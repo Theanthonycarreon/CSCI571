@@ -38,18 +38,21 @@
     padding: 10px;
 }
 .lawyer {
-    width: 1457px;
+    width: 100%;
     margin-top: 50px;
-    height: 650px;
-    margin-left: -10px;
-    margin-right: .2px;
+    height: 100%;
+    margin-bottom: -9%;
 }
+
 .image_container{
+    width: 100%;
     position: relative;
     display: inline-block; 
+    overflow: hidden;
 }
+
 .sign_up_box {
-    background-color: rgb(21, 50, 136);
+    background-color: rgb(15, 64, 143);
     width: 245px;
     height: 295px;
     padding: 50px;
@@ -91,7 +94,86 @@
 .submit_button{
     background-color: yellow;
 }
+
 .features{
-    margin-right: 40px;
-    margin-left: 40px;
+    margin-top: -8%;
+    margin-bottom: -14%; 
+    border-spacing: 75px; 
+    padding: 10%;
+    
+}
+
+.founders_quote {
+    width: 100%;
+    height: 450px;
+    /* margin-left: -10px;
+    margin-right: .2px; */
+    margin-top: 100px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 24px;
+    background-color: rgb(240, 240, 240);
+    /* #sourced chatgpt - next 3 lines - [1] https://chatgpt.com/share/2cb49eb9-c9ee-416a-a9ed-3884ae4298da */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+} 
+
+.founders_info{
+    font-size: 18px;
+}
+
+
+.price_background {
+    width: 100%;
+    height: 900px;
+    position: relative;
+    display: block;
+    opacity: 0.8; 
+    filter: grayscale(100%); 
+    margin-top: -1%;
+    /* sourced chatgpt next 4 lines - [3] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 */
+    background-image: url('../images/glasses.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+}
+
+.price_header {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px;
+    position: relative;
+    top: 5%;
+}
+
+.price_slogan {
+    color: rgb(148, 148, 148);
+    font-size: 12px; 
+}
+
+/* sourced chatgpt next 3 lines - [2] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3*/
+.plans_layout {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 5%;
+    margin-top: 10%;
+}
+
+.plan_box {
+    width: 22%;
+    text-align: center;
+}
+
+.basic_plan {
+    /* margin-bottom: 10%; */
+    background-color: grey;
+}
+
+.standard_plan {
+    background-color: grey;
+}
+.corporate_plan {
+    background-color: grey;
 }
