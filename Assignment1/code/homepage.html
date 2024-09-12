@@ -7,9 +7,9 @@
         <a class= "menu_button" href="page2.html">MENU</a>
     </div>
     <div class="helpful_links">
-        <a class= "about_button" href= "page2.html">About</a>
-        <a class= "project_button" href= "page2.html">Project</a>
-        <a class= "services_button" href= "page2.html">Services</a>
+        <a class= "about_button" id="about" href= "page2.html#about">About</a>
+        <a class= "project_button" id="project" href= "page2.html#project">Project</a>
+        <a class= "services_button" id="services" href= "page2.html#services">Services</a>
     </div>
 </header>
 <body>
@@ -21,88 +21,121 @@
                     <span class = "your_bus_span">YOUR BUSINESS<br></span>
                     <span class="today_span">TODAY!<br></span>
                     <span class="slogan_span">- Get your hands on Biz Optima -<br><br></span>
-                    <input type="search" id="email" name="customer_email"><br><br>
+                    <input type="search" id="email" class="customer_email"><br><br>
                     <button class= "submit_button" type="submit">SIGN UP FOR FREE!</button>
             </div>
     </div>
-    <table class="features">
-        <tr>
-            <td>
+    <div class="features">
+        <div class="feature">
+            <span class="feature_title">
                 <p>AMAZING FEATURE #1</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Done mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
-            </td>
-            <td>
-                <p>AMAZING FEATURE #2</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Done mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
-            </td>
-            <td>
-                <p>AMAZING FEATURE #3</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Done mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
-            </td>
-        </tr>
-    </table>
+            </span>
+            <span class="feature_desc">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
+            </div>
+            <div class="feature">
+                <span class="feature_title">
+                    <p>AMAZING FEATURE #2</p>
+                </span>
+                <span class="feature_desc">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
+                </span>
+            </div>
+            <div class="feature">
+                <span class="feature_title">
+                    <p>AMAZING FEATURE #3</p>
+                </span>
+                <span class="feature_desc">    
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed malesuada faucibus ex nec ultricies. Donec mattis egestas nisi non pretium. Suspendisse nec eros ut erat facilisis maximus. In congue et leo in varius. Vestibulum sit amet felis ornare, commodo orci ut, feugiat lorem.</p>
+                </span>
+        </div>
+    </div>
     <div class="founders_quote">
         <p>"I COULDN'T HAVE ASKED FOR MORE THAN THIS. BIZ OPTIMA IS THE NEXT KILLER APP."<br>
             <span class="founders_info"><strong>John Doe</strong>, CEO & Founder, Biz Optima</span>
         </p>
     </div>
     <div class="price_background">
-        <!-- <img class = "desktop_img" src="../images/glasses.png">      ****check to see if this is okay to do****** -->
-            <div class="price_header">
-                <p>PRICES<br> 
-                    <span class="price_slogan">AFFORDABLE FOR EVERYONE</span>
-                </p>
-            </div>
+            <span class="price_header">
+                <p>PRICES</p>
+                    <span class="price_slogan">
+                        <p>AFFORDABLE FOR EVERYONE</p>
+                    </span>
+                </span>
             <div class="plans_layout">
                 <div class="plan_box basic_plan">
-                    <p>BASIC PLAN</p>
-                    <p>Plan Amazing feature #1</p>
-                    <p>Plan Amazing feature #2</p>
-                    <p>Plan Amazing feature #3</p>
-                    <p>Plan Amazing feature #4</p>
-                    <p>$29.99</p>
-                    <p>Monthly</p>
-                    <button class="buy_basic" type="submit">BUY NOW</button>
+                    <div class="basic_plan_details">
+                        <p>BASIC PLAN</p>
+                        <p>Plan Amazing feature #1</p>
+                        <p>Plan Amazing feature #2</p>
+                        <p>Plan Amazing feature #3</p>
+                        <p>Plan Amazing feature #4</p>
+                        <span class="prices">
+                            <p>$29.99</p>
+                            <p>Monthly</p>
+                        </span>
+                        <button class="buy_button" type="submit">BUY NOW</button>
+                    </div> 
                 </div>
                 <div class="plan_box standard_plan">
-                    <p>STANDARD PLAN</p>
-                    <p>Plan Amazing feature #1</p>
-                    <p>Plan Amazing feature #2</p>
-                    <p>Plan Amazing feature #3</p>
-                    <p>Plan Amazing feature #4</p>
-                    <p>$39.99</p>
-                    <p>Monthly</p>
-                    <button class="buy_standard" type="submit">BUY NOW</button>
+                    <div class="stand_plan_details"> 
+                        <p>STANDARD PLAN</p>
+                        <p>Plan Amazing feature #1</p>
+                        <p>Plan Amazing feature #2</p>
+                        <p>Plan Amazing feature #3</p>
+                        <p>Plan Amazing feature #4</p>
+                        <span class="prices">
+                            <p>$39.99</p>
+                            <p>Monthly</p>
+                        </span>
+                        <button class="buy_button" type="submit">BUY NOW</button>
+                    </div>
                 </div>
                 <div class="plan_box corporate_plan">
-                    <p>CORPORATE PLAN</p>
-                    <p>Plan Amazing feature #1</p>
-                    <p>Plan Amazing feature #2</p>
-                    <p>Plan Amazing feature #3</p>
-                    <p>Plan Amazing feature #4</p>
-                    <p>$49.99</p>
-                    <p>Monthly</p>
-                    <button class="buy_corporate" type="submit">BUY NOW</button>
+                    <div class="corp_plan_details">
+                        <p>CORPORATE PLAN</p>
+                            <p>Plan Amazing feature #1</p>
+                            <p>Plan Amazing feature #2</p>
+                            <p>Plan Amazing feature #3</p>
+                            <p>Plan Amazing feature #4</p>
+                            <span class="prices">
+                                <p>$49.99</p>
+                                <p>Monthly</p>
+                            </span>
+                            <button class="buy_button" type="submit">BUY NOW</button>
+                    </div>
                 </div>
             </div>
     </div>
-    <div class="free_trial">
-        <p>TRY THE BEST APP IN THE MARKET</p>
-        <p>tell more why your software is amazing and why users need to sign up</p>
-        <button class= "try_free_button" type="submit">TRY IT FOR FREE</button>
+    <div class="notebook_img">
+        <div class="free_trial_box">
+            <span class="slogan1">
+                <p>TRY THE BEST APP IN THE MARKET</p>
+            </span>
+            <span class="slogan2">
+                <p>tell more why your software is amazing and why users need to sign up</p>
+            </span>
+            <span class="try_free_span">
+                <button class= "try_free_button" type="submit">TRY IT FOR FREE</button>
+            </span>
+        </div>
     </div>
 </body>
 <footer>
-    <div class="name_and_addr">
-        <p>BIZ OPTIMA</p>
-        <p>Grant Ave, Redondo Beach, CA, 90278 310.555.1212 Ext. 3 for Business Needs</p>
-    </div>
-    <div class="social_medias">
-        <img class = "facebook" src="../images/facebook.png">
-        <img class = "x" src="../images/x.png">
-        <img class = "instagram" src="../images/instagram.png">
-        <img class = "youtube" src="../images/youtube.png">
-        <img class = "tiktok" src="../images/tiktok.png">
+    <div class="footer_div">
+        <span class="company_name">
+            <p>BIZ OPTIMA</p>
+        </span>
+        <span class="company_addr">
+            <p>224 Grant Ave, Redondo Beach, CA, 90278 310.555.1212 Ext. 3 for Business Needs</p>
+        </span>
+        <div class="social_medias">
+            <img class = "facebook" src="../images/facebook.png">
+            <img class = "x" src="../images/x.png">
+            <img class = "instagram" src="../images/instagram.png">
+            <img class = "youtube" src="../images/youtube.png">
+            <img class = "tiktok" src="../images/tiktok.png">
+        </div>
     </div>
 </footer>
 </html>
