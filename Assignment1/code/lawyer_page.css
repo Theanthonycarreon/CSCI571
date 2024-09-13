@@ -3,41 +3,41 @@ body {
 }
 .menu {
     float: left;
-    margin-top: 30px;
+    margin-top: 59px;
 }
 .menu_button{
     text-decoration: none;
     color: black;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
+    font-size: 19px;
     margin-left: 250px;
     margin-top: 30px;
     bottom: 5%;
 }
 .helpful_links {
     float: right;
-    margin-top: 30px;
+    margin-top: 59px;
     margin-right: 250px;
 }
 .about_button {
     color: lightgrey;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px;
 }
 .project_button {
     color: lightgrey;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px;
 }
 .services_button {
     color: lightgrey;
     text-decoration: none;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     padding: 10px;
 }
 .lawyer {
@@ -56,8 +56,8 @@ body {
 
 .sign_up_box {
     background-color: rgb(38 62 101);
-    width: 245px;
-    height: 295px;
+    width: 330px;
+    height: 415px;
     padding: 50px;
     margin: 10px;
     position: absolute;
@@ -68,30 +68,31 @@ body {
 .dont_wait_span{
     color: white;
     font-family: Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
 }
 
 .improve_span{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 33px;
+    font-size: 43px;
 }
 .your_bus_span{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 29px;
+    font-size: 39px;
 }
 
 .today_span{
     color: white;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 32px;
+    font-size: 42px;
+    margin-bottom: 10%;
 }
 
 .slogan_span{
     color: yellow;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
+    font-size: 16px;
     font-style: italic;
 }
 .customer_email{
@@ -104,44 +105,52 @@ body {
 .submit_button{
     background-color: yellow;
     border-width: 0px;
-    width: 145px;
-    height: 42px;
-    font-size: 11px;
+    width: 165px;
+    height: 50px;
+    font-size: 14px;
 
 }
 
 
 .features{
-    margin: 51px auto;
+    margin: 123px 85px;
     align-items: center;
     display: flex;
     padding: 0px 212px;
-
+    font-family: Arial, Helvetica, sans-serif;
     /* sourced chatgpt - 1 line [4] - https://chatgpt.com/share/8f1c0ed7-9a93-4238-8e45-840b808e30b4 */
     justify-content: space-between;
     
 }
 
 
-.feature {
-    font-size: 14px;
-    margin: 10px;
+/* .feature {
+    font-size: 19px;
+    margin: 14px;
     padding: 20px;
+} */
+
+.feature_title{
+    font-size: 20px;
+    margin: 0px 0px;
+    padding: 16px;
+    width: 403px;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-
-.features_desc {
-    font-size: 13px;
-    color: rgb(144 142 142);
+.feature_desc{
+    font-size: 17px;
+    color: grey;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 .founders_quote {
     width: 100%;
-    height: 450px;
+    height: 443px;
     margin-top: 100px;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
+    font-size: 24px;
     background-color: rgb(240, 240, 240);
 
     /* #sourced chatgpt - next 3 lines - [1] https://chatgpt.com/share/2cb49eb9-c9ee-416a-a9ed-3884ae4298da */
@@ -152,20 +161,20 @@ body {
 } 
 
 .founders_info{
-    font-size: 12px;
+    font-size: 16px;
 }
 
 
 .price_background {
     width: 100%;
     height: 985px;
-    position: relative;
-    display: block;
-    /* opacity: 0.8; 
-    filter: grayscale(100%);  */
+    position: absolute;
+    display: flex;
+    opacity: 0.8; 
+    filter: grayscale(100%); 
     display: flex;
     margin-bottom: -5.21%;
-
+    z-index: 0;
     /* sourced chatgpt next 4 lines - [3] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 */
     background-image: url('../images/glasses.png');
     background-size: cover;
@@ -174,7 +183,7 @@ body {
 }
 
 .price_header {
-    position: absolute;
+    position: relative;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24px;
@@ -183,13 +192,15 @@ body {
     align-items: center;
     flex-direction: column;
     margin-top: 2%;
-    left: 43.7%;
+    z-index: 1;
 }
 
 .price_slogan {
+    position: relative;
     color: rgb(148, 148, 148);
     font-size: 16px; 
     margin-top: -20px;
+    z-index: 1;
 }
 
 /* sourced chatgpt next 4 lines - [2] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 --- need to update link*/ 
@@ -197,57 +208,61 @@ body {
     display: flex;
     justify-content: center;
     gap: 52px;
-
+    
     margin-bottom: 5%;
-    margin-top: 12%;
+    margin-top: 3%;
     text-align: center;
     align-items: center;
     padding: 0px 320px;
-
+    z-index: 1;
+    
 }
 
 .plan_box {
-    background-color: white;
+    background-color: rgb(240 240 240);
     background-image: 
-        linear-gradient(to right, black 1px, transparent 0px), 
-        linear-gradient(to bottom, black 1px, transparent 1px), 
-        repeating-linear-gradient(45deg, black, black 0px, transparent 2px, transparent 14px), 
-        repeating-linear-gradient(135deg, black, black 0px, transparent 2px, transparent 15px);
-        
-    background-size: 20px 20px;
-    position: relative; 
+        linear-gradient(to right, lightgrey 1px, transparent 0px), 
+        linear-gradient(to bottom, lightgrey 1px, transparent 1px), 
+        repeating-linear-gradient(45deg, lightgrey, lightgrey 0px, transparent 1px, transparent 9px), 
+        repeating-linear-gradient(135deg, lightgrey, lightgrey 0px, transparent 1px, transparent 9px);
+    background-size: 13px 13px;
 }
 
 .basic_plan {
+    position: relative; 
     height: 623px;
     width: 385px;
     font-size: 18px;
-    position: relative; 
+    z-index: 2;
 }
 
 .standard_plan {
     height: 623px;
     width: 385px;
     font-size: 18px;
+    z-index: 2;
 }
 .corporate_plan {
     height: 623px;
     width: 385px;
     font-size: 18px;
+    z-index: 2;
 }
 
 
 .basic_plan_details {
     margin-top: 20%;
-    z-index: 1;
+    z-index: 2;
 }
 
 .stand_plan_details {
     margin-top: 20%;
+    z-index: 2;
 }
 
 .corp_plan_details {
     margin-top: 20%;
+    z-index: 2;
 }
 
 /* sourced chatgpt - 4 lines - [6] - https://chatgpt.com/share/66e368ec-2404-800b-bd8c-e6f36aa20f8c */
@@ -272,6 +287,7 @@ body {
     padding-block: 0px;
     color: white;
     font-size: 12px;
+    z-index: 1;
 }
 
 .notebook_img{
@@ -280,7 +296,7 @@ body {
     background-position: center;
     height: 568px;
     margin-bottom: 40;
-    margin-top: 99px;
+    margin-top: 161px;
     
     }
 
