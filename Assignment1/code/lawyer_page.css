@@ -118,17 +118,12 @@ body {
     display: flex;
     padding: 0px 212px;
     font-family: Arial, Helvetica, sans-serif;
-    /* sourced chatgpt - 1 line [4] - https://chatgpt.com/share/8f1c0ed7-9a93-4238-8e45-840b808e30b4 */
+    /* prompt: How to move the text to the center of the box? - 1 line- https://chatgpt.com/share/8f1c0ed7-9a93-4238-8e45-840b808e30b4 */
     justify-content: space-between;
     
 }
 
 
-/* .feature {
-    font-size: 19px;
-    margin: 14px;
-    padding: 20px;
-} */
 
 .feature_title{
     font-size: 20px;
@@ -152,8 +147,7 @@ body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 24px;
     background-color: rgb(240, 240, 240);
-
-    /* #sourced chatgpt - next 3 lines - [1] https://chatgpt.com/share/2cb49eb9-c9ee-416a-a9ed-3884ae4298da */
+    /* prompt: How to move text to the center of the box? - 3 lines - https://chatgpt.com/share/2cb49eb9-c9ee-416a-a9ed-3884ae4298da */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -175,7 +169,7 @@ body {
     display: flex;
     margin-bottom: -5.21%;
     z-index: 0;
-    /* sourced chatgpt next 4 lines - [3] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 */
+    /* prompt: whats the best way to have a table with 3 box columns with 3 separate image background with the 3 different plan options inside the image div - 4 lines - https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 */
     background-image: url('../images/glasses.png');
     background-size: cover;
     background-position: center;
@@ -203,7 +197,7 @@ body {
     z-index: 1;
 }
 
-/* sourced chatgpt next 4 lines - [2] https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3 --- need to update link*/ 
+/* prompt: whats the best way to have a table with 3 box columns with 3 separate image background with the 3 different plan options inside the image div - 3 lines- https://chatgpt.com/share/52587fc1-3aaa-47a0-97ce-cdf000bb1de3  */
 .plans_layout {
     display: flex;
     justify-content: center;
@@ -265,7 +259,7 @@ body {
     z-index: 2;
 }
 
-/* sourced chatgpt - 4 lines - [6] - https://chatgpt.com/share/66e368ec-2404-800b-bd8c-e6f36aa20f8c */
+/* prompt: How to get space at the bottom of the amazing feature #4 and between the prices? - 4 lines - https://chatgpt.com/share/66e368ec-2404-800b-bd8c-e6f36aa20f8c */
 .basic_plan_details p:nth-child(5), 
 .stand_plan_details p:nth-child(5), 
 .corp_plan_details p:nth-child(5) {
@@ -295,41 +289,56 @@ body {
     background-size: cover;
     background-position: center;
     height: 568px;
-    margin-bottom: 40;
     margin-top: 161px;
+    position: relative;
+    z-index: 0;
     
-    }
+}
 
-    
+
 .free_trial_box{
+    position: relative;
     background-size: cover;
     background-position: center;
     height: 568px;
     background-color: rgb(0, 47, 81);
     opacity: 80%;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    color: white;
-    display: flex;
     justify-content: center;
     align-items:center; 
-    
-    /* sourced chatgpt - 1 line [4] - https://chatgpt.com/share/8f1c0ed7-9a93-4238-8e45-840b808e30b4 */
-    flex-direction: column;
+    text-align: center;
+    z-index: 1;
 }
 
 
 .slogan1{
+    position: relative; 
+    justify-content: center;
+    align-items:center; 
+    z-index: 2;
     margin-top: -30px;
     font-size: 29px;
+    color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 35%;
 }
 
 .slogan2{
+    position: relative; 
+    justify-content: center;
+    align-items:center; 
+    z-index: 2;
     margin-top: -25px;
     font-size: 15px;
+    color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 35%;
 }
 
 .try_free_button{
+    position: relative; 
+    z-index: 2;
     margin-top:20px;
     font-size: 14px;
     background-color: rgb(255, 217, 66);
@@ -337,6 +346,9 @@ body {
     height: 45px;
     border-width: 0px;
     padding-block: 0px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    top: 35%;
 }
 
 .footer_div{
@@ -364,7 +376,7 @@ body {
     margin-bottom: 20px;
 }
 
-/* sourced chatgpt next 2 lines [5] - https://chatgpt.com/share/8542dff8-4d86-48df-9d1c-1a0e675e6610 */
+/* prompt: how to make make space between each image? - 3 lines - https://chatgpt.com/share/8542dff8-4d86-48df-9d1c-1a0e675e6610 */
 .social_medias img{
    margin: 15px;
    padding-left: 10px;
