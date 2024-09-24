@@ -1,5 +1,3 @@
 [submodule "Assignment2/msdocs-python-flask-webapp-quickstart-X1Z"]
-  path = Assignment2/msdocs-python-flask-webapp-quickstart-X1Z
-  url = git@ssh.azure-devices.net:UniversityOfSouthernCalifornia/msdocs-python-flask-webapp-quickstart-X1Z.git
-
-
+	path = Assignment2/msdocs-python-flask-webapp-quickstart-X1Z
+	url = https://msdocs-python-flask-webapp-quickstart-x1z-a9ghcdghapc2aadj.westus-01.azurewebsites.net/
