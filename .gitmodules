@@ -1,6 +1,0 @@
-[submodule "Assignment2/msdocs-python-flask-webapp-quickstart-X1Z"]
-	path = Assignment2/json-version
-	url = https://json-version-atenffgpa8a5aach.scm.westus-01.azurewebsites.net:443/json-version.git
-[submodule "Assignment2/Assignment2/msdocs-python-flask-webapp-quickstart"]
-	path = Assignment2/msdocs-python-flask-webapp-quickstart
-	url = https://msdocs-python-flask-webapp-quickstart-x1z-2-htd3gmagcycudebr.scm.westus-01.azurewebsites.net:443/msdocs-python-flask-webapp-quickstart-X1Z-2.git
