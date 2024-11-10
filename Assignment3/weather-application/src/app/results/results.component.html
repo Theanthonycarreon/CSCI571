@@ -1,0 +1,52 @@
+
+<div class="container" >
+    <h1>Forcast at CITY</h1>
+    <div class="row">
+        <div class="d-flex justify-content-end">
+            <span>*</span><span>Details ></span> <!--Need to change to the star symbol and add the right arrow after details-->
+        </div>
+    </div>
+    <div class="row">
+        <ul class="nav justify-content-end" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="dayView-tab" data-toggle="tab" href="#dayViewData" role="tab" aria-controls="dayViewData" aria-selected="true" (click)="dayViewTAB('city')">Day View</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tempChart-tab" data-toggle="tab" href="#tempChartData" role="tab" aria-controls="tempChartData" aria-selected="false"(click)="tempChartTAB('city')">Daily Temp. Chart</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="meteogram-tab" data-toggle="tab" href="#meteogramData" role="tab" aria-controls="meteogramData" aria-selected="false" (click)="meteogramTAB('city')">Meteogram</a>
+            </li>
+        </ul>
+    </div>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active"  id="dayViewData" role="tabpanel" aria-labelledby="dayView-tab">
+            <div class="row">
+                <table class="table table-responsive table-striped">
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Temp. High(°F)</th>
+                    <th>Temp. Low(°F)</th>
+                    <th>Wind Speed(mph)</th>
+                </tr>
+                <tr *ngFor="let x of rows; let i = index">
+                    <td>{{ i + 1 }}</td> 
+                    <!-- <td>{{x.status}}</td>
+                    <td>{{x.highTemp}}</td>
+                    <td>{{x.lowTemp}}</td>
+                    <td>{{x.WindSpeed}}</td> -->
+                </tr>
+                </table>
+            </div>
+        </div>
+        <div class="tab-pane fade" *ngif="chartTabClicked" id="tempChartData" role="tabpanel" aria-labelledby="tempChart-tab">
+            CHART GOES HERE
+        </div>
+        <div class="tab-pane fade" *ngif="meteogramTabClicked" id="meteogramData" role="tabpanel" aria-labelledby="meteogram-tab">
+            Meteogram GOES HERE
+        </div>
+    </div>
+    
+</div>
