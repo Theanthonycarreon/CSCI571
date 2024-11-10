@@ -19,7 +19,7 @@ automatic_scaling:
   max_pending_latency: automatic
 
 service_account: assignment3-440805@appspot.gserviceaccount.com
- 
+
 env_variables:
   MONGODB_URI: 'mongodb+srv://theanthonycarreon:Notorious18!@assignment3.gevhk.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3'
   TOMORROW_API_KEY: "rt6KkyZOCA8PELgZmhqjbmw5Qw3vpYTm"
