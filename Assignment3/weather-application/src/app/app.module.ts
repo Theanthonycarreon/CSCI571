@@ -9,6 +9,7 @@ import { DetailsPaneComponent } from './details-pane/details-pane.component';
 import { AutoCompleteComponent } from './auto-complete/auto-complete.component';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AutoCompleteService } from './auto-complete.service';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AutoCompleteService } from './auto-complete.service';
     FavoritesComponent,
     DetailsPaneComponent,
     ReactiveFormsModule,
+    HighchartsChartModule
   ],
   providers: [AutoCompleteService,provideHttpClient(withInterceptorsFromDi())],
   bootstrap: [AppComponent] // Main app component to bootstrap
