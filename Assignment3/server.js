@@ -41,7 +41,6 @@ const app = express();
 
 const uri = process.env.MONGODB_URI;
 
-
 app.use(express.json());
 
 // Serve static files from the 'public' directory (Angular app)
@@ -86,7 +85,7 @@ app.get('/api/removeFavorite', async (req, res) => {
       State: state, //change this
     }); //change this
   } catch (error) {
-    console.error('Error adding to DB:', error);
+    console.error('Error removing from DB:', error);
   }
 });
 
@@ -96,66 +95,14 @@ app.get('/api/customerFavorites', async (req, res) => {
     const favorites = await favorites_list.find().sort({ city: 1 }).toArray();
     res.json(favorites);
   } catch (error) {
-    console.error('Error adding to DB:', error);
+    console.error('Error fetching data:', error);
   }
 });
 
 
-// API call for Autocomplete --------> need to implement for maps too
-//  prompt: how do I setup get city to print out to html component? - 10 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
-app.get('/api/autocomplete', async (req, res) => {
-  console.log("Autocomplete route hit");
-  const input = req.query.input;
-  console.log('input', input);
+app.get('/api/dayView', async (req, res) => {
+  const { latitude , longitude} = req.query; //might need longitude and latitude
   try {
-      const response = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
-          params: { 
-              input, 
-              key: mapsApiKey, 
-              types: "(cities)"
-          },
-      });
-      console.log('response.data', response.data);
-      res.json(response.data);  // Ensure JSON response is sent
-  } catch (error) {
-      console.error('Error fetching autocomplete data:', error);
-      res.status(500).json({ error: 'Failed to fetch autocomplete data' });
-  }
-});
-
-
-
-// API call for Tomorrow.io
-app.get('/api/weather', async (req, res) => {
-  const { auto_loc, street, city, state } = req.query;
-  var latitude = 0;
-  var longitude = 0;
-  try {
-    if(auto_loc){
-      const ipinfoResponse = await axios.get('https://ipinfo.io', {
-        params: { 
-          token: ipinfoKey
-        },
-        headers
-      });
-      let coords = ipinfoResponse.data['loc'].split(',')
-      latitude = coords[0];
-      longitude = coords[1];
-    } else {
-      const address = [street,city,state].join(', ');
-      const coordinates = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { 
-        params: {
-          address, 
-          key: geocodingApiKey
-        },
-        headers
-      });
-      latitude = coordinates.data['results'][0]['geometry']['location']['lat'];
-      longitude = coordinates.data['results'][0]['geometry']['location']['lng'];
-      let newaddress = coordinates.data['results'][0]['formatted_address'];
-      console.log('address', newaddress);
-    }
-    
     const weatherData = await axios.get('https://api.tomorrow.io/v4/timelines', { 
       params: { 
         location:`${latitude},${longitude}`,
@@ -169,8 +116,108 @@ app.get('/api/weather', async (req, res) => {
       },
       headers 
     });
-    console.log('weatherData', weatherData.data);
     res.json(weatherData.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
+// app.get('/api/tempChart', async (req, res) => {
+//   const {  latitude , longitude } = req.query; //might need longitude and latitude
+//   try {
+//     const tempChart = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', { //change link
+//       params: { 
+//           // address, 
+//           key: mapsApiKey, 
+//       },
+//     });
+//     res.
+//     res.json(tempChart);
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//   }
+// });
+// app.get('/api/meteogram', async (req, res) => {
+//   const {  latitude , longitude } = req.query; //might need longitude and latitude
+//   try {
+//     const meteogramChart = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', { //change link
+//       params: { 
+//           // address, 
+//           key: mapsApiKey, 
+//       },
+//     });
+//     res.json(meteogramChart);
+//   } catch (error) {
+//     console.error('Error fetching data:', error);
+//   }
+// });
+
+
+// API call for Autocomplete --------> need to implement for maps too
+//  prompt: how do I setup get city to print out to html component? - 10 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
+app.get('/api/autocomplete', async (req, res) => {
+  const { input } = req.query;
+  try {
+      const response = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', {
+          params: { 
+              input, 
+              key: mapsApiKey, 
+              types: "(cities)"
+          },
+      });
+      res.json(response.data);  
+  } catch (error) {
+      console.error('Error fetching autocomplete data:', error);
+      res.status(500).json({ error: 'Failed to fetch autocomplete data' });
+  }
+});
+
+
+
+// API call for Tomorrow.io
+app.get('/api/weather', async (req, res) => {
+  let inputLatitude = 0;
+  let inputLongitude = 0;
+  let inputAddress = '';
+  const { auto_loc, street, city, state } = req.query;
+  try {
+    if(auto_loc === 'true'){
+      const ipinfoResponse = await axios.get('https://ipinfo.io', {
+        params: { 
+          token: ipinfoKey
+        },
+        headers
+      });
+      let coords = ipinfoResponse.data['loc'].split(',')
+      inputLatitude = coords[0];
+      inputLongitude = coords[1];
+    } else {
+      const address = [street,city,state].join(', ');
+      const coordinates = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { 
+        params: {
+          address, 
+          key: geocodingApiKey
+        },
+        headers
+      });
+      inputLatitude = coordinates.data['results'][0]['geometry']['location']['lat'];
+      inputLongitude = coordinates.data['results'][0]['geometry']['location']['lng'];
+      inputAddress = coordinates.data['results'][0]['formatted_address'];
+    }
+    
+    const weatherData = await axios.get('https://api.tomorrow.io/v4/timelines', { 
+      params: { 
+        location:`${inputLatitude},${inputLongitude}`,
+        fields: ["temperature", "temperatureApparent", "temperatureMin", "temperatureMax", "windSpeed"
+          , "windDirection", "humidity", "pressureSeaLevel", "uvIndex", "weatherCode", "precipitationProbability",
+              "precipitationType", "sunriseTime", "sunsetTime", "visibility", "moonPhase", "cloudCover"],
+              timesteps: "1d",
+              timezone: "America/Los_Angeles",
+              units: "imperial",
+              apikey: tomorrowApiKey
+      },
+      headers 
+    });
+    res.json({weatherData: weatherData.data, latitude: inputLatitude, longitude: inputLongitude, address: inputAddress});
 
   } catch (error) {
     console.error('Error fetching data:', error);

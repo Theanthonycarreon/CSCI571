@@ -11,13 +11,7 @@ export class AutoCompleteService {
   constructor(private http: HttpClient) {}
   
   getAutoComplete(input: string): Observable<any> {
-    console.log('Inside getAutoComplete');
-    return this.http.get<any>(`/api/autocomplete?input=${input}`).pipe(
-      catchError((error) => {
-        console.error('Error in getAutoComplete:', error);
-        return throwError(error);
-      })
-    );
+    return this.http.get<any>(`/api/autocomplete?input=${input}`);
   }
   
 

@@ -6,12 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MeteogramService  {
- 
+  
   constructor(private http: HttpClient) {}
   
-  getMeteogram() {
-    throw new Error('Method not implemented.');
+  meteogramTAB(latitude: number, longitude: number): Observable<any> {
+    return this.http.get<any>('/api/meteogram'); //need to figure out how to send the input .... ex - return this.http.get<any>(`/api/autocomplete?input=${input}`);
   }
-
+ 
+  postData(data: any): Observable<any> {
+    return this.http.post<any>('/api/meteogram', data);
+  }
  
 }

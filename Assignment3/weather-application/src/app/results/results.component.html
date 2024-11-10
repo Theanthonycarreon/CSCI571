@@ -9,18 +9,18 @@
     <div class="row">
         <ul class="nav justify-content-end" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="dayView-tab" data-toggle="tab" href="#dayViewData" role="tab" aria-controls="dayViewData" aria-selected="true" (click)="dayViewTAB('city')">Day View</a>
+                <a class="nav-link active" [class.active]="dayViewTabClicked" id="dayView-tab" data-toggle="tab" href="#dayViewData" role="tab" aria-controls="dayViewData" aria-selected="true" (click)="dayViewTAB()">Day View</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="tempChart-tab" data-toggle="tab" href="#tempChartData" role="tab" aria-controls="tempChartData" aria-selected="false"(click)="tempChartTAB('city')">Daily Temp. Chart</a>
+                <a class="nav-link" [class.active]="chartTabClicked" id="tempChart-tab" data-toggle="tab" href="#tempChartData" role="tab" aria-controls="tempChartData" aria-selected="false"(click)="tempChartTAB()">Daily Temp. Chart</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="meteogram-tab" data-toggle="tab" href="#meteogramData" role="tab" aria-controls="meteogramData" aria-selected="false" (click)="meteogramTAB('city')">Meteogram</a>
+                <a class="nav-link"  [class.active]="meteogramTabClicked" id="meteogram-tab" data-toggle="tab" href="#meteogramData" role="tab" aria-controls="meteogramData" aria-selected="false" (click)="meteogramTAB()">Meteogram</a>
             </li>
         </ul>
     </div>
     <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active"  id="dayViewData" role="tabpanel" aria-labelledby="dayView-tab">
+        <div class="tab-pane fade show active"  *ngIf="dayViewTabClicked" id="dayViewData" role="tabpanel" aria-labelledby="dayView-tab">
             <div class="row">
                 <table class="table table-responsive table-striped">
                 <tr>
@@ -29,22 +29,24 @@
                     <th>Status</th>
                     <th>Temp. High(°F)</th>
                     <th>Temp. Low(°F)</th>
-                    <th>Wind Speed(mph)</th>
+                    <th>Wind Speed(mph)</th> 
                 </tr>
-                <tr *ngFor="let x of rows; let i = index">
+                <tr *ngFor="let x of row; let i = index">
                     <td>{{ i + 1 }}</td> 
-                    <!-- <td>{{x.status}}</td>
-                    <td>{{x.highTemp}}</td>
-                    <td>{{x.lowTemp}}</td>
-                    <td>{{x.WindSpeed}}</td> -->
+                    <!-- prompt: how print date in the format needed? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
+                    <td>{{ x.date | date:'EEEE, MMM. d, y' }}</td> 
+                    <td>{{x.weatherCode}}</td>
+                    <td>{{x.temperatureMax}}</td>
+                    <td>{{x.temperatureMin}}</td>
+                    <td>{{x.windSpeed}}</td>
                 </tr>
                 </table>
             </div>
         </div>
-        <div class="tab-pane fade" *ngif="chartTabClicked" id="tempChartData" role="tabpanel" aria-labelledby="tempChart-tab">
+        <div class="tab-pane fade" *ngIf="chartTabClicked" id="tempChartData" role="tabpanel" aria-labelledby="tempChart-tab">
             CHART GOES HERE
         </div>
-        <div class="tab-pane fade" *ngif="meteogramTabClicked" id="meteogramData" role="tabpanel" aria-labelledby="meteogram-tab">
+        <div class="tab-pane fade" *ngIf="meteogramTabClicked" id="meteogramData" role="tabpanel" aria-labelledby="meteogram-tab">
             Meteogram GOES HERE
         </div>
     </div>
