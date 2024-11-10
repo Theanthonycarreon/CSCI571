@@ -1,28 +1,24 @@
 runtime: nodejs20
 env: standard
 instance_class: F1
-
 handlers:
-  # Serve static files directly from the 'dist' folder
   - url: /static/(.*)
     static_files: weather-application/dist/\1
     upload: weather-application/dist/.*
-
-  # Catch-all handler for other routes, serving the Node.js application
   - url: /.*
     script: auto
-
+  - url: .*
+    script: auto
+env_variables:
+  GEOCODING_API_KEY: AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE
+  IPINFO_KEY: 5b2286d51fefe2
+  MAPS_API_KEY: AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE
+  MONGODB_URI: >-
+    mongodb+srv://theanthonycarreon:Notorious18!@assignment3.gevhk.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3
+  TOMORROW_API_KEY: rt6KkyZOCA8PELgZmhqjbmw5Qw3vpYTm
 automatic_scaling:
   min_idle_instances: automatic
   max_idle_instances: automatic
   min_pending_latency: automatic
   max_pending_latency: automatic
-
 service_account: assignment3-440805@appspot.gserviceaccount.com
-
-env_variables:
-  MONGODB_URI: 'mongodb+srv://theanthonycarreon:Notorious18!@assignment3.gevhk.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3'
-  TOMORROW_API_KEY: "rt6KkyZOCA8PELgZmhqjbmw5Qw3vpYTm"
-  GEOCODING_API_KEY: "AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE"
-  IPINFO_KEY: "5b2286d51fefe2"
-  MAPS_API_KEY: "AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE"
