@@ -136,20 +136,26 @@ app.get('/api/dayView', async (req, res) => {
 //     console.error('Error fetching data:', error);
 //   }
 // });
-// app.get('/api/meteogram', async (req, res) => {
-//   const {  latitude , longitude } = req.query; //might need longitude and latitude
-//   try {
-//     const meteogramChart = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', { //change link
-//       params: { 
-//           // address, 
-//           key: mapsApiKey, 
-//       },
-//     });
-//     res.json(meteogramChart);
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// });
+app.get('/api/meteogram', async (req, res) => {
+  const {  latitude , longitude } = req.query; //might need longitude and latitude
+  // `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`
+  try {
+    const meteogramChart = await axios.get('https://api.met.no/weatherapi/locationforecast/2.0/compact', { 
+      params: { 
+        lat: latitude,
+        lon: longitude,
+      },
+      headers: {
+        'User-Agent': 'Assignment3 (theanthonycarreon@gmail.com)'
+      }
+    });
+    // console.log('meteogramChart (inside server.js)', meteogramChart)
+    res.json({meteogramChart: meteogramChart.data, latitude, longitude});
+
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
 
 
 // API call for Autocomplete --------> need to implement for maps too

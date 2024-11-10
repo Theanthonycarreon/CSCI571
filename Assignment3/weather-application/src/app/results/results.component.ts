@@ -3,6 +3,10 @@ import { CustomerResultsService } from '../customer-results.service';
 import { TempChartService } from '../temp-chart.service';
 import { MeteogramService } from '../meteogram.service';
 import * as Highcharts from 'highcharts';
+import WindBarb from 'highcharts/modules/windbarb';
+
+// Initialize the windbarb module
+WindBarb(Highcharts);
 
 @Component({
   selector: 'app-results',
@@ -129,9 +133,64 @@ export class ResultsComponent implements OnInit {
       this.dayViewTabClicked = false;
       this.chartTabClicked = false;
       this.meteogramTabClicked = true;
-      // this.meteogramService.meteogramTAB(this.latitude, this.longitude).subscribe(response => {
-      //   this.rows = response.json();
-      // });
-    }
+      // let meteogramJson = null;
+      this.meteogramService.getMeteogram(this.latitude, this.longitude).subscribe(response => {
+        const meteogramJson = response.meteogramChart;
+        console.log('meteogramJson', meteogramJson);
 
+        class Meteogram {
+          private temperatures: { x: number; y: number; to: number; symbolName: string }[] = [];
+          private precipitations: { x: number; y: number }[] = [];
+          private winds: { x: number; value: number; direction: number }[] = [];
+          private pressures: { x: number; y: number }[] = [];
+          private chart?: Highcharts.Chart;
+          private container: string;
+
+          constructor(meteogramJson: any, container: string) {
+            this.container = container;
+            this.createChart();
+          }
+
+          private getChartOptions(): Highcharts.Options {
+            return {
+              chart: {
+                renderTo: this.container,
+                type: 'spline',
+                marginBottom: 70,
+                marginRight: 40,
+                marginTop: 50,
+                plotBorderWidth: 1,
+                height: 310,
+                scrollablePlotArea: { minWidth: 720 },
+              },
+              title: { text: 'Meteogram for Example Location', align: 'left' },
+              xAxis: {
+                type: 'datetime',
+                tickInterval: 2 * 36e5, // two hours
+                labels: { format: '{value:%H}' }
+              },
+              yAxis: [
+                { title: { text: 'Temperature (°C)' }, labels: { format: '{value}°' } },
+                { title: { text: 'Precipitation (mm)' }, opposite: true }
+              ],
+              series: [
+                { name: 'Temperature', data: this.temperatures, type: 'spline', color: '#FF3333' },
+                { name: 'Precipitation', data: this.precipitations, type: 'column', color: '#68CFE8' },
+                { name: 'Wind', data: this.winds, type: 'windbarb', color: '#1E90FF' },
+                { name: 'Pressure', data: this.pressures, type: 'spline', color: '#00FF00' }
+              ]
+            };
+          }
+
+          private createChart(): void {
+            this.chart = Highcharts.chart(this.container, this.getChartOptions());
+          }
+        }
+
+        // Instantiate the chart without API data
+        new Meteogram(meteogramJson, 'hourly_chart');
+      });
+    }
 }
+
+    

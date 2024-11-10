@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,8 +9,11 @@ export class MeteogramService  {
   
   constructor(private http: HttpClient) {}
   
-  meteogramTAB(latitude: number, longitude: number): Observable<any> {
-    return this.http.get<any>('/api/meteogram'); //need to figure out how to send the input .... ex - return this.http.get<any>(`/api/autocomplete?input=${input}`);
+  getMeteogram(latitude: number, longitude: number): Observable<any> {
+    let params = new HttpParams()
+        .set('latitude', latitude.toString())
+        .set('longitude', longitude.toString());
+    return this.http.get<any>('/api/meteogram', { params });
   }
  
   postData(data: any): Observable<any> {
