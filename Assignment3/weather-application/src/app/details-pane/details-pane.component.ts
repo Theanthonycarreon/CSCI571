@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerResultsService } from '../customer-results.service';
-
+declare const google: any;
 @Component({
   selector: 'app-details-pane',
   templateUrl: './details-pane.component.html',
   styleUrls: ['./details-pane.component.css']
 })
-export class DetailsPaneComponent implements OnInit {
+export class DetailsPaneComponent implements OnInit, AfterViewInit {
   @Input() city?: string;
   @Input() state?: string;
   @Input() latitude?: number;
@@ -20,6 +20,7 @@ export class DetailsPaneComponent implements OnInit {
     private customerService: CustomerResultsService,
   ) { 
   }
+  
   ngOnInit(): void {
     const dayData = this.weekData[0];
     this.firstDay = {
@@ -35,8 +36,11 @@ export class DetailsPaneComponent implements OnInit {
         visibility: dayData.values?.visibility,
         cloudCover: dayData.values?.cloudCover,
       };
-      console.log(dayData);
+      // console.log(dayData);
      
+    // this.loadAndRenderMap();
+  }
+  ngAfterViewInit(): void {
     this.loadAndRenderMap();
   }
 
@@ -49,18 +53,12 @@ export class DetailsPaneComponent implements OnInit {
   }
 
   loadAndRenderMap() {
-    if (this.latitude && this.longitude) {
-      this.customerService.getMap(this.latitude, this.longitude).subscribe(() => {
-        this.renderMap();
-      });
-    }
-  }
+    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: 8,
+    });
+ 
+  } 
+}
 
-  renderMap() {
-    // this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-    //   center: { lat: this.latitude ?? 0, lng: this.longitude ?? 0 },
-    //   zoom: 8,
-    // });
-  }
-  }
 
