@@ -5,15 +5,22 @@
       <div class="form-group">
         <label for="street">Street<span class="asterisk">*</span></label>
         <input type="text" formControlName="street" class="form-control" id="street">
-        <div class="invalidInput" *ngIf="inputForm.get('street')?.touched && inputForm.get('street')?.invalid">
+        <div class="invalidInput" *ngIf="inputForm.get('street')?.invalid">
           Please enter a valid street
         </div>
       </div>
       <div class="form-group">
         <label for="city">City<span class="asterisk">*</span></label>
          <!-- prompt: how do I setup get city to print out to html component? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
-        <app-auto-complete [currCity]="inputForm.get('city')?.value" [clickedOut]="clickedOut" (focusout)= "clickedOutOfCity()"(citySelected)="onCitySelected($event)"></app-auto-complete>
-        <div class="invalidInput" *ngIf="inputForm.get('city')?.touched && inputForm.get('city')?.invalid">
+          <app-auto-complete *ngIf="!formSubmitted"
+            [currCity]="inputForm.get('city')?.value" 
+            [clickedOut]="clickedOut" 
+            [disabled]="inputForm.get('autodetect')?.value && formSubmitted"  
+            [formSubmitted]="formSubmitted" 
+            (citySelected)="onCitySelected($event)">
+          </app-auto-complete>
+          <input type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"> 
+        <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid">
           Please enter a valid city
         </div>
       </div>
@@ -28,7 +35,7 @@
       </div>
       <div class="form-check justify-content-center">
         Autodetect Location<span class="asterisk">*</span>
-        <input class="form-check-input" type="checkbox" formControlName="autodetect" id="autodetect">
+        <input class="form-check-input" type="checkbox" formControlName="autodetect" id="autodetect" (click)="lockFields()">
         <label class="form-check-label" for="autodetect">Current Location</label>
       </div>
       <div class="d-flex justify-content-center">

@@ -54,8 +54,17 @@ export class AppComponent implements OnInit{
       }
     });
     
-      
   }
+
+  lockFields(){
+    console.log('inside lockFields()')
+    this.inputForm.get('street')?.disable();
+    this.inputForm.get('city')?.disable();
+    // i need this to call 
+    this.inputForm.get('state')?.disable();
+    this.formSubmitted = true;
+  }
+
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
     this.inputForm.get('city')?.disable();
@@ -63,6 +72,7 @@ export class AppComponent implements OnInit{
   clickedOutOfCity() {
     this.clickedOut = true;
     this.inTextBox.emit({clickedOut: this.clickedOut});
+    console.log("inside clickedOutOfCity");
   }
 
   onClear() {
@@ -124,6 +134,7 @@ export class AppComponent implements OnInit{
       if(callbackend){
         console.log("submitting form");
         this.inputData.emit({auto_loc:this.auto_loc, street: this.street, city: this.city, state: this.state});
+        this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
       } 
     }
