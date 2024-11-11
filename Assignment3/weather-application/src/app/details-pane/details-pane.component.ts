@@ -13,8 +13,7 @@ export class DetailsPaneComponent implements OnInit {
   @Input() longitude?: number;
   @Input() weekData: any;
   @Output() backToResults = new EventEmitter<void>(); 
-  google: any;
-
+  // map: google.maps.Map | undefined;
   firstDay: any = {}; 
   map: any = {};
   constructor(
@@ -37,23 +36,31 @@ export class DetailsPaneComponent implements OnInit {
         cloudCover: dayData.values?.cloudCover,
       };
       console.log(dayData);
-      this.renderMap();
-    }
-    postTweet(){
-      console.log("inside postTweet()");
-    }
-    backToDetailsView(){
-      this.backToResults.emit();
-    }
+     
+    this.loadAndRenderMap();
+  }
 
-    async renderMap(){
-      this.customerService.getMap(this.latitude ?? 0,this.longitude ?? 0).subscribe(async () => {
-        // const { Map } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
-        //   this.map = new Map(document.getElementById("map") as HTMLElement, {
-        //     center: { lat: this.latitude ?? 0 , lng: this.longitude ?? 0},
-        //     zoom: 8,
-        //   });
-        });
+  postTweet() {
+    console.log("inside postTweet()");
+  }
+
+  backToDetailsView() {
+    this.backToResults.emit();
+  }
+
+  loadAndRenderMap() {
+    if (this.latitude && this.longitude) {
+      this.customerService.getMap(this.latitude, this.longitude).subscribe(() => {
+        this.renderMap();
+      });
     }
+  }
+
+  renderMap() {
+    // this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+    //   center: { lat: this.latitude ?? 0, lng: this.longitude ?? 0 },
+    //   zoom: 8,
+    // });
+  }
   }
 
