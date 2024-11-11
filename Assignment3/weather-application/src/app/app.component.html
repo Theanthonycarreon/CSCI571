@@ -4,8 +4,9 @@
     <form class="form" [formGroup]="inputForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
         <label for="street">Street<span class="asterisk">*</span></label>
-        <input type="text" formControlName="street" class="form-control" id="street">
-        <div class="invalidInput" *ngIf="inputForm.get('street')?.invalid">
+        <input type="text" formControlName="street" class="form-control" id="street"
+        [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+        <div class="invalidInput" *ngIf="inputForm.get('street')?.invalid && formSubmitted">
           Please enter a valid street
         </div>
       </div>
@@ -19,14 +20,15 @@
             [formSubmitted]="formSubmitted" 
             (citySelected)="onCitySelected($event)">
           </app-auto-complete>
-          <input type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"> 
-        <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid">
+          <input type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
+          [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+        <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid && formSubmitted">
           Please enter a valid city
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" >
         <label for="state">State<span class="asterisk">*</span></label>
-        <select formControlName="state" id="state" class="form-control">
+        <select formControlName="state" id="state" class="form-control" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
           <option value="no_state" selected>Select your state</option>
           <option>Alaska</option>
           <option>Alabama</option>
