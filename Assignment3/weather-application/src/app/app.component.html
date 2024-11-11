@@ -5,11 +5,17 @@
       <div class="form-group">
         <label for="street">Street<span class="asterisk">*</span></label>
         <input type="text" formControlName="street" class="form-control" id="street">
+        <div class="invalidInput" *ngIf="inputForm.get('street')?.touched && inputForm.get('street')?.invalid">
+          Please enter a valid street
+        </div>
       </div>
       <div class="form-group">
         <label for="city">City<span class="asterisk">*</span></label>
          <!-- prompt: how do I setup get city to print out to html component? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
-        <app-auto-complete [currCity]="inputForm.get('city')?.value" (citySelected)="onCitySelected($event)"></app-auto-complete>
+        <app-auto-complete [currCity]="inputForm.get('city')?.value" [clickedOut]="clickedOut" (focusout)= "clickedOutOfCity()"(citySelected)="onCitySelected($event)"></app-auto-complete>
+        <div class="invalidInput" *ngIf="inputForm.get('city')?.touched && inputForm.get('city')?.invalid">
+          Please enter a valid city
+        </div>
       </div>
       <div class="form-group">
         <label for="state">State<span class="asterisk">*</span></label>

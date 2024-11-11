@@ -1,6 +1,6 @@
 
-<input type="text" [formControl]="cityControl" class="form-control" id="city">
-<ul class="dropdown-menu w-100 show" *ngIf="cities.length > 0">
-    <li class="dropdown-item" *ngFor="let city of cities" (click)="selectCity(city)">{{ city }}</li>
+<input type="text" [formControl]="cityControl" class="form-control" id="cityInput" >
+<ul class="dropdown-menu w-100 show" *ngIf="showDropdown">
+    <li class="dropdown-item" *ngFor="let city of cities"  (click)="selectCity(city)">{{ city }}</li>
 </ul>
 

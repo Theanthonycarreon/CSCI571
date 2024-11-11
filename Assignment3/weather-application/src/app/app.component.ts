@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomerResultsService } from './customer-results.service';
 // 2 way binding to send data from one component and back 
 
@@ -18,8 +18,10 @@ export class AppComponent implements OnInit{
   city = '';
   state = '';
   auto_loc = false;
+  clickedOut = false;
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
+  @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
 
 // prompt: how do I setup a responsive form in typescript? - 6 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
   constructor(
@@ -28,9 +30,9 @@ export class AppComponent implements OnInit{
   }
   createForm() {
     this.inputForm = this.fb.group({ 
-      street: [''],
-      city: [''],      
-      state: [''],        
+      street: ['', Validators.required],
+      city: ['', Validators.required],      
+      state: ['', Validators.required],        
       autodetect: [false] 
     });
   }
@@ -39,11 +41,28 @@ export class AppComponent implements OnInit{
     this.createForm();
     this.showResults = false; 
     this.showFavorites = false; 
+    this.clickedOut = false;
+    this.inputForm.get('autodetect')?.valueChanges.subscribe((isAutoDetect: boolean) => {
+      if (isAutoDetect) {
+        this.inputForm.get('street')?.disable();
+        this.inputForm.get('city')?.disable();
+        this.inputForm.get('state')?.disable();
+      } else {
+        this.inputForm.get('street')?.enable();
+        this.inputForm.get('city')?.enable();
+        this.inputForm.get('state')?.enable();
+      }
+    });
     
       
   }
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
+    this.inputForm.get('city')?.disable();
+  }
+  clickedOutOfCity() {
+    this.clickedOut = true;
+    this.inTextBox.emit({clickedOut: this.clickedOut});
   }
 
   onClear() {
@@ -51,7 +70,7 @@ export class AppComponent implements OnInit{
     this.showFavorites = false;
     this.formSubmitted = false;
     this.inputForm.get('city')?.setValue("");
-    this.inputForm.reset(); 
+    this.inputForm.reset({ autodetect: false }); 
     console.log("inside onClear()");
     console.log(this.inputForm.value);
   }
@@ -75,8 +94,14 @@ export class AppComponent implements OnInit{
       if(this.inputForm.get("autodetect")?.value == true){
         callbackend = true;
         this.auto_loc = true;
+        this.inputForm.get('street')?.disable();
+        this.inputForm.get('city')?.disable();
+        this.inputForm.get('state')?.disable();
       } else {
         callbackend = true;
+        this.inputForm.get('street')?.enable();
+        this.inputForm.get('city')?.enable();
+        this.inputForm.get('state')?.enable();
         if(this.inputForm.get("street")?.value != ""){
           this.street = this.inputForm.get("street")?.value || '';
         } else {
