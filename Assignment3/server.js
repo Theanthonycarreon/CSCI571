@@ -32,6 +32,7 @@ const tomorrowApiKey = "rt6KkyZOCA8PELgZmhqjbmw5Qw3vpYTm";
 const geocodingApiKey = "AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE";
 const ipinfoKey = "5b2286d51fefe2"; 
 const mapsApiKey = "AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE";
+const uri = "mongodb+srv://theanthonycarreon:Notorious18!@assignment3.gevhk.mongodb.net/?retryWrites=true&w=majority&appName=Assignment3";
 
 const path = require('path');
 const express = require('express');
@@ -39,7 +40,7 @@ const axios = require('axios');
 const { error } = require('console');
 const app = express();
 
-const uri = process.env.MONGODB_URI;
+// const uri = mongodb_URL;
 
 app.use(express.json());
 
@@ -101,6 +102,20 @@ app.get('/api/customerFavorites', async (req, res) => {
     console.error('Error fetching data:', error);
   }
 });
+app.get('/api/map', async (req, res) => {
+  const { latitude, longitude} = req.query
+  try {
+    const response = await axios.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', {
+      params: { 
+        location: `${latitude},${longitude}`,
+          key: mapsApiKey, 
+        },
+      });
+      res.json(response.data);
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+});
 
 
 app.get('/api/dayView', async (req, res) => {
@@ -111,7 +126,7 @@ app.get('/api/dayView', async (req, res) => {
         location:`${latitude},${longitude}`,
         fields: ["temperature", "temperatureApparent", "temperatureMin", "temperatureMax", "windSpeed"
           , "windDirection", "humidity", "pressureSeaLevel", "uvIndex", "weatherCode", "precipitationProbability",
-              "precipitationType", "sunriseTime", "sunsetTime", "visibility", "moonPhase", "cloudCover"],
+              "precipitationType", "sunriseTime", "sunsetTime", "visibility", "moonPhase", "cloudCover", "temperatureApparent"],
               timesteps: "1d",
               timezone: "America/Los_Angeles",
               units: "imperial",

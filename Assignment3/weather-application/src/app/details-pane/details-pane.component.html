@@ -1,51 +1,56 @@
-<h1>Inside Details Pane</h1>
-<!-- <div class="container">
-    <h2>firstDay.date</h2>
-    <div class="row">
-        <table class="table table-responsive table-striped">
-          <tr>
-            <td>Status</td>
-            <td>{{firstDay.status}}</td>
-          </tr>
-          <tr>
-            <td>Max Temperature</td>
-            <td>{{firstDay.temperatureMax}}</td>
-          </tr>
-          <tr>
-            <td>Min Temperature</td>
-            <td>{{firstDay.temperatureMin}}</td>
-          </tr>
-          <tr>
-            <td>Apparent Temperature</td>
-            <td>{{firstDay.status}}</td>
-          </tr>
-          <tr>
-            <td>Sun Rise Time</td>
-            <td>{{firstDay.status}}</td>
-          </tr>
-          <tr>
-            <td>Sun Set Time</td>
-            <td>{{firstDay.status}}</td>
-          </tr>
-          <tr>
-            <td>Humidity</td>
-            <td>{{firstDay.humidity}}</td>
-          </tr>
-          <tr>
-            <td>Wind Speed</td>
-            <td>{{firstDay.windSpeed}}</td>
-          </tr>
-          <tr>
-            <td>Visibility</td>
-            <td>{{firstDay.visibility}}</td>
-          </tr>
-          <tr>
-            <td>Cloud Cover</td>
-            <td>{{firstDay.cloudCover}}</td>
-          </tr>
-        </table>
-        <map name="searchedLocation">
-            
-        </map>
-      </div>
-    </div> -->
+<div class="row">
+<span>
+    <div class="d-flex align-items-center">
+        <button type="button" class="btn btn-primary" href="#dayViewData" (click)="backToDetailsView()"> (<)List </button>
+        <h2>{{ firstDay.date | date:'EEEE, MMM. d, y' }}</h2>
+        <button type="button" class="btn btn-primary" href="#twitterPost" (click)="postTweet()"> TWEET</button>
+    </div>
+</span>
+</div>
+<div class="row" *ngIf="firstDay">
+<table class="table table-responsive table-striped">
+    <tr>
+        <td>Status</td>
+        <td>{{firstDay.weatherCode}}</td>
+    </tr>
+    <tr>
+        <td>Max Temperature</td>
+        <td>{{firstDay.temperatureMax}}°F</td>
+    </tr>
+    <tr>
+        <td>Min Temperature</td>
+        <td>{{firstDay.temperatureMin}}°F</td>
+    </tr>
+    <tr>
+        <td>Apparent Temperature</td>
+        <td>{{firstDay.temperatureApparent}}°F</td>
+    </tr>
+    <tr>
+        <td>Sun Rise Time</td>
+        <td>{{firstDay.sunriseTime  | date: 'h a'}}</td>
+    </tr>
+    <tr>
+        <td>Sun Set Time</td>
+        <td>{{firstDay.sunsetTime  | date: 'h a'}}</td>
+    </tr>
+    <tr>
+        <td>Humidity</td>
+        <td>{{firstDay.humidity}}%</td>
+    </tr>
+    <tr>
+        <td>Wind Speed</td>
+        <td>{{firstDay.windSpeed}}mph</td>
+    </tr>
+    <tr>
+        <td>Visibility</td>
+        <td>{{firstDay.visibility}}mi</td>
+    </tr>
+    <tr>
+        <td>Cloud Cover</td>
+        <td>{{firstDay.cloudCover}}%</td>
+    </tr>
+</table>
+    <div id="map" style="height: 400px; width: 100%;">
+        
+    </div>
+</div>

@@ -1,5 +1,5 @@
 
-<div class="container" >
+<div class="container" *ngIf="!detailsTabClicked" >
     <h1>Forcast at {{city}}</h1>
     <div class="row">
         <div class="d-flex justify-content-end">
@@ -7,24 +7,12 @@
                 <button type="button" class="btn btn-primary" href="#favoritesData" (click)="addFavorite()">
                     *
                 </button>
-                <!-- <app-favorites *ngIf="showResults" 
-                [auto_loc]="auto_loc"
-                [street]="street"
-                [city]="city"
-                [state]="state"
-                ></app-favorite> -->
             </span>
             <span>
                 <button type="button" class="btn btn-primary" href="#dayDetailsData" (click)="detailsTAB()">Details ></button>
             </span> <!--Need to change to the star symbol and add the right arrow after details-->
         </div>
     </div>
-    <app-details-pane *ngIf="detailsTabClicked" 
-        [city]="city" 
-        [state]="state" 
-        [latitude]="latitude" 
-        [longitude]="longitude"
-    ></app-details-pane>
     <div class="row">
         <!-- [auto_loc]="auto_loc"
         [street]="street"
@@ -80,5 +68,14 @@
             <div id="hourly_chart" style="width: 100%; height: 400px;"></div>
         </div>
     </div>
-    
+</div>
+<div class="container" *ngIf="detailsTabClicked">
+    <app-details-pane
+        [city]="city"
+        [state]="state"
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [weekData]="weekData"
+        (backToResults)="dayViewTAB()"
+    ></app-details-pane>
 </div>

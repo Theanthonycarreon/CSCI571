@@ -30,7 +30,7 @@
         <button type="button" class="btn btn-light" (click)="onClear()">Clear</button>
       </div>
       <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-primary">Results</button>
+        <button type="button" class="btn btn-primary" (click)="getResults()">Results</button>
         <button type="button" class="btn btn-primary" (click)="getFavorites()">Favorites</button>
       </div>
     </form>
@@ -47,8 +47,6 @@
   <div class="container">
     <app-favorites 
       *ngIf="showFavorites"
-      [latitude]="latitude"
-      [longitude]="longitude"
       [city]="city"
       [state]="state">
     </app-favorites>

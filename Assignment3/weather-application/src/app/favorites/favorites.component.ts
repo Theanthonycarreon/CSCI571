@@ -10,8 +10,6 @@ import { CustomerResultsService } from '../customer-results.service';
 export class FavoritesComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
-  @Input() latitude?: number;
-  @Input() longitude?: number;
   row: any[] = [];
   constructor(
     private customerService: CustomerResultsService,

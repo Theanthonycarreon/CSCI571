@@ -3,69 +3,38 @@
 ├── folder_structure.txt
 ├── node_modules
 │   ├── @ampproject
-│   ├── @ampproject 2
 │   ├── @angular
-│   ├── @angular 2
 │   ├── @angular-devkit
-│   ├── @angular-devkit 2
 │   ├── @babel
-│   ├── @babel 2
 │   ├── @colors
-│   ├── @colors 2
 │   ├── @discoveryjs
-│   ├── @discoveryjs 2
 │   ├── @esbuild
-│   ├── @esbuild 2
 │   ├── @inquirer
-│   ├── @inquirer 2
 │   ├── @isaacs
-│   ├── @isaacs 2
 │   ├── @istanbuljs
-│   ├── @istanbuljs 2
 │   ├── @jridgewell
-│   ├── @jridgewell 2
-│   ├── @jsonjoy 2.com
 │   ├── @jsonjoy.com
 │   ├── @leichtgewicht
-│   ├── @leichtgewicht 2
 │   ├── @listr2
-│   ├── @listr2 2
 │   ├── @lmdb
-│   ├── @lmdb 2
 │   ├── @mongodb-js
 │   ├── @msgpackr-extract
-│   ├── @msgpackr-extract 2
 │   ├── @ngtools
-│   ├── @ngtools 2
 │   ├── @nodelib
-│   ├── @nodelib 2
 │   ├── @npmcli
-│   ├── @npmcli 2
 │   ├── @pkgjs
-│   ├── @pkgjs 2
 │   ├── @popperjs
 │   ├── @rollup
-│   ├── @rollup 2
 │   ├── @schematics
-│   ├── @schematics 2
 │   ├── @sigstore
-│   ├── @sigstore 2
 │   ├── @sindresorhus
-│   ├── @sindresorhus 2
-│   ├── @socket 2.io
 │   ├── @socket.io
 │   ├── @tufjs
-│   ├── @tufjs 2
 │   ├── @types
-│   ├── @types 2
 │   ├── @vitejs
-│   ├── @vitejs 2
 │   ├── @webassemblyjs
-│   ├── @webassemblyjs 2
 │   ├── @xtuc
-│   ├── @xtuc 2
 │   ├── @yarnpkg
-│   ├── @yarnpkg 2
 │   ├── abbrev
 │   ├── accepts
 │   ├── acorn
@@ -255,6 +224,8 @@
 │   ├── has-proto
 │   ├── has-symbols
 │   ├── hasown
+│   ├── highcharts
+│   ├── highcharts-angular
 │   ├── hosted-git-info
 │   ├── hpack.js
 │   ├── html-entities
@@ -617,6 +588,7 @@
 │   └── zone.js
 ├── package-lock.json
 ├── package.json
+├── requirements.txt
 ├── server.js
 └── weather-application
     ├── README.md
@@ -624,9 +596,11 @@
     ├── dist
     ├── folder_structure.txt
     ├── node_modules
+    ├── package-lock.json
+    ├── package.json
     ├── src
     ├── tsconfig.app.json
     ├── tsconfig.json
     └── tsconfig.spec.json
 
-619 directories, 11 files
+590 directories, 14 files

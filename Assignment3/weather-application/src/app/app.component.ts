@@ -14,15 +14,10 @@ export class AppComponent implements OnInit{
   formSubmitted = false;
   showResults = false; 
   showFavorites = false; 
-  title: any;
   street = '';
   city = '';
   state = '';
   auto_loc = false;
-  latitude: number = 0;  
-  longitude: number = 0; 
-  address: string = '';  
-  weatherData: any; 
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
 
@@ -53,6 +48,7 @@ export class AppComponent implements OnInit{
 
   onClear() {
     this.showResults = false;
+    this.showFavorites = false;
     this.formSubmitted = false;
     this.inputForm.get('city')?.setValue("");
     this.inputForm.reset(); 
@@ -60,7 +56,11 @@ export class AppComponent implements OnInit{
     console.log(this.inputForm.value);
   }
   
+  getResults(){
+    this.showResults = true; 
+    this.showFavorites = false; 
 
+  }
   
   getFavorites() {
     this.showResults = false; 

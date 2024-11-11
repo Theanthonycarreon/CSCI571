@@ -9,6 +9,13 @@ export class CustomerResultsService  {
   
   constructor(private http: HttpClient) {}
 
+  getMap(latitude: number, longitude: number){
+    const params = new HttpParams()
+      .set('latitude', latitude.toString())
+      .set('longitude', longitude.toString());
+    return this.http.get<any>('/api/map');
+  }
+
   getFavorites() {
     return this.http.get<any>('/api/customerFavorites');
   }
