@@ -13,6 +13,7 @@ export class AppComponent implements OnInit{
   inputForm!: FormGroup;
   formSubmitted = false;
   showResults = false; 
+  showFavorites = false; 
   title: any;
   street = '';
   city = '';
@@ -42,6 +43,7 @@ export class AppComponent implements OnInit{
   ngOnInit(): void {
     this.createForm();
     this.showResults = false; 
+    this.showFavorites = false; 
     
       
   }
@@ -58,18 +60,11 @@ export class AppComponent implements OnInit{
     console.log(this.inputForm.value);
   }
   
-  // getResults() {
-  //   this.showResults = true;
-  //   this.formSubmitted = true;
-  //   console.log("inside getResults()");
-  //   console.log(this.inputForm.value);
 
-  // }
   
   getFavorites() {
-    
-    console.log("inside getFavorites()");
-    console.log(this.inputForm.value);
+    this.showResults = false; 
+    this.showFavorites = true; 
   }
 
   

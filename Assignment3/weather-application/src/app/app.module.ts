@@ -15,12 +15,12 @@ import { HighchartsChartModule } from 'highcharts-angular';
   declarations: [
     AppComponent,
     ResultsComponent,
-    AutoCompleteComponent
+    AutoCompleteComponent,
+    FavoritesComponent,
+    DetailsPaneComponent,
   ],
   imports: [
     BrowserModule,
-    FavoritesComponent,
-    DetailsPaneComponent,
     ReactiveFormsModule,
     HighchartsChartModule
   ],

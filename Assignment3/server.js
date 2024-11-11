@@ -63,11 +63,12 @@ client.connect().then(() => console.log("Connected to MongoDB")).catch(err => co
 const favorites_list = client.db('Assignment3').collection('Favorites');
 
 app.get('/api/addFavorite', async (req, res) => {
-  const { city, state } = req.query;
+  const { latitude, longitude, city, state } = req.query;
   try {
-    // console.log("inside server for addFavorite")
 //  prompt: how do I get MongoDb to work with this assignment? - 1 line - https://chatgpt.com/share/672eedda-3c38-800b-b507-3d11cc7aa0ec
     await favorites_list.insertOne({
+      Latitude: latitude,
+      Longitude: longitude, 
       City: city,
       State: state, 
     });
@@ -77,13 +78,15 @@ app.get('/api/addFavorite', async (req, res) => {
 });
 
 app.get('/api/removeFavorite', async (req, res) => {
-  const { city, state } = req.query;
+  const { latitude, longitude, city, state } = req.query;
   try {
     // console.log("inside server for removeFavorite")
     await favorites_list.deleteOne({
-      City: city, //change this
-      State: state, //change this
-    }); //change this
+      Latitude: latitude,
+      Longitude: longitude, 
+      City: city, 
+      State: state,
+    }); 
   } catch (error) {
     console.error('Error removing from DB:', error);
   }

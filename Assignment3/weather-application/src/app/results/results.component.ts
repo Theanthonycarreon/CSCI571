@@ -30,17 +30,19 @@ export class ResultsComponent implements OnInit {
   row: any[] = [];
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
+  detailsTabClicked = false;
 
   constructor(
     private customerService: CustomerResultsService,
     private tempChartService: TempChartService,
-    private meteogramService: MeteogramService
+    private meteogramService: MeteogramService,
   ) { 
   }  
   ngOnInit() {
     this.dayViewTabClicked = true;
     this.chartTabClicked = false;
     this.meteogramTabClicked = false;
+    this.detailsTabClicked = false;
     this.customerService.getWeatherData(this.auto_loc ?? false, this.street ?? '', this.city ?? '',this.state?? '').subscribe(response => {
       const { latitude, longitude, address, weatherData } = response;
       this.latitude = latitude;
@@ -61,6 +63,16 @@ export class ResultsComponent implements OnInit {
     });
     
   }
+    addFavorite(){
+      this.customerService.addFavoriteCity(this.latitude, this.longitude, this.city ?? '',this.state?? '').subscribe({});;
+    }
+
+    detailsTAB(){
+      this.dayViewTabClicked = false;
+      this.chartTabClicked = false;
+      this.meteogramTabClicked = false;
+      this.detailsTabClicked = true;
+    }
 
     dayViewTAB() { //may need ip address or longitude and latitude
       this.dayViewTabClicked = true;

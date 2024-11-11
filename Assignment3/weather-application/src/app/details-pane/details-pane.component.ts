@@ -1,12 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-details-pane',
-  standalone: true,
-  imports: [],
   templateUrl: './details-pane.component.html',
   styleUrls: ['./details-pane.component.css']
 })
 export class DetailsPaneComponent {
+  @Input() city?: string;
+  @Input() state?: string;
+  @Input() latitude?: number;
+  @Input() longitude?: number;
 
 }
