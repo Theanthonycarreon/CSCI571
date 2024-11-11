@@ -25,7 +25,7 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
     const dayData = this.weekData[0];
     this.firstDay = {
         date: dayData.startTime,
-        status: dayData.value?.weatherCode,
+        status: dayData.values?.weatherCode,
         temperatureMax: dayData.values?.temperatureMax,
         temperatureMin: dayData.values?.temperatureMin,
         temperatureApparent: dayData.values?.temperatureApparent,
@@ -36,12 +36,13 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
         visibility: dayData.values?.visibility,
         cloudCover: dayData.values?.cloudCover,
       };
-      // console.log(dayData);
-     
-    // this.loadAndRenderMap();
   }
+
   ngAfterViewInit(): void {
-    this.loadAndRenderMap();
+    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: 8,
+    });
   }
 
   postTweet() {
@@ -52,13 +53,7 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
     this.backToResults.emit();
   }
 
-  loadAndRenderMap() {
-    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      center: { lat: this.latitude, lng: this.longitude },
-      zoom: 8,
-    });
- 
-  } 
+  
 }
 
 

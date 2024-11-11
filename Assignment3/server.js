@@ -212,8 +212,8 @@ app.get('/api/weather', async (req, res) => {
         headers
       });
       let coords = ipinfoResponse.data['loc'].split(',')
-      inputLatitude = coords[0];
-      inputLongitude = coords[1];
+      inputLatitude = parseFloat(coords[0]);
+      inputLongitude = parseFloat(coords[1]);
     } else {
       const address = [street,city,state].join(', ');
       const coordinates = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { 
