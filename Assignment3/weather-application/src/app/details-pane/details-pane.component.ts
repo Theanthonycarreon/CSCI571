@@ -6,7 +6,7 @@ declare const google: any;
   templateUrl: './details-pane.component.html',
   styleUrls: ['./details-pane.component.css']
 })
-export class DetailsPaneComponent implements OnInit {
+export class DetailsPaneComponent implements OnInit, AfterViewInit {
   @Input() city?: string;
   @Input() state?: string;
   @Input() latitude?: number;
@@ -56,12 +56,12 @@ export class DetailsPaneComponent implements OnInit {
       };
   }
 
-  // ngAfterViewInit(): void {
-  //   this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-  //     center: { lat: this.latitude, lng: this.longitude },
-  //     zoom: 8,
-  //   });
-  // }
+  ngAfterViewInit(): void {
+    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+      center: { lat: this.latitude, lng: this.longitude },
+      zoom: 8,
+    });
+  }
 
   postTweet() {
     console.log("inside postTweet()");
