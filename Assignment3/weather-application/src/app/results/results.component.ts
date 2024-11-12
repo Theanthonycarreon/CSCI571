@@ -196,7 +196,7 @@ export class ResultsComponent implements OnInit {
 
         class Meteogram {
           private temperatures: { x: number; y: number; to: number; symbolName: string }[] = [];
-          private precipitations: { x: number; y: number }[] = [];
+          private humidities: { x: number; y: number }[] = [];
           private winds: { x: number; value: number; direction: number }[] = [];
           private pressures: { x: number; y: number }[] = [];
           private chart?: Highcharts.Chart;
@@ -215,9 +215,9 @@ export class ResultsComponent implements OnInit {
               symbolName: entry.data.next_1_hours?.summary?.symbol_code ?? 0  // Adjust based on exact symbol location
           }));
             
-            this.precipitations = meteogramJson.properties.timeseries.map((entry: any) => ({
+            this.humidities = meteogramJson.properties.timeseries.map((entry: any) => ({
               x: new Date(entry.time).getTime(),
-              y: entry.data.next_1_hours?.details?.precipitation_amount ?? 0 
+              y: entry.data.next_1_hours?.details?.humidity ?? 0 
           }));
             
             this.winds = meteogramJson.properties.timeseries.map((entry: any) => ({
@@ -238,24 +238,185 @@ export class ResultsComponent implements OnInit {
                 marginRight: 40,
                 marginTop: 50,
                 plotBorderWidth: 1,
+                alignTicks: false,
                 // height: 600,
                 scrollablePlotArea: { minWidth: 720 },
               },
-              title: { text: 'Meteogram for Example Location', align: 'left' },
-              xAxis: {
-                type: 'datetime',
-                tickInterval: 2 * 36e5, // two hours
-                labels: { format: '{value:%H}' }
+              title: { text: 'Hourly Weather (For Next 5 days)', align: 'center' },
+              tooltip: {
+                shared: true,
+                useHTML: true,
+                headerFormat:
+                    '<small>{point.x:%A, %b %e, %H:%M} - ' +
+                    '{point.point.to:%H:%M}</small><br>' +
+                    '<b>{point.point.symbolName}</b><br>'
+    
               },
-              yAxis: [
-                { title: { text: 'Temperature (°F)' }, labels: { format: '{value}°' } },
-                { title: { text: 'Precipitation (mm)' }, opposite: true }
-              ],
+              xAxis:[{ // Bottom X axis
+                type: 'datetime',
+                tickInterval: 36e5, // two hours
+                minorTickInterval: 36e5, // one hour
+                tickLength: 1,
+                gridLineWidth: 1,
+                gridLineColor: 'rgba(128, 128, 128, 0.1)',
+                startOnTick: false,
+                endOnTick: false,
+                minPadding: 0,
+                maxPadding: 0,
+                offset: 30,
+                showFirstLabel: false,
+                showLastLabel: true,
+                labels: {
+                    format: '{value:%H}'
+                },
+                crosshair: true
+            }, { // Top X axis
+                linkedTo: 0,
+                type: 'datetime',
+                tickInterval: 24 * 3600 * 900,
+                labels: {
+                    format: '{value:<span style="font-size: 12px; font-weight: ' +
+                        'bold">%a</span> %b %e}',
+                    align: 'left',
+                    x: 3,
+                    y: -5
+                },
+                opposite: true,
+                tickLength: 20,
+                gridLineWidth: 1
+            }],
+              yAxis: [{ // temperature axis
+                title: {
+                    text: null
+                },
+                labels: {
+                    format: '{value}°', //needs to be F
+                    style: {
+                        fontSize: '10px'
+                    },
+                    x: -3
+                },
+                plotLines: [{ // zero plane
+                    value: 0,
+                    color: '#BBBBBB',
+                    width: 1,
+                    zIndex: 2
+                }],
+                maxPadding: 0.3,
+                minRange: 8,
+                tickInterval: 7,
+                gridLineColor: 'rgba(128, 128, 128, 0.1)'
+    
+            }, { // precipitation axis
+                title: {
+                    text: null
+                },
+                labels: {
+                    enabled: false
+                },
+                gridLineWidth: 0,
+                tickLength: 1,
+                minRange: 10,
+                min: 0
+    
+            }, { // Air pressure
+                allowDecimals: false,
+                title: { // Title on top of axis
+                    text: 'inHg',
+                    offset: 0,
+                    align: 'high',
+                    rotation: 0,
+                    style: {
+                        fontSize: '10px',
+                        color: '#FFDAB9',
+                    },
+                    textAlign: 'left',
+                    x: 3
+                },
+                labels: {
+                    style: {
+                        fontSize: '8px',
+                        color: '#FFDAB9',
+                    },
+                    y: 1,
+                    x: 3
+                },
+                gridLineWidth: 0,
+                opposite: true,
+                showLastLabel: false
+            }],
+    
+            legend: {
+                enabled: false
+            },
+    
+            plotOptions: {
+                series: {
+                    pointPlacement: 'between'
+                },
+                windbarb:{
+                dataGrouping: {
+                    enabled: true,
+                        units: [['hour',[2]]],
+                        groupPixelWidth: 1
+                }
+                },
+            },
+    
               series: [
-                { name: 'Temperature', data: this.temperatures, type: 'spline', color: '#FF3333' },
-                { name: 'Precipitation', data: this.precipitations, type: 'column', color: '#68CFE8' },
-                { name: 'Wind', data: this.winds, type: 'windbarb', color: '#1E90FF' },
-                { name: 'Pressure', data: this.pressures, type: 'spline', color: '#00FF00' }
+                { name: 'Temperature', 
+                  data: this.temperatures, 
+                  type: 'spline', 
+                  color: '#FF3333',
+                  
+                    // marker: {
+                    //     enabled: false,
+                    //     states: {
+                    //         hover: {
+                    //             enabled: true
+                    //         }
+                    //     }
+                    // },
+                    // tooltip: {
+                    //     pointFormat: '<span style="color:{point.color}">\u25CF</span>' +
+                    //         ' ' +
+                    //         '{series.name}: <b>{point.y}°F</b><br/>'
+                    // },
+                    // zIndex: 1,
+                    // negativeColor: '#48AFE8'
+
+                },
+                { name: 'Humidity', 
+                  data: this.humidities,
+                  type: 'column', 
+                  color: '#68CFE8',
+                  yAxis: 1,
+                  groupPadding: 0,
+                  pointPadding: 0,
+                  grouping: false,
+                  dataLabels: {
+                      style: {
+                          fontSize: '8px',
+                          color: '#666'
+                      }
+                  },
+                  tooltip: {
+                    valueSuffix: ' %'
+                  }
+                },
+                { name: 'Wind', 
+                  data: this.winds, 
+                  type: 'windbarb', 
+                  color: 'purple' 
+
+                },
+                { name: 'Air Pressure', 
+                  data: this.pressures, 
+                  type: 'spline', 
+                  color: '#00FF00',
+                  
+
+                }
               ]
             };
           }
