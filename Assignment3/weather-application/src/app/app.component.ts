@@ -19,6 +19,7 @@ export class AppComponent implements OnInit{
   state = '';
   auto_loc = false;
   clickedOut = false;
+  getDifferentDataTab: string = 'results';
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
   @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
@@ -86,14 +87,23 @@ export class AppComponent implements OnInit{
   }
   
   getResults(){
-    this.showResults = true; 
-    this.showFavorites = false; 
+    console.log('inside getResults()');
+    if(this.formSubmitted){
+      this.showResults = true; 
+      this.showFavorites = false; 
+      this.getDifferentDataTab = 'results';
+    }
 
+    
   }
   
   getFavorites() {
-    this.showResults = false; 
-    this.showFavorites = true; 
+    console.log('inside getFavorites()');
+    if(this.formSubmitted){
+      this.showResults = false; 
+      this.showFavorites = true; 
+      this.getDifferentDataTab = 'favorites';
+    }
   }
 
   

@@ -1,23 +1,108 @@
 .invalid-border {
     border: 1px solid red;
 }
-/* #weatherSearchContainer{
-    background-color: #f09191;
-} */
-.container{
+
+#weatherSearchContainer{
     background-color: #eaeaea;
     width: 90%;
     margin: 0 auto;
+    height: 245px;
+}
+.container-results-favorites{
+    text-align: center;
+    margin-top: 1%;
 }
 
-h2{
+#title{
     text-align: center;
 }
 
 form{
-    text-align: center;
+    text-align: left;
 }
 
 .asterisk{
     color: red;
 }
+
+.alignTextLeft{
+    margin-left: 12%;
+}
+
+#street, #city {
+    width: 70%;
+    height: 35px;
+    border-color: #d3d3d3;
+    border-width: 1px;
+    padding: 0;
+    border-radius: 4px;
+    margin-left: 12%;
+    /* text-align: left; */
+}
+#stateInput{
+    width: 22%;
+    height: 40px;
+    border-color: #d3d3d3;
+    border-width: 1px;
+    padding: 0;
+    border-radius: 4px;
+    margin-left: 12.3%;
+    letter-spacing: normal;
+    appearance: none;
+    margin-bottom: 1.9%;
+}
+
+.form_select{
+    width: 100%;
+    height: 30px;
+    font-size: 20px;
+}
+
+/* .form-check-input input[type="checkbox"]:checked {
+    background-color: orange;
+} */
+.custom-checkbox{
+    text-align: center;
+}
+
+#autodetect{
+    margin-left: 1%;
+}
+.active-btn {
+    background-color: #007bff;
+    color: white;
+    border-radius: 5px;
+    border-width: 0px;
+    width: 5%;
+    height: 32px;
+    font-size: 14px;
+  }
+  
+  .btn-search {
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+      border-width: 0px;
+      width: 5%;
+      height: 35px;
+      font-size: 18px;
+    }
+
+  .btn-clear {
+        color: #696969;
+        border-radius: 5px;
+        border-width: 1px;
+        width: 6%;
+        height: 35px;
+        font-size: 18px;
+    }
+
+.inactive-btn {
+    color: #007bff;
+    border-radius: 5px;
+    border-width: 0px;
+    width: 5%;
+    height: 32px;
+    font-size: 14px;
+    background-color: transparent;
+  }

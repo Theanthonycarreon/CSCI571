@@ -1,6 +1,6 @@
 
 <input type="text" [formControl]="cityControl" [disabled]="disabled" class="form-control" id="cityInput" (input)="currCityInput()">
-<ul class="dropdown-menu w-100 show" *ngIf="showDropdown">
+<ul class="dropdown-menu w-100 show removeBottomSpace" *ngIf="showDropdown">
     <li class="dropdown-item" *ngFor="let city of cities"  (click)="selectCity(city)">{{ city }}</li>
 </ul>
 

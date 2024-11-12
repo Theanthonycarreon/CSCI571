@@ -1,18 +1,18 @@
 <main>
-  <div class="container sticky-top mx-auto" id="weatherSearchContainer">
-    <h2>Weather Search<span class="logo_img">(IMG)</span></h2>
+  <div class="container p-4 rounded" id="weatherSearchContainer">
+    <h2 id="title">Weather Search<span class="logo_img">(IMG)</span></h2>
     <form class="form" [formGroup]="inputForm" (ngSubmit)="onSubmit()">
 
-      <div class="form-group mb-3">
+      <div class="mb-3 alignTextLeft">
         <label for="street">Street<span class="asterisk">*</span></label>
-        <input type="text" formControlName="street" class="form-control" id="street"
+        <input class="spacerStreetBox" type="text" formControlName="street" class="form-control" id="street"
         [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
         <div class="invalidInput" *ngIf="inputForm.get('street')?.invalid && formSubmitted">
           Please enter a valid street
         </div>
       </div>
 
-      <div class="form-group mb-3">
+      <div class="mb-3 alignTextLeft">
         <label for="city">City<span class="asterisk">*</span></label>
          <!-- prompt: how do I setup get city to print out to html component? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
           <app-auto-complete *ngIf="!formSubmitted"
@@ -22,16 +22,18 @@
             [formSubmitted]="formSubmitted" 
             (citySelected)="onCitySelected($event)">
           </app-auto-complete>
-          <input type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
+
+          <input class="spacerCityBox" type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
           [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
-        <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid && formSubmitted">
-          Please enter a valid city
-        </div>
+          <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid && formSubmitted">
+            Please enter a valid city
+          </div>
+
       </div>
 
-      <div class="form-group mb-3" >
-        <label for="state">State<span class="asterisk">*</span></label>
-        <select placeholder="Select your state" formControlName="state" id="state" class="form-control" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+      <div class="mb-3 alignTextLeft">
+        <label for="state" class="spacer">State<span class="asterisk">*</span></label>
+        <select placeholder="Select your state" formControlName="state" id="stateInput" class="form-select spacerStateBox" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
           <option value="no_state" selected>Select your state</option>
           <option>Alaska</option>
           <option>Alabama</option>
@@ -39,27 +41,27 @@
         </select>
       </div>
 
-      <div class="form-check justify-content-center mb-3">
+      <div class="d-flex justify-content-center mb-3 custom-checkbox">
         Autodetect Location<span class="asterisk">*</span>
         <input class="form-check-input" type="checkbox" formControlName="autodetect" id="autodetect" (click)="lockFields()">
         <label class="form-check-label" for="autodetect">Current Location</label>
       </div>
 
-      <div class="d-flex justify-content-center mb-3">
-        <button type="submit" class="btn btn-primary me-2">Search</button>
-        <button type="button" class="btn btn-light" (click)="onClear()">Clear</button>
+      <div class="d-flex justify-content-center mb-3 custom-checkbox">
+        <button type="submit" class="btn btn-search me-2">Search</button>
+        <button type="button" class="btn btn-clear" (click)="onClear()">Clear</button>
       </div>
-
-      <div class="container">
-        <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-primary me-2" (click)="getResults()">Results</button>
-          <button type="button" class="btn btn-primary" (click)="getFavorites()">Favorites</button>
-        </div>
-
-      </div>
-
-
     </form>
+  </div>
+
+  <div class="container-results-favorites">
+    <div class="d-flex justify-content-center mt-3 custom-checkbox">
+      <button type="button" class="btn btn-result me-2" (click)="getResults()" 
+      [ngClass]="{'active-btn': getDifferentDataTab === 'results', 'inactive-btn': getDifferentDataTab !== 'results'}">Results</button>
+
+      <button type="button" class="btn btn-primary" (click)="getFavorites()" 
+      [ngClass]="{'active-btn': getDifferentDataTab === 'favorites', 'inactive-btn': getDifferentDataTab !== 'favorites'}">Favorites</button>
+    </div>
   </div>
 
   <div class="container mt-4">
