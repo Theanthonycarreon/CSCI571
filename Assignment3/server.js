@@ -250,6 +250,7 @@ app.get('/api/weather', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
+  console.log('inside app.get(/)');
   res.sendFile(path.join(__dirname, 'weather-application/dist/', 'index.html'));
 });
 
@@ -257,6 +258,7 @@ app.get('/', (req, res) => {
 
 // Redirect all traffic to index.html
 app.get('*', (req, res) => {
+  console.log('inside app.get(*)');
   res.sendFile(path.join(__dirname, 'weather-application/dist', 'index.html'));
 });
 // Listen to the App Engine-specified port, or 8080 otherwise

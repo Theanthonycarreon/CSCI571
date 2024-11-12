@@ -20,9 +20,11 @@ export class AppComponent implements OnInit{
   auto_loc = false;
   clickedOut = false;
   getDifferentDataTab: string = 'results';
+  formCleared = false;
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
   @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
+  @Output() clearedForm = new EventEmitter<{formCleared: boolean}>();
 
 // prompt: how do I setup a responsive form in typescript? - 6 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
   constructor(
@@ -39,6 +41,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.formCleared = false;
     this.createForm();
     this.showResults = false; 
     this.showFavorites = false; 
@@ -54,7 +57,7 @@ export class AppComponent implements OnInit{
         this.inputForm.get('state')?.enable();
       }
     });
-    
+    console.log('inside ngOnInit()');
   }
 
   lockFields(){
@@ -69,6 +72,7 @@ export class AppComponent implements OnInit{
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
     this.inputForm.get('city')?.disable();
+    console.log('inside onCitySelected()');
   }
   clickedOutOfCity() {
     this.clickedOut = true;
@@ -80,6 +84,9 @@ export class AppComponent implements OnInit{
     this.showResults = false;
     this.showFavorites = false;
     this.formSubmitted = false;
+    this.formCleared = true;
+    console.log('emitting formCleared');
+    this.clearedForm.emit({formCleared: this.formCleared});
     this.inputForm.get('city')?.setValue("");
     this.inputForm.reset({ autodetect: false }); 
     console.log("inside onClear()");
@@ -147,6 +154,7 @@ export class AppComponent implements OnInit{
         this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
       } 
+      console.log('after emitting, maybe running program?')
     }
  
   

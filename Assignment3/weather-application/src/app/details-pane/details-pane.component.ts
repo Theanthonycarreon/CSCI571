@@ -6,7 +6,7 @@ declare const google: any;
   templateUrl: './details-pane.component.html',
   styleUrls: ['./details-pane.component.css']
 })
-export class DetailsPaneComponent implements OnInit, AfterViewInit {
+export class DetailsPaneComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
   @Input() latitude?: number;
@@ -22,7 +22,9 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit(): void {
-    const dayData = this.weekData[0];
+    const dayData = this.weekData;
+    console.log("inside detail pane");
+    console.log("this.weekData", this.weekData);
     this.firstDay = {
         date: dayData.startTime,
         status: dayData.values?.weatherCode,
@@ -36,21 +38,24 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
         visibility: dayData.values?.visibility,
         cloudCover: dayData.values?.cloudCover,
       };
+      console.log("inside detail pane");
   }
 
-  ngAfterViewInit(): void {
-    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
-      center: { lat: this.latitude, lng: this.longitude },
-      zoom: 8,
-    });
-  }
+  // ngAfterViewInit(): void {
+  //   this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+  //     center: { lat: this.latitude, lng: this.longitude },
+  //     zoom: 8,
+  //   });
+  // }
 
   postTweet() {
     console.log("inside postTweet()");
   }
 
   backToDetailsView() {
+    console.log('emitting back...........')
     this.backToResults.emit();
+    console.log('after emit call, still in details pane')
   }
 
   

@@ -3,14 +3,16 @@ env: standard
 instance_class: F1
 
 handlers:
-  # Serve all static files from the `dist/weather-application` directory
-  - url: /static
-    static_dir: weather-application/dist
-
-  # Main entry point for your app
+  - url: /static/(.*)
+    static_files: weather-application/dist/\1
+    upload: weather-application/dist/.*
   - url: /.*
-    static_files: weather-application/dist/index.html
-    upload: weather-application/dist/index.html
+    script: auto
+  - url: .*
+    script: auto
+  - url: .*
+    script: auto
+
 
 env_variables:
   GEOCODING_API_KEY: "AIzaSyAuY31y568J2ld6PjerQJ1Pp1SG1aZe1yE"
