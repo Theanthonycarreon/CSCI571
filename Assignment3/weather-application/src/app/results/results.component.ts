@@ -98,6 +98,43 @@ export class ResultsComponent implements OnInit {
       this.detailsTabClicked = false;
       this.activeTab = 'tempChartTab';
       this.highcharts = Highcharts;
+
+      // this.chartOptions = {   
+        //   chart: {
+        //     type: 'arearange', 
+        //   },
+        //   title: {
+        //     text: "Temperature Ranges (Min, Max)"
+        //   },
+        //   xAxis: {
+        //     type: 'datetime',
+        //     labels: {
+        //       format: '{value:%e %b}'
+        //     }
+        //   },
+        //   tooltip: {
+        //     shared: true,
+        //     valueSuffix: '°F',
+        //     xDateFormat: '%e %b'
+        //   },
+        //   series: [{
+        //     type: 'arearange',
+        //     name: 'Temperatures',
+        //     data: this.weekData.map((dayData: any) => [
+        //         dayData.startTime,
+        //         dayData.values?.temperatureMin,
+        //         dayData.values?.temperatureMax
+        //     ]),
+        //     color: {
+        //         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+        //         stops: [[0, '#FFA500'], [1, '#87CEEB']]
+        //     },
+        //     marker: {
+        //         enabled: true,
+        //         fillColor: '#66CCFF'
+        //     }
+        //   }]
+        
     this.chartOptions = {   
       chart: {
         type: "spline" // General chart type
@@ -168,9 +205,31 @@ export class ResultsComponent implements OnInit {
           constructor(meteogramJson: any, container: string) {
             this.container = container;
             this.createChart();
+            console.log(this.getChartOptions);
           }
 
           private getChartOptions(): Highcharts.Options {
+            this.temperatures = meteogramJson.properties.timeseries.map((entry: any) => ({
+              x: new Date(entry.time).getTime(),
+              y: entry.data.instant?.details?.air_temperature ?? null, // Check if instant and details exist
+              symbolName: entry.data.next_1_hours?.summary?.symbol_code ?? 0  // Adjust based on exact symbol location
+          }));
+            
+            this.precipitations = meteogramJson.properties.timeseries.map((entry: any) => ({
+              x: new Date(entry.time).getTime(),
+              y: entry.data.next_1_hours?.details?.precipitation_amount ?? 0 
+          }));
+            
+            this.winds = meteogramJson.properties.timeseries.map((entry: any) => ({
+              x: new Date(entry.time).getTime(),
+              value: entry.data.instant?.details?.wind_speed ?? 0, // Fallback to 0 if wind data is missing
+              direction: entry.data.instant?.details?.wind_from_direction ?? 0 // Adjust based on actual field names
+            }));
+            
+            this.pressures = meteogramJson.properties.timeseries.map((entry: any) => ({
+              x: new Date(entry.time).getTime(),
+              y: entry.data.instant?.details?.air_pressure_at_sea_level ?? 0// Adjust based on your data's field name
+            }));
             return {
               chart: {
                 renderTo: this.container,
@@ -179,7 +238,7 @@ export class ResultsComponent implements OnInit {
                 marginRight: 40,
                 marginTop: 50,
                 plotBorderWidth: 1,
-                height: 310,
+                // height: 600,
                 scrollablePlotArea: { minWidth: 720 },
               },
               title: { text: 'Meteogram for Example Location', align: 'left' },
@@ -189,7 +248,7 @@ export class ResultsComponent implements OnInit {
                 labels: { format: '{value:%H}' }
               },
               yAxis: [
-                { title: { text: 'Temperature (°C)' }, labels: { format: '{value}°' } },
+                { title: { text: 'Temperature (°F)' }, labels: { format: '{value}°' } },
                 { title: { text: 'Precipitation (mm)' }, opposite: true }
               ],
               series: [
@@ -206,7 +265,6 @@ export class ResultsComponent implements OnInit {
           }
         }
 
-        // Instantiate the chart without API data
         new Meteogram(meteogramJson, 'hourly_chart');
       });
     }
