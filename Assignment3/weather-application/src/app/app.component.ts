@@ -61,7 +61,7 @@ export class AppComponent implements OnInit{
   }
 
   lockFields(){
-    console.log('inside lockFields()')
+    // console.log('inside lockFields()')
     this.inputForm.get('street')?.disable();
     this.inputForm.get('city')?.disable();
     // i need this to call 
@@ -72,12 +72,12 @@ export class AppComponent implements OnInit{
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
     this.inputForm.get('city')?.disable();
-    console.log('inside onCitySelected()');
+    // console.log('inside onCitySelected()');
   }
   clickedOutOfCity() {
     this.clickedOut = true;
     this.inTextBox.emit({clickedOut: this.clickedOut});
-    console.log("inside clickedOutOfCity");
+    // console.log("inside clickedOutOfCity");
   }
 
   onClear() {
@@ -89,12 +89,12 @@ export class AppComponent implements OnInit{
     this.clearedForm.emit({formCleared: this.formCleared});
     this.inputForm.get('city')?.setValue("");
     this.inputForm.reset({ autodetect: false }); 
-    console.log("inside onClear()");
+    // console.log("inside onClear()");
     console.log(this.inputForm.value);
   }
   
   getResults(){
-    console.log('inside getResults()');
+    // console.log('inside getResults()');
     if(this.formSubmitted){
       this.showResults = true; 
       this.showFavorites = false; 
@@ -105,7 +105,7 @@ export class AppComponent implements OnInit{
   }
   
   getFavorites() {
-    console.log('inside getFavorites()');
+    // console.log('inside getFavorites()');
     if(this.formSubmitted){
       this.showResults = false; 
       this.showFavorites = true; 
@@ -154,7 +154,7 @@ export class AppComponent implements OnInit{
         this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
       } 
-      console.log('after emitting, maybe running program?')
+      // console.log('after emitting, maybe running program?')
     }
  
   

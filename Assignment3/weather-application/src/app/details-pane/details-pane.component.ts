@@ -53,9 +53,9 @@ export class DetailsPaneComponent implements OnInit {
   }
 
   backToDetailsView() {
-    console.log('emitting back...........')
+    // console.log('emitting back...........')
     this.backToResults.emit();
-    console.log('after emit call, still in details pane')
+    // console.log('after emit call, still in details pane')
   }
 
   
