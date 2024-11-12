@@ -85,6 +85,7 @@ export class ResultsComponent implements OnInit {
       this.activeTab = 'dayView';
       this.weekData.forEach((dayData: any) => {
         this.row.push({
+          date: dayData.startTime,
           weatherCode: dayData.values?.weatherCode,
           temperatureMax: dayData.values?.temperatureMax,
           temperatureMin: dayData.values?.temperatureMin,

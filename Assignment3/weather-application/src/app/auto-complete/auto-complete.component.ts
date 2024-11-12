@@ -42,7 +42,7 @@ export class AutoCompleteComponent implements OnInit{
         this.cityControl.disable();
       }
     } else {
-      console.log("setting data again")
+      // console.log("setting data again")
       this.cityControl.valueChanges.subscribe(value =>{
         if(value != null && value.length != 0){
           this.auto.getAutoComplete(value).subscribe(response =>{

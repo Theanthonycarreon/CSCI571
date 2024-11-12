@@ -12,6 +12,7 @@ export class DetailsPaneComponent implements OnInit {
   @Input() latitude?: number;
   @Input() longitude?: number;
   @Input() weekData: any;
+  @Input() dateClicked?: any;
   @Output() backToResults = new EventEmitter<void>(); 
   // map: google.maps.Map | undefined;
   firstDay: any = {}; 
@@ -22,9 +23,24 @@ export class DetailsPaneComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    const dayData = this.weekData;
-    console.log("inside detail pane");
-    console.log("this.weekData", this.weekData);
+    const dayData = this.weekData[0];
+    // foreach(day: weekData){
+    //   if(dateClicked == day){
+    //     this.firstDay = {
+    //       date: dayData.startTime,
+    //       status: dayData.values?.weatherCode,
+    //       temperatureMax: dayData.values?.temperatureMax,
+    //       temperatureMin: dayData.values?.temperatureMin,
+    //       temperatureApparent: dayData.values?.temperatureApparent,
+    //       sunriseTime: dayData.values?.sunriseTime,
+    //       sunsetTime: dayData.values?.sunsetTime,
+    //       humidity: dayData.values?.humidity,
+    //       windSpeed: dayData.values?.windSpeed,
+    //       visibility: dayData.values?.visibility,
+    //       cloudCover: dayData.values?.cloudCover,
+    //     };
+    //   }
+    // }
     this.firstDay = {
         date: dayData.startTime,
         status: dayData.values?.weatherCode,
@@ -38,7 +54,6 @@ export class DetailsPaneComponent implements OnInit {
         visibility: dayData.values?.visibility,
         cloudCover: dayData.values?.cloudCover,
       };
-      console.log("inside detail pane");
   }
 
   // ngAfterViewInit(): void {
