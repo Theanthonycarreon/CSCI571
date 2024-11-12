@@ -27,6 +27,7 @@ export class ResultsComponent implements OnInit {
   longitude = 0;
   address = '';
   weekData = [];
+  activeTab: string = 'dayView';
 
   row: any[] = [];
   highcharts: typeof Highcharts = Highcharts;
@@ -80,6 +81,7 @@ export class ResultsComponent implements OnInit {
       this.meteogramTabClicked = false;
       this.detailsTabClicked = false;
       this.row = [];
+      this.activeTab = 'dayView';
       this.weekData.forEach((dayData: any) => {
         this.row.push({
           weatherCode: dayData.values?.weatherCode,
@@ -94,6 +96,7 @@ export class ResultsComponent implements OnInit {
       this.chartTabClicked = true;
       this.meteogramTabClicked = false;
       this.detailsTabClicked = false;
+      this.activeTab = 'tempChartTab';
       this.highcharts = Highcharts;
     this.chartOptions = {   
       chart: {
@@ -148,6 +151,7 @@ export class ResultsComponent implements OnInit {
       this.chartTabClicked = false;
       this.meteogramTabClicked = true;
       this.detailsTabClicked = false;
+      this.activeTab = 'meteogramTab';
       // let meteogramJson = null;
       this.meteogramService.getMeteogram(this.latitude, this.longitude).subscribe(response => {
         const meteogramJson = response.meteogramChart;

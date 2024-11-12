@@ -1,0 +1,117 @@
+/* For buttons */
+.btn {
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: bold;
+  }
+  
+  .btn-primary-star {
+    background-color: #f7f7f7;
+    border-color: black;
+    color: black;
+    border-width: 1px;
+    width: 34px;
+    height: 30px;
+  }
+  
+  .btn-primary {
+    background-color: transparent;
+    color: #a8a8a8;
+    border-width: 0px;
+    font-size: 15px;
+    text-decoration: underline;
+    font-weight: 100;
+  }
+  
+  /* For tab links */
+  .nav-link {
+    font-weight: bold;
+    padding: 10px;
+    color: #007bff;
+  }
+  
+  .nav-link.active {
+    color: #007bff;
+    border-radius: 5px;
+  }
+  
+  /* For table headers */
+  .table th {
+    font-weight: bold;
+  }
+  
+  /* .container h2 {
+    font-weight: bold;
+    font-size: 1.5rem;
+  } */
+  
+  .container {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+
+
+h2{
+    text-align: center;
+    font-weight: bold;
+}
+
+  
+  #myTab{
+    list-style: none;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .nav-tabs .nav-link {
+    text-decoration: none;
+}
+
+#favorite_detail_holder{
+    text-align: right;
+}
+ 
+
+.tab-pane{
+    text-align: center;
+}
+
+#headerDayView th {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.custom-tabs .nav-link {
+    color: #007bff;
+    padding: 9px 13px;
+}
+
+.custom-tabs .nav-link.active {
+    color: black;
+    /* font-weight: bold; */
+    padding: 9px 13px;
+    border-top: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+    border-left: 1px solid lightgrey;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table thead {
+    border-top: 1px solid lightgrey;
+}
+
+.custom-table th, .custom-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid lightgrey;
+}
+
+#numOfDays{
+    font-weight: bold;
+}

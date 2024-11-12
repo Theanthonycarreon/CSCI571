@@ -1,8 +1,9 @@
 <main>
-  <div class="container sticky-top mx-auto">
-    <h1>Weather Search<span class="logo_img">(IMG)</span></h1>
+  <div class="container sticky-top mx-auto" id="weatherSearchContainer">
+    <h2>Weather Search<span class="logo_img">(IMG)</span></h2>
     <form class="form" [formGroup]="inputForm" (ngSubmit)="onSubmit()">
-      <div class="form-group">
+
+      <div class="form-group mb-3">
         <label for="street">Street<span class="asterisk">*</span></label>
         <input type="text" formControlName="street" class="form-control" id="street"
         [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
@@ -10,7 +11,8 @@
           Please enter a valid street
         </div>
       </div>
-      <div class="form-group">
+
+      <div class="form-group mb-3">
         <label for="city">City<span class="asterisk">*</span></label>
          <!-- prompt: how do I setup get city to print out to html component? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
           <app-auto-complete *ngIf="!formSubmitted"
@@ -26,31 +28,41 @@
           Please enter a valid city
         </div>
       </div>
-      <div class="form-group" >
+
+      <div class="form-group mb-3" >
         <label for="state">State<span class="asterisk">*</span></label>
-        <select formControlName="state" id="state" class="form-control" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+        <select placeholder="Select your state" formControlName="state" id="state" class="form-control" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
           <option value="no_state" selected>Select your state</option>
           <option>Alaska</option>
           <option>Alabama</option>
           <option>California</option>
         </select>
       </div>
-      <div class="form-check justify-content-center">
+
+      <div class="form-check justify-content-center mb-3">
         Autodetect Location<span class="asterisk">*</span>
         <input class="form-check-input" type="checkbox" formControlName="autodetect" id="autodetect" (click)="lockFields()">
         <label class="form-check-label" for="autodetect">Current Location</label>
       </div>
-      <div class="d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Search</button>
+
+      <div class="d-flex justify-content-center mb-3">
+        <button type="submit" class="btn btn-primary me-2">Search</button>
         <button type="button" class="btn btn-light" (click)="onClear()">Clear</button>
       </div>
-      <div class="d-flex justify-content-center">
-        <button type="button" class="btn btn-primary" (click)="getResults()">Results</button>
-        <button type="button" class="btn btn-primary" (click)="getFavorites()">Favorites</button>
+
+      <div class="container">
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-primary me-2" (click)="getResults()">Results</button>
+          <button type="button" class="btn btn-primary" (click)="getFavorites()">Favorites</button>
+        </div>
+
       </div>
+
+
     </form>
   </div>
-  <div class="container">
+
+  <div class="container mt-4">
     <app-results
       *ngIf="showResults" 
       [auto_loc]="auto_loc"
@@ -59,7 +71,8 @@
       [state]="state">
     </app-results>
   </div>
-  <div class="container">
+
+  <div class="container mt-4">
     <app-favorites 
       *ngIf="showFavorites"
       [city]="city"

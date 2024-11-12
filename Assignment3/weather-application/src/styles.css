@@ -1,10 +1,15 @@
-/* @import './styles.css'; */
+html, body,app-root{
+    background-color: white;
+    width: 100%;
+}
+
 body {
     z-index: 0; 
     display: flex;   
     justify-content: center;        
     align-items: center;             
     margin: 0;
-    background-color: #eaeaea;  
+    /* background-color: #eaeaea;   */
     font-family: Arial, Helvetica, sans-serif;
 }
+
