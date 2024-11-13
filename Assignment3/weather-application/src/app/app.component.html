@@ -65,13 +65,6 @@
 
       <button type="button" class="btn btn-primary" (click)="getFavorites()" 
       [ngClass]="{'active-btn': getDifferentDataTab === 'favorites', 'inactive-btn': getDifferentDataTab !== 'favorites'}">Favorites</button>
-        <!-- <div class="container mt-4"> -->
-          <app-favorites 
-            *ngIf="showFavorites"
-            [city]="city"
-            [state]="state">
-          </app-favorites>
-        <!-- </div> -->
     </div>
   </div>
 
