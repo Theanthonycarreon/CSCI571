@@ -9,7 +9,7 @@
                     </button>
                 </span>
                 <span>
-                    <button type="button" class="btn btn-primary" href="#dayDetail" (click)="detailsTAB()">Details ></button>
+                    <button type="button" class="btn btn-primary" href="#dayDetail" (click)="detailsTAB('')">Details ></button>
                 </span> <!--Need to change to the star symbol and add the right arrow after details-->
             </div>
         <!-- <div class="row"> -->
@@ -64,7 +64,7 @@
                         <tr *ngFor="let x of row; let i = index">
                             <td id="numOfDays">{{ i + 1 }}</td> 
                             <td>
-                                <a href="#dayDetail" (click)="detailsTAB()">
+                                <a href="#dayDetail" (click)="detailsTAB(x.date)">
                                      <!-- prompt: how print date in the format needed? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
                                     {{ x.date | date:'EEEE, MMM. d, y' }}
                                 </a>
@@ -75,6 +75,8 @@
                                         [latitude]="latitude"
                                         [longitude]="longitude"
                                         [weekData]="weekData"
+                                        [dateClicked]= "dateClicked"
+                                        [dateObject] = "dateObject"
                                         (backToResults)="dayViewTAB()"
                                     ></app-details-pane>
                                 </div>
@@ -118,6 +120,8 @@
         [latitude]="latitude"
         [longitude]="longitude"
         [weekData]="weekData"
+        [dateObject] = "dateObject"
+        [dateClicked] = dateClicked
         (backToResults)="dayViewTAB()"
     ></app-details-pane>
 </div>

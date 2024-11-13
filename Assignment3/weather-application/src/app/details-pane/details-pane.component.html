@@ -6,7 +6,7 @@
           </div>
           <div class="spacerLeft"></div>
               <div class="col-sm text-center">
-                  <h2 class="m-0 mx-2 datePadding">{{ firstDay.date | date:'EEEE, MMM. d, y' }}</h2>
+                  <h2 class="m-0 mx-2 datePadding">{{ theDate.date | date:'EEEE, MMM. d, y' }}</h2>
               </div>
             <div class="spacerRight"></div>
           <div class="col-sm-auto">
@@ -15,48 +15,48 @@
         </div>
       </div>
 
-<div class="d-flex justify-content-center align-items-center mt-3" *ngIf="firstDay">
+<div class="d-flex justify-content-center align-items-center mt-3" *ngIf="theDate">
     <div class="table-container">
         <table class="table table-responsive table-striped">
             <tr>
                 <td>Status</td>
-                <td>{{firstDay.status}}</td>
+                <td>{{theDate.status}}</td>
             </tr>
             <tr>
                 <td>Max Temperature</td>
-                <td>{{firstDay.temperatureMax}}°F</td>
+                <td>{{theDate.temperatureMax}}°F</td>
             </tr>
             <tr>
                 <td>Min Temperature</td>
-                <td>{{firstDay.temperatureMin}}°F</td>
+                <td>{{theDate.temperatureMin}}°F</td>
             </tr>
             <tr>
                 <td>Apparent Temperature</td>
-                <td>{{firstDay.temperatureApparent}}°F</td>
+                <td>{{theDate.temperatureApparent}}°F</td>
             </tr>
             <tr>
                 <td>Sun Rise Time</td>
-                <td>{{firstDay.sunriseTime  | date: 'h a'}}</td>
+                <td>{{theDate.sunriseTime  | date: 'h a'}}</td>
             </tr>
             <tr>
                 <td>Sun Set Time</td>
-                <td>{{firstDay.sunsetTime  | date: 'h a'}}</td>
+                <td>{{theDate.sunsetTime  | date: 'h a'}}</td>
             </tr>
             <tr>
                 <td>Humidity</td>
-                <td>{{firstDay.humidity}}%</td>
+                <td>{{theDate.humidity}}%</td>
             </tr>
             <tr>
                 <td>Wind Speed</td>
-                <td>{{firstDay.windSpeed}}mph</td>
+                <td>{{theDate.windSpeed}}mph</td>
             </tr>
             <tr>
                 <td>Visibility</td>
-                <td>{{firstDay.visibility}}mi</td>
+                <td>{{theDate.visibility}}mi</td>
             </tr>
             <tr>
                 <td>Cloud Cover</td>
-                <td>{{firstDay.cloudCover}}%</td>
+                <td>{{theDate.cloudCover}}%</td>
             </tr>
         </table>
     </div>

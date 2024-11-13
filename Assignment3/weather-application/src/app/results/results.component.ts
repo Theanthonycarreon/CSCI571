@@ -29,11 +29,11 @@ export class ResultsComponent implements OnInit {
   address = '';
   weekData = [];
   activeTab: string = 'dayView';
-
+  dateClicked = '';
   row: any[] = [];
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
-
+  dateObject = {};
   constructor(
     private customerService: CustomerResultsService,
     private tempChartService: TempChartService,
@@ -54,6 +54,11 @@ export class ResultsComponent implements OnInit {
       this.row = [];
       this.weekData = weatherData.data?.timelines[0]?.intervals;
       this.weekData.forEach((dayData: any) => {
+        if (dayData.startTime) {
+          console.log('Start Time:', dayData.startTime); // Log startTime
+        }
+      });
+      this.weekData.forEach((dayData: any) => {
         this.row.push({
           date: dayData.startTime,
           icon: dayData.values.icon,
@@ -68,11 +73,35 @@ export class ResultsComponent implements OnInit {
     });
     
   }
+  // onDateClick(day: { startTime: string; values: any }){
+  //   this.weekData.forEach((dayData: any) => {
+  //     console.log('dayData', dayData)
+  //     if(dayData == '2024-11-13T06:00:00-08:00'){
+  //       console.log('found a match')
+  //     }
+  //     console.log('Didnt match');
+  //   });
+    // console.log('this.dateClicked', this.dateClicked);
+
+  // }
+
     addFavorite(){
       this.customerService.addFavoriteCity(this.latitude, this.longitude, this.city ?? '',this.state?? '').subscribe({});;
     }
 
-    detailsTAB(){
+    detailsTAB(day: string){
+      if(day == ''){
+        this.dateClicked = day;
+        this.dateObject = this.weekData[0];
+      } else {
+        this.weekData.forEach((dayData: any) => {
+          if(dayData.startTime == day){
+            this.dateClicked = dayData.startTime;
+            this.dateObject = dayData;
+          }
+        });
+      }
+      console.log('date object',  this.dateObject );
       this.dayViewTabClicked = false;
       this.chartTabClicked = false;
       this.meteogramTabClicked = false;

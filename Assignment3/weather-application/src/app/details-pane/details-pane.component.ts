@@ -12,10 +12,11 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   @Input() latitude?: number;
   @Input() longitude?: number;
   @Input() weekData: any;
-  @Input() dateClicked?: any;
+  @Input() dateClicked?: string;
+  @Input() dateObject: {} | undefined;
   @Output() backToResults = new EventEmitter<void>(); 
   // map: google.maps.Map | undefined;
-  firstDay: any = {}; 
+  theDate: any = {}; 
   map: any = {};
   constructor(
     private customerService: CustomerResultsService,
@@ -23,38 +24,25 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   }
   
   ngOnInit(): void {
-    const dayData = this.weekData[0];
-    // foreach(day: weekData){
-    //   if(dateClicked == day){
-    //     this.firstDay = {
-    //       date: dayData.startTime,
-    //       status: dayData.values?.weatherCode,
-    //       temperatureMax: dayData.values?.temperatureMax,
-    //       temperatureMin: dayData.values?.temperatureMin,
-    //       temperatureApparent: dayData.values?.temperatureApparent,
-    //       sunriseTime: dayData.values?.sunriseTime,
-    //       sunsetTime: dayData.values?.sunsetTime,
-    //       humidity: dayData.values?.humidity,
-    //       windSpeed: dayData.values?.windSpeed,
-    //       visibility: dayData.values?.visibility,
-    //       cloudCover: dayData.values?.cloudCover,
-    //     };
-    //   }
-    // }
-    this.firstDay = {
-        date: dayData.startTime,
-        icon: dayData.values.icon,
-        status: dayData.values.status,
-        temperatureMax: dayData.values?.temperatureMax,
-        temperatureMin: dayData.values?.temperatureMin,
-        temperatureApparent: dayData.values?.temperatureApparent,
-        sunriseTime: dayData.values?.sunriseTime,
-        sunsetTime: dayData.values?.sunsetTime,
-        humidity: dayData.values?.humidity,
-        windSpeed: dayData.values?.windSpeed,
-        visibility: dayData.values?.visibility,
-        cloudCover: dayData.values?.cloudCover,
-      };
+    // console.log(this.weekData);
+    console.log('date clicked', this.dateClicked);
+    console.log('dateObject', this.dateObject);
+    const dateData: any = this.dateObject;
+    this.theDate = {
+      date: dateData.startTime,
+      icon: dateData.values?.icon,
+      status: dateData.values?.status,
+      temperatureMax: dateData.values?.temperatureMax,
+      temperatureMin: dateData.values?.temperatureMin,
+      temperatureApparent: dateData.values?.temperatureApparent,
+      sunriseTime: dateData.values?.sunriseTime,
+      sunsetTime: dateData.values?.sunsetTime,
+      humidity: dateData.values?.humidity,
+      windSpeed: dateData.values?.windSpeed,
+      visibility: dateData.values?.visibility,
+      cloudCover: dateData.values?.cloudCover,
+    };
+
   }
 
   ngAfterViewInit(): void {
