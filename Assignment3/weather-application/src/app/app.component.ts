@@ -139,6 +139,12 @@ export class AppComponent implements OnInit{
   onSubmit() {
     this.formSubmitted = true;
       var callbackend = false;
+      console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
+      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
+      console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
+      console.log("this.streetControl.value =", this.streetControl.value);
+      console.log("this.cityControl.value =", this.cityControl.value);
+      console.log("this.stateControl.value =", this.stateControl.value);
       if(this.inputForm.get("autodetect")?.value == true){
         callbackend = true;
         this.auto_loc = true;
@@ -151,26 +157,28 @@ export class AppComponent implements OnInit{
         this.inputForm.get('city')?.enable();
         this.inputForm.get('state')?.enable();
         console.log('street value', this.inputForm.get("street")?.value)
-        if(this.inputForm.get("street")?.value != "" || !this.inputForm.get("street")){
+        if(this.streetControl.value != ""){
           this.street = this.inputForm.get("street")?.value || '';
         } else {
-          console.log('inside the else')
           // this.streetControl.disable();
           callbackend = false;
         }
         if(this.inputForm.get("city")?.value != ""){
-          this.city = this.inputForm.get("city")?.value || '';
+          this.city = this.inputForm.get("city")?.value ?? '';
         } else {
           callbackend = false;
           // this.cityControl.disable();
         }
-        if(this.inputForm.get("state")?.value != ""){
-          this.state = this.inputForm.get("state")?.value || '';
+        if(this.stateControl.value != ""){
+          this.state = this.stateControl.value ?? '';
         } else {
           // this.stateControl.disable();
           callbackend = false;
         }
       }
+      console.log("this.street =", this.street);
+      console.log("this.state =", this.state);
+      console.log("this.city =", this.city);
       if(callbackend){
         console.log("submitting form");
         this.inputData.emit({auto_loc:this.auto_loc, street: this.street, city: this.city, state: this.state});

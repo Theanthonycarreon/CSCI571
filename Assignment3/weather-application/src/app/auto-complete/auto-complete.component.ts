@@ -39,14 +39,12 @@ export class AutoCompleteComponent implements OnInit{
     this.showDropDown = true;
     this.clickedOutOfBox = false;
     this.clickedCity = false;
-    console.log('inside NgOninit')
     if (this.clickedOut || this.disabled || this.formSubmitted) {
       this.hideDropdown();
       if(this.formSubmitted){
         this.cityControl.disable();
       }
     } else {
-      // console.log("setting data again")
       this.cityControl.valueChanges.subscribe(value =>{
         if(value != null && value.length != 0){
           this.auto.getAutoComplete(value).subscribe(response =>{
@@ -59,7 +57,6 @@ export class AutoCompleteComponent implements OnInit{
             }
           })
         } else {
-          // this.invalidInput = true;
           this.cities = [];
           this.showDropDown = false;
         }
@@ -78,32 +75,34 @@ export class AutoCompleteComponent implements OnInit{
     if(this.cities.length > 0 && this.cityControl.value == ''){
       this.invalidInput = true;
     }
-    // console.log('cities' this.cities);
-    // console.log('city length', this.cities.length);
     
     
   }
-  onBlur(){
-    console.log('inside onBlur()')
-    console.log('this.cityControl.value inside OnBlur()', this.cityControl.value)
-    if(this.cityControl.value == ''){
+  onBlur(city: string){
+    if(!this.startedTyping && !this.invalidInput){
+      this.startedTyping = true;
       this.invalidInput = true;
+    } else if(this.startedTyping && this.cityControl.value == ''){
+      this.invalidInput = true;
+    } else if(this.startedTyping && this.cityControl.value != '' && this.invalidInput){
+      this.cityChanged.emit(city || undefined);  
+    } else {
+      this.cityChanged.emit(city || undefined);  
     }
+    
+  
     
   }
 
   currCityInput(){
-    console.log('inside currCityInput()')
     if(this.cityControl.value == ''){
-      console.log('this.cityControl.value is empty')
       this.invalidInput = true;
     }
     if(this.startedTyping && this.cityControl.value == ''){
       this.invalidInput = true;
+    } else if(this.cityControl.value != ''){
+      this.invalidInput = false;
     }
-    // if(this.cities.length > 0 && this.cityControl.value == ''){
-    //   this.invalidInput = true;
-    // }
     this.cityChanged.emit(this.cityControl.value || undefined);
   }
   //  prompt: how do I setup get city to print out to html component? - 3 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264

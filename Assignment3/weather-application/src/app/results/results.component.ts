@@ -87,7 +87,7 @@ export class ResultsComponent implements OnInit {
   
 
     addFavorite(){
-      console.log('adding favorite');
+      // console.log('adding favorite');
       this.clickedFavorite = true;
       this.gettingClicked = true;
       if(!this.city){
