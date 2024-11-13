@@ -67,6 +67,11 @@
       [ngClass]="{'active-btn': getDifferentDataTab === 'favorites', 'inactive-btn': getDifferentDataTab !== 'favorites'}">Favorites</button>
     </div>
   </div>
+  <div class="progress" *ngIf="(showResults || showFavorites) || (doneLoading)" [ngStyle]="{'background-color': showProgressBar ? '#f3f3f3' : 'transparent'}">
+    <div *ngIf="showProgressBar && started " class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
+    [style.width]="progressWidth + '%'"
+    [attr.aria-valuenow]="progressWidth"></div>
+  </div>
 
   <div class="container mt-4">
     <app-results
@@ -75,7 +80,8 @@
       [street]="street"
       [city]="city"
       [state]="state"
-      [formCleared] = "formCleared">
+      [formCleared] = "formCleared"
+      (noLoadingBar) = "noLoadBar()">
     </app-results>
   </div>
 

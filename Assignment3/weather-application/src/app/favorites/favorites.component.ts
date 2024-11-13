@@ -17,9 +17,10 @@ export class FavoritesComponent implements OnInit {
   ) { 
   } 
   ngOnInit(): void {
-    console.log('Inside ngOninIt')
-    console.log('this.alreadyLoaded', this.alreadyLoaded);
+    console.log('Inside ngOninIt inside favorites component')
+    console.log('Here will be where to fix the favorites progress bar speed- maybe add a timer here?', this.alreadyLoaded);
     this.customerService.getFavorites().subscribe((response: any) =>{
+      this.alreadyLoaded = true;
       this.row = response
     });
     this.alreadyLoaded = true;

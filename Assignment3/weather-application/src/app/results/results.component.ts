@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerResultsService } from '../customer-results.service';
 import { TempChartService } from '../temp-chart.service';
 import { MeteogramService } from '../meteogram.service';
@@ -29,6 +29,7 @@ export class ResultsComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
   @Input() formCleared?: boolean;
+  @Output() noLoadingBar = new EventEmitter<void>(); 
 
   dayViewTabClicked = true;
   chartTabClicked = false;
@@ -57,6 +58,11 @@ export class ResultsComponent implements OnInit {
 
   
   ngOnInit() {
+    console.log('inside ngOnInit() in results component');
+    // if(this.dayViewTabClicked || this.chartTabClicked || this.detailsTabClicked || this.meteogramTabClicked ){
+      // console.log("one is clicked")
+      // this.noLoadingBar.emit();
+    // }
     this.dayViewTabClicked = true;
     this.chartTabClicked = false;
     this.meteogramTabClicked = false;
@@ -69,6 +75,8 @@ export class ResultsComponent implements OnInit {
       // prompt: how do I loop thru data? - 4 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
       this.row = [];
       this.weekData = weatherData.data?.timelines[0]?.intervals;
+      console.log('Loading data???');
+      this.noLoadingBar.emit();
       this.weekData.forEach((dayData: any) => {
         this.row.push({
           date: dayData.startTime,
@@ -80,12 +88,15 @@ export class ResultsComponent implements OnInit {
           windSpeed: dayData.values?.windSpeed,
         });
       });
-      
     });
-    
+    console.log('done ??Loading data???');
   }
   
-
+  loadedResults(){
+    console.log("inside loadedResults in results component")
+    // this.noLoadingBar.emit();
+  }
+  
     addFavorite(){
       // console.log('adding favorite');
       this.clickedFavorite = true;
@@ -121,6 +132,7 @@ export class ResultsComponent implements OnInit {
     }
 
     dayViewTAB() { //may need ip address or longitude and latitude
+      console.log('inside dayViewTAB() in results component');
       this.slideDirection = 'slide-right';
       this.dayViewTabClicked = true;
       this.chartTabClicked = false;

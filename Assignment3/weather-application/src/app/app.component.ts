@@ -28,6 +28,11 @@ export class AppComponent implements OnInit{
   cityClickedOut = false;
   streetClickedOut = false;
   started = false;
+  doneLoading = false;
+
+  showProgressBar: boolean = false;
+  progressWidth: number = 0;
+
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
   @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
@@ -55,6 +60,8 @@ export class AppComponent implements OnInit{
     this.clickedOut = false;
     this.streetClickedOut = false;
     this.inputForm.get('autodetect')?.valueChanges.subscribe((isAutoDetect: boolean) => {
+      this.showProgressBar = true;
+      this.progressWidth = 0;
       if (isAutoDetect) {
         this.inputForm.get('street')?.disable();
         this.inputForm.get('city')?.disable();
@@ -69,6 +76,15 @@ export class AppComponent implements OnInit{
     this.started = true;
   }
 
+  noLoadBar(){
+    console.log('back in app component from results component');
+    // console.log('this.progressWidth(before)', this.progressWidth);
+    // console.log('showProgressBar (before)', this.showProgressBar);
+    // this.showProgressBar = false;
+    // // this.progressWidth = 0;
+    // console.log('this.progressWidth(before)', this.progressWidth);
+    // console.log('showProgressBar (before)', this.showProgressBar);
+  }
   lockFields(){
     // console.log('inside lockFields()')
     this.inputForm.get('street')?.disable();
@@ -80,9 +96,9 @@ export class AppComponent implements OnInit{
 
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
-    console.log('this.inputForm.get(city)?.value = ',this.inputForm.get('city')?.value);
-    console.log('passing from autocomplete city =',city);
-    console.log('this.cityControl.value =',this.cityControl.value);
+    // console.log('this.inputForm.get(city)?.value = ',this.inputForm.get('city')?.value);
+    // console.log('passing from autocomplete city =',city);
+    // console.log('this.cityControl.value =',this.cityControl.value);
     this.inputForm.get('city')?.disable();
   }
   clickedOutOfCity() {
@@ -119,6 +135,17 @@ export class AppComponent implements OnInit{
     // if(this.formSubmitted){
       if(this.formSubmitted){
         this.showResults = true;
+        this.showProgressBar = true;
+        this.progressWidth = 0;
+        const interval = setInterval(() => {
+          if (this.progressWidth < 100) {
+            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+          } else {
+            clearInterval(interval); // Stop the animation when it reaches 100%
+            this.showProgressBar = false; // Hide progress bar if desired
+            // this.loadResults(); // Call the method to load results or perform further actions
+          }
+        }, 500);
       } 
       this.showFavorites = false; 
       this.getDifferentDataTab = 'results';
@@ -133,6 +160,17 @@ export class AppComponent implements OnInit{
       this.showResults = false; 
       this.showFavorites = true; 
       this.getDifferentDataTab = 'favorites';
+      this.showProgressBar = true;
+        this.progressWidth = 0;
+        const interval = setInterval(() => {
+          if (this.progressWidth < 100) {
+            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+          } else {
+            clearInterval(interval); // Stop the animation when it reaches 100%
+            this.showProgressBar = false; // Hide progress bar if desired
+            // this.loadResults(); // Call the method to load results or perform further actions
+          }
+        }, 500);
     // }
   }
 
@@ -141,12 +179,12 @@ export class AppComponent implements OnInit{
   onSubmit() {
     this.formSubmitted = true;
       var callbackend = false;
-      console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
-      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
-      console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
-      console.log("this.streetControl.value =", this.streetControl.value);
-      console.log("this.cityControl.value =", this.cityControl.value);
-      console.log("this.stateControl.value =", this.stateControl.value);
+      // console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
+      // console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
+      // console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
+      // console.log("this.streetControl.value =", this.streetControl.value);
+      // console.log("this.cityControl.value =", this.cityControl.value);
+      // console.log("this.stateControl.value =", this.stateControl.value);
       if(this.inputForm.get("autodetect")?.value == true){
         callbackend = true;
         this.auto_loc = true;
@@ -179,13 +217,28 @@ export class AppComponent implements OnInit{
           callbackend = false;
         }
       }
-      console.log("this.street =", this.street);
-      console.log("this.state =", this.state);
-      console.log("this.city =", this.city);
-      console.log("this.cityControl.value =", this.cityControl.value);
-      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
+      // console.log("this.street =", this.street);
+      // console.log("this.state =", this.state);
+      // console.log("this.city =", this.city);
+      // console.log("this.cityControl.value =", this.cityControl.value);
+      // console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
       if(callbackend){
+        this.doneLoading = true;
         console.log("submitting form");
+        this.showProgressBar = true;
+        this.progressWidth = 0;
+        const interval = setInterval(() => {
+          if (this.progressWidth < 100) {
+            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+          } else {
+            clearInterval(interval); // Stop the animation when it reaches 100%
+            this.showProgressBar = false; // Hide progress bar if desired
+            // this.loadResults(); // Call the method to load results or perform further actions
+          }
+        }, 500);
+
+
+
         this.inputData.emit({auto_loc:this.auto_loc, street: this.street, city: this.city, state: this.state});
         this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
