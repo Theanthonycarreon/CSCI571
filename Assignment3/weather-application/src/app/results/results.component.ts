@@ -45,7 +45,7 @@ export class ResultsComponent implements OnInit {
   chartOptions: Highcharts.Options = {};
   clickedFavorite = false;
   gettingClicked = false;
-
+  slideDirection: string = ''; 
 
   dateObject = {};
   constructor(
@@ -102,6 +102,7 @@ export class ResultsComponent implements OnInit {
     }
 
     detailsTAB(day: string){
+      this.slideDirection = 'slide-left';
       if(day == ''){
         this.dateClicked = day;
         this.dateObject = this.weekData[0];
@@ -120,6 +121,7 @@ export class ResultsComponent implements OnInit {
     }
 
     dayViewTAB() { //may need ip address or longitude and latitude
+      this.slideDirection = 'slide-right';
       this.dayViewTabClicked = true;
       this.chartTabClicked = false;
       this.meteogramTabClicked = false;

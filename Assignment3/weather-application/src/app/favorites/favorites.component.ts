@@ -22,7 +22,7 @@ export class FavoritesComponent implements OnInit {
   }
   removeFavorite(latitude: number, longitude: number, city: string, state: string){
     this.customerService.removeFavoriteRow(latitude, longitude, city, state).subscribe({});
-    // this.row = [];
+    this.row = [];
     this.customerService.getFavorites().subscribe((response: any) =>{
       this.row = response
     });

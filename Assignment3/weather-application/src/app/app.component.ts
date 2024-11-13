@@ -95,22 +95,24 @@ export class AppComponent implements OnInit{
   
   getResults(){
     // console.log('inside getResults()');
-    if(this.formSubmitted){
-      this.showResults = true; 
+    // if(this.formSubmitted){
+      if(this.formSubmitted){
+        this.showResults = true;
+      } 
       this.showFavorites = false; 
       this.getDifferentDataTab = 'results';
-    }
+    // }
 
     
   }
   
   getFavorites() {
     // console.log('inside getFavorites()');
-    if(this.formSubmitted){
+    // if(this.formSubmitted){
       this.showResults = false; 
       this.showFavorites = true; 
       this.getDifferentDataTab = 'favorites';
-    }
+    // }
   }
 
   

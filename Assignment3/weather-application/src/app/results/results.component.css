@@ -120,3 +120,22 @@ h2{
   font-size: 19px;
 }
 
+.slide-container.slide-left .list-view {
+  transition: transform 5s ease-in-out;
+  transform: translateX(-100%); 
+}
+
+.slide-container.slide-left .details-view {
+  transition: transform 5s ease-in-out;
+  transform: translateX(0);
+}
+
+.slide-container.slide-right .list-view {
+  transition: transform 5s ease-in-out;
+  transform: translateX(0);
+}
+
+.slide-container.slide-right .details-view {
+  transition: transform 5s ease-in-out;
+  transform: translateX(100%);
+}
