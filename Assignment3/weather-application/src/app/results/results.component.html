@@ -79,7 +79,10 @@
                                     ></app-details-pane>
                                 </div>
                             </td> 
-                            <td>{{x.weatherCode}}</td>
+                            <td>
+                                <img [src]="'../assets/images/weatherCodes/' + x.icon" width="30" height="30">
+                                {{x.status}}
+                            </td>
                             <td>{{x.temperatureMax}}</td>
                             <td>{{x.temperatureMin}}</td>
                             <td>{{x.windSpeed}}</td>

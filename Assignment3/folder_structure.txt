@@ -595,12 +595,10 @@
     ├── angular.json
     ├── dist
     ├── folder_structure.txt
-    ├── node_modules
-    ├── package-lock.json
     ├── package.json
     ├── src
     ├── tsconfig.app.json
     ├── tsconfig.json
     └── tsconfig.spec.json
 
-590 directories, 14 files
+589 directories, 13 files

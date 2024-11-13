@@ -56,12 +56,15 @@ export class ResultsComponent implements OnInit {
       this.weekData.forEach((dayData: any) => {
         this.row.push({
           date: dayData.startTime,
+          icon: dayData.values.icon,
+          status: dayData.values.status,
           weatherCode: dayData.values?.weatherCode,
           temperatureMax: dayData.values?.temperatureMax,
           temperatureMin: dayData.values?.temperatureMin,
           windSpeed: dayData.values?.windSpeed,
         });
       });
+      
     });
     
   }
@@ -86,6 +89,8 @@ export class ResultsComponent implements OnInit {
       this.weekData.forEach((dayData: any) => {
         this.row.push({
           date: dayData.startTime,
+          icon: dayData.values.icon,
+          status: dayData.values.status,
           weatherCode: dayData.values?.weatherCode,
           temperatureMax: dayData.values?.temperatureMax,
           temperatureMin: dayData.values?.temperatureMin,

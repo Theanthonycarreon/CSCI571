@@ -43,7 +43,8 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
     // }
     this.firstDay = {
         date: dayData.startTime,
-        status: dayData.values?.weatherCode,
+        icon: dayData.values.icon,
+        status: dayData.values.status,
         temperatureMax: dayData.values?.temperatureMax,
         temperatureMin: dayData.values?.temperatureMin,
         temperatureApparent: dayData.values?.temperatureApparent,

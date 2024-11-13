@@ -20,6 +20,30 @@
 // const { error } = require('console');
 // const app = express();
 
+const IMAGE_CODES = {
+  1000: ["clear_day.svg", "Clear"],
+  1001: ["cloudy.svg", "Cloudy"],
+  1100: ["mostly_clear_day.svg", "Mostly Cloudy"],
+  1101: ["partly_cloudy_day.svg", "Partly Cloudy"],
+  1102: ["mostly_cloudy.svg", "Mostly Cloudy"],
+  2000: ["fog.svg", "Fog"],
+  2100: ["fog_light.svg", "Light Fog"],
+  4000: ["drizzle.svg", "Drizzle"],
+  4001: ["rain.svg", "Rain"],
+  4200: ["rain_light.svg", "Light Rain"],
+  4201: ["rain_heavy.svg", "Heavy Rain"],
+  5000: ["snow.svg", "Snow"],
+  5001: ["flurries.svg", "Flurries"],
+  5100: ["snow_light.svg", "Light Snow"],
+  5101: ["snow_heavy.svg", "Heavy Snow"],
+  6001: ["freezing_rain.svg", "Freezing Rain"],
+  6200: ["freezing_rain_light.svg", "Light Freezing Rain"],
+  6201: ["freezing_rain_heavy.svg", "Heavy Freezing Rain"],
+  7000: ["ice_pellets.svg", "Ice Pellets"],
+  7101: ["ice_pellets_heavy.svg", "Heavy Ice Pellets"],
+  7102: ["ice_pellets_light.svg", "Light Ice Pellets"],
+  8000: ["tstorm.svg", "Thunderstorm"]
+}
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
@@ -241,6 +265,14 @@ app.get('/api/weather', async (req, res) => {
       },
       headers 
     });
+
+    weatherData.data.data.timelines[0].intervals.forEach(interval => {
+    const weatherCode = interval.values.weatherCode;
+    const [imageFile, description] = IMAGE_CODES[weatherCode] || ["clear_day.svg", "Clear"];
+    interval.values.icon = imageFile;
+    interval.values.status = description;
+   });
+
     res.json({weatherData: weatherData.data, latitude: inputLatitude, longitude: inputLongitude, address: inputAddress});
 
   } catch (error) {
