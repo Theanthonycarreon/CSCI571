@@ -252,10 +252,10 @@ app.get('/api/weather', async (req, res) => {
       inputLongitude = coordinates.data['results'][0]['geometry']['location']['lng'];
        // prompt: how do I split the response? - 4 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
       const temp = coordinates.data['results'][0]['formatted_address'].split(',');
-      const city = temp[1].trim(); 
-      const state = temp[2].trim().split(' ')[0];
-      const cityState = `${city}, ${state}`;
-      inputAddress = cityState;
+      // const city = temp[1].trim(); 
+      // const state = temp[2].trim().split(' ')[0];
+      // const cityState = `${city}, ${state}`;
+      inputAddress = temp;
       console.log(inputAddress);
     }
     
