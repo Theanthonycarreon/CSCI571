@@ -1,31 +1,21 @@
-html, body {
-    height: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.custom-table {
+.table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.custom-table thead {
-    border-top: 1px solid lightgrey;
+ .table{
+    margin-left: 4%;
+ }
+
+ #headerDayView th {
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.custom-table th, .custom-table td {
+
+.table th, .table td {
+    padding: 16px;
     text-align: left;
     border-bottom: 1px solid lightgrey;
 }
- .container{
-    width: 100%;
-    /* text-align: -webkit-right; */
- }
-
- .table{
-    width: 100%;
-    text-align: center;
-    margin-left: 4%;
- }
