@@ -1,0 +1,43 @@
+.d-flex {
+    text-align: center;
+}
+
+/* .row{
+    text-align: center;
+} */
+
+.btn{
+    text-align: center;
+}
+/* .table{
+    text-align: left;
+} */
+
+.table-container {
+    text-align: center;
+    width: 100%;
+  }
+  
+  .table {
+    text-align: left;
+    width: 42%;
+    font-weight: bold;
+    font-size: 19px;
+  }
+
+  .container{
+    text-align: center;
+  }
+
+  .row{
+    display: ruby;
+  }
+
+
+
+  .spacerLeft{
+    margin-left: 35%;
+  }
+  .spacerRight{
+    margin-right:  35%;
+  }
