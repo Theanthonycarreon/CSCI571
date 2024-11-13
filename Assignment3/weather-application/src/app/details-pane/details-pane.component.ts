@@ -14,24 +14,26 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   @Input() weekData: any;
   @Input() dateClicked?: string;
   @Input() dateObject: {} | undefined;
+  @Input() address?: string;
   @Output() backToResults = new EventEmitter<void>(); 
+
   // map: google.maps.Map | undefined;
   theDate: any = {}; 
   map: any = {};
+  datePipe: any;
   constructor(
     private customerService: CustomerResultsService,
   ) { 
   }
   
   ngOnInit(): void {
-    // console.log(this.weekData);
-    console.log('date clicked', this.dateClicked);
-    console.log('dateObject', this.dateObject);
     const dateData: any = this.dateObject;
+    console.log(dateData);
     this.theDate = {
       date: dateData.startTime,
       icon: dateData.values?.icon,
       status: dateData.values?.status,
+      temperatureNow: dateData.values?.temperature,
       temperatureMax: dateData.values?.temperatureMax,
       temperatureMin: dateData.values?.temperatureMin,
       temperatureApparent: dateData.values?.temperatureApparent,
@@ -53,11 +55,24 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   }
 
   postTweet() {
-    console.log("inside postTweet()");
+    const dateObject = new Date(this.theDate.date);
+
+  // Format the date using Intl.DateTimeFormat
+  const formattedDate = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(dateObject);
+    console.log(formattedDate);
+    const text = `The temperature in ${this.address} on ${formattedDate} is ${this.theDate.temperatureNow}°F and the conditions are ${this.theDate.status}. #CSCI571WeatherForecast`;
+    console.log(text);
+    this.customerService.postingTweet(text).subscribe((response) => {
+      window.open(response.tweetUrl, '_blank'); 
+    });
   }
 
   backToDetailsView() {
-    // console.log('emitting back...........')
     this.backToResults.emit();
     // console.log('after emit call, still in details pane')
   }

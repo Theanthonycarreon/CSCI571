@@ -87,6 +87,15 @@ const client = new MongoClient(uri, {
 client.connect().then(() => console.log("Connected to MongoDB")).catch(err => console.error("MongoDB connection error:", err));
 const favorites_list = client.db('Assignment3').collection('Favorites');
 
+app.get('/api/postTweet', async (req, res) => {
+  const { text } = req.query;
+  try {
+    const tweetUrl = `https://twitter.com/intent/tweet?text=` + text;
+    res.json({ tweetUrl });
+  } catch (error) {
+    console.error('Error adding to DB:', error);
+  }
+});
 app.get('/api/addFavorite', async (req, res) => {
   const { latitude, longitude, city, state } = req.query;
   try {

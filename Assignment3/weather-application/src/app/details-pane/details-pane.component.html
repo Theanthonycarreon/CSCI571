@@ -2,7 +2,7 @@
         <div class="row justify-content-center align-items-center mt-3">
 
           <div class="col-sm-auto">
-            <button type="button" class="btn btn-primary" (click)="backToDetailsView()">(<) List</button>
+            <button type="button" class="btn btn-primary" (click)="backToDetailsView()"><span id="backArrow">&lt;</span> List</button>
           </div>
           <div class="spacerLeft"></div>
               <div class="col-sm text-center">
@@ -10,7 +10,7 @@
               </div>
             <div class="spacerRight"></div>
           <div class="col-sm-auto">
-            <button type="button" class="btn btn-primary" (click)="postTweet()">TWEET</button>
+            <button type="button" class="btn btn-primary" (click)="postTweet()"><img [src]="'../assets/images/twitter-x.svg'" width="30" height="30"></button>
           </div>
         </div>
       </div>

@@ -19,3 +19,7 @@
     text-align: left;
     border-bottom: 1px solid lightgrey;
 }
+.trashCan{
+    background-color: transparent;
+    border-color: transparent;  
+}

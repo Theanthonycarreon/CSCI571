@@ -5,11 +5,11 @@
             <div class="d-flex justify-content-between align-items-center mb-3" id="favorite_detail_holder">
                 <span>
                     <button type="button" class="btn btn-primary-star me-2" href="#favoritesData" (click)="addFavorite()">
-                        *
+                        <img class="starButton" [class.starButton-change]="gettingClicked" [src]="clickedFavorite ? '../assets/images/star-fill.svg' : '../assets/images/star.svg'" width="20" height="20">
                     </button>
                 </span>
                 <span>
-                    <button type="button" class="btn btn-primary" href="#dayDetail" (click)="detailsTAB('')">Details ></button>
+                    <button type="button" class="btn btn-primary" href="#dayDetail" (click)="detailsTAB('')">Details <span id="forwardArrow">&gt;</span></button>
                 </span> <!--Need to change to the star symbol and add the right arrow after details-->
             </div>
         <!-- <div class="row"> -->
@@ -75,6 +75,7 @@
                                         [latitude]="latitude"
                                         [longitude]="longitude"
                                         [weekData]="weekData"
+                                        [address] = "address"
                                         [dateClicked]= "dateClicked"
                                         [dateObject] = "dateObject"
                                         (backToResults)="dayViewTAB()"
@@ -119,6 +120,7 @@
         [latitude]="latitude"
         [longitude]="longitude"
         [weekData]="weekData"
+        [address] = "address"
         [dateObject] = "dateObject"
         [dateClicked] = dateClicked
         (backToResults)="dayViewTAB()"

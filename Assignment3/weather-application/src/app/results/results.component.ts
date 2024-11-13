@@ -43,6 +43,8 @@ export class ResultsComponent implements OnInit {
   row: any[] = [];
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
+  clickedFavorite = false;
+  gettingClicked = false;
 
 
   dateObject = {};
@@ -68,11 +70,6 @@ export class ResultsComponent implements OnInit {
       this.row = [];
       this.weekData = weatherData.data?.timelines[0]?.intervals;
       this.weekData.forEach((dayData: any) => {
-        if (dayData.startTime) {
-          console.log('Start Time:', dayData.startTime); // Log startTime
-        }
-      });
-      this.weekData.forEach((dayData: any) => {
         this.row.push({
           date: dayData.startTime,
           icon: dayData.values.icon,
@@ -87,20 +84,21 @@ export class ResultsComponent implements OnInit {
     });
     
   }
-  // onDateClick(day: { startTime: string; values: any }){
-  //   this.weekData.forEach((dayData: any) => {
-  //     console.log('dayData', dayData)
-  //     if(dayData == '2024-11-13T06:00:00-08:00'){
-  //       console.log('found a match')
-  //     }
-  //     console.log('Didnt match');
-  //   });
-    // console.log('this.dateClicked', this.dateClicked);
-
-  // }
+  
 
     addFavorite(){
-      this.customerService.addFavoriteCity(this.latitude, this.longitude, this.city ?? '',this.state?? '').subscribe({});;
+      console.log('adding favorite');
+      this.clickedFavorite = true;
+      this.gettingClicked = true;
+      if(!this.city){
+        const [tempCity, tempState] = this.address.split(",");
+        this.city = tempCity.trim();
+        this.state = tempState.trim();
+      }
+      this.customerService.addFavoriteCity(this.latitude, this.longitude, this.city ?? '',this.state?? '').subscribe({});
+      setTimeout(() => {}, 10000);
+      this.clickedFavorite = false;
+      this.gettingClicked = true;
     }
 
     detailsTAB(day: string){

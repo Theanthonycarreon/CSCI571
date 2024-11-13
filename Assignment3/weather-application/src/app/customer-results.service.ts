@@ -15,6 +15,12 @@ export class CustomerResultsService  {
       .set('longitude', longitude.toString());
     return this.http.get<any>('/api/map');
   }
+  postingTweet(text: string) {
+    const params = new HttpParams()
+        .set('text', text);
+    return this.http.get<{ tweetUrl: string }>('/api/postTweet', { params });
+  }
+  
 
   getFavorites() {
     return this.http.get<any>('/api/customerFavorites');

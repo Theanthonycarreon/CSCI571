@@ -5,14 +5,14 @@
     font-weight: bold;
   }
   
-  .btn-primary-star {
+  /* .btn-primary-star {
     background-color: #f7f7f7;
     border-color: black;
     color: black;
     border-width: 1px;
     width: 34px;
     height: 30px;
-  }
+  } */
   
   .btn-primary {
     background-color: transparent;
@@ -114,5 +114,9 @@ h2{
 
 #numOfDays{
     font-weight: bold;
+}
+
+#forwardArrow{
+  font-size: 19px;
 }
 
