@@ -1,0 +1,31 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.custom-table thead {
+    border-top: 1px solid lightgrey;
+}
+
+.custom-table th, .custom-table td {
+    text-align: left;
+    border-bottom: 1px solid lightgrey;
+}
+ .container{
+    width: 100%;
+    /* text-align: -webkit-right; */
+ }
+
+ .table{
+    width: 100%;
+    text-align: center;
+    margin-left: 4%;
+ }
