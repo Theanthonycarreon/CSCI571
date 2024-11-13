@@ -170,7 +170,7 @@ export class ResultsComponent implements OnInit {
             type: 'arearange',
             name: 'Temperatures',
             data: this.weekData.map((dayData: any) => [
-                dayData.startTime,
+                new Date(dayData.startTime).getTime(),
                 dayData.values?.temperatureMin,
                 dayData.values?.temperatureMax
             ]),
