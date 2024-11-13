@@ -4,6 +4,16 @@ import { TempChartService } from '../temp-chart.service';
 import { MeteogramService } from '../meteogram.service';
 import * as Highcharts from 'highcharts';
 import WindBarb from 'highcharts/modules/windbarb';
+// import * as Highcharts from 'highcharts';
+import HighchartsMore from 'highcharts/highcharts-more';
+import HighchartsExporting from 'highcharts/modules/exporting';
+import ighchartsMore from 'highcharts/highcharts-more';
+HighchartsMore(Highcharts);
+
+// Initialize Highcharts modules
+// HighchartsMore(Highcharts); // Enables advanced charts like arearange
+// ArearangeModule(Highcharts); // Enables arearange charts
+// HighchartsExporting(Highcharts); 
 
 // Initialize the windbarb module
 WindBarb(Highcharts);
@@ -33,6 +43,8 @@ export class ResultsComponent implements OnInit {
   row: any[] = [];
   highcharts: typeof Highcharts = Highcharts;
   chartOptions: Highcharts.Options = {};
+
+
   dateObject = {};
   constructor(
     private customerService: CustomerResultsService,
@@ -136,85 +148,85 @@ export class ResultsComponent implements OnInit {
       this.activeTab = 'tempChartTab';
       this.highcharts = Highcharts;
 
-      // this.chartOptions = {   
-        //   chart: {
-        //     type: 'arearange', 
-        //   },
-        //   title: {
-        //     text: "Temperature Ranges (Min, Max)"
-        //   },
-        //   xAxis: {
-        //     type: 'datetime',
-        //     labels: {
-        //       format: '{value:%e %b}'
-        //     }
-        //   },
-        //   tooltip: {
-        //     shared: true,
-        //     valueSuffix: '°F',
-        //     xDateFormat: '%e %b'
-        //   },
-        //   series: [{
-        //     type: 'arearange',
-        //     name: 'Temperatures',
-        //     data: this.weekData.map((dayData: any) => [
-        //         dayData.startTime,
-        //         dayData.values?.temperatureMin,
-        //         dayData.values?.temperatureMax
-        //     ]),
-        //     color: {
-        //         linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
-        //         stops: [[0, '#FFA500'], [1, '#87CEEB']]
-        //     },
-        //     marker: {
-        //         enabled: true,
-        //         fillColor: '#66CCFF'
-        //     }
-        //   }]
+      this.chartOptions = {   
+          chart: {
+            type: 'arearange', 
+          },
+          title: {
+            text: "Temperature Ranges (Min, Max)"
+          },
+          xAxis: {
+            type: 'datetime',
+            labels: {
+              format: '{value:%e %b}'
+            }
+          },
+          tooltip: {
+            shared: true,
+            valueSuffix: '°F',
+            xDateFormat: '%e %b'
+          },
+          series: [{
+            type: 'arearange',
+            name: 'Temperatures',
+            data: this.weekData.map((dayData: any) => [
+                dayData.startTime,
+                dayData.values?.temperatureMin,
+                dayData.values?.temperatureMax
+            ]),
+            color: {
+                linearGradient: { x1: 0, x2: 0, y1: 0, y2: 1 },
+                stops: [[0, '#FFA500'], [1, '#87CEEB']]
+            },
+            marker: {
+                enabled: true,
+                fillColor: '#66CCFF'
+            }
+          }]
         
-    this.chartOptions = {   
-      chart: {
-        type: "spline" // General chart type
-      },
-      title: {
-        text: "Monthly Average Temperature"
-      },
-      subtitle: {
-        text: "Source: WorldClimate.com"
-      },
-      xAxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-      },
-      yAxis: {          
-        title: {
-          text: "Temperature °C"
-        } 
-      },
-      tooltip: {
-        valueSuffix: " °C"
-      },
-      series: [
-        {
-          type: "spline",  // Specify type here
-          name: 'Tokyo',
-          data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-        },
-        {
-          type: "spline",  // Specify type here
-          name: 'New York',
-          data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-        },
-        {
-          type: "spline",  // Specify type here
-          name: 'Berlin',
-          data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
-        },
-        {
-          type: "spline",  // Specify type here
-          name: 'London',
-          data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-        }
-      ]
+    // this.chartOptions = {   
+    //   chart: {
+    //     type: "spline" // General chart type
+    //   },
+    //   title: {
+    //     text: "Monthly Average Temperature"
+    //   },
+    //   subtitle: {
+    //     text: "Source: WorldClimate.com"
+    //   },
+    //   xAxis: {
+    //     categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    //   },
+    //   yAxis: {          
+    //     title: {
+    //       text: "Temperature °C"
+    //     } 
+    //   },
+    //   tooltip: {
+    //     valueSuffix: " °C"
+    //   },
+    //   series: [
+    //     {
+    //       type: "spline",  // Specify type here
+    //       name: 'Tokyo',
+    //       data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+    //     },
+    //     {
+    //       type: "spline",  // Specify type here
+    //       name: 'New York',
+    //       data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+    //     },
+    //     {
+    //       type: "spline",  // Specify type here
+    //       name: 'Berlin',
+    //       data: [-0.9, 0.6, 3.5, 8.4, 13.5, 17.0, 18.6, 17.9, 14.3, 9.0, 3.9, 1.0]
+    //     },
+    //     {
+    //       type: "spline",  // Specify type here
+    //       name: 'London',
+    //       data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+    //     }
+    //   ]
     };
       // this.tempChartService.tempChartTAB(this.latitude, this.longitude).subscribe(response => {
       //   this.rows = response.json();
