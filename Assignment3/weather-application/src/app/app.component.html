@@ -1,12 +1,13 @@
 <main>
   <div class="container p-4 rounded" id="weatherSearchContainer">
-    <h2 id="title">Weather Search<span class="logo_img">(IMG)</span></h2>
+    <h2 id="title">Weather Search<span class="logo_img">⛅</span></h2>
     <form class="form" [formGroup]="inputForm" (ngSubmit)="onSubmit()">
 
       <div class="mb-3 alignTextLeft">
         <label for="street">Street<span class="asterisk">*</span></label>
-        <input class="spacerStreetBox" type="text" formControlName="street" class="form-control" id="street"
-        [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+        <input class="spacerStreetBox" type="text" formControlName="street" [formControl]="streetControl" id="street"
+        (click)="clickedOutStreet()"
+        [class.invalid]="streetControl.value === '' && !started"> 
         <div class="invalidInput" *ngIf="inputForm.get('street')?.invalid && formSubmitted">
           Please enter a valid street
         </div>
@@ -23,8 +24,9 @@
             (citySelected)="onCitySelected($event)">
           </app-auto-complete>
 
-          <input class="spacerCityBox" type="text" *ngIf="formSubmitted" id="cityInput" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
-          [ngClass]="{'invalid-border': inputForm.get('street')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+          <input class="spacerCityBox" type="text" *ngIf="formSubmitted" id="cityInput" [formControl]="cityControl" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
+          (click)="clickedOutCity()"
+          [class.invalid]="cityControl.value === '' && !started">
           <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid && formSubmitted">
             Please enter a valid city
           </div>
@@ -33,7 +35,9 @@
 
       <div class="mb-3 alignTextLeft">
         <label for="state" class="spacer">State<span class="asterisk">*</span></label>
-        <select placeholder="Select your state" formControlName="state" id="stateInput" class="form-select spacerStateBox" [ngClass]="{'invalid-border': inputForm.get('state')?.invalid && formSubmitted && !inputForm.get('autodetect')?.value}">
+        <select placeholder="Select your state" formControlName="state" [formControl]="stateControl" id="stateInput" 
+        (click)="clickedOutState()"
+        [class.invalid]="stateControl.value === '' && !started">
           <option value="no_state" selected>Select your state</option>
           <option>Alaska</option>
           <option>Alabama</option>

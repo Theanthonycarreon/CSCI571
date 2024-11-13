@@ -1,4 +1,4 @@
-#cityInput{
+.cityInput{
     width: 70%;
     height: 35px;
     border-color: #d3d3d3;
@@ -9,4 +9,8 @@
 }
 .removeBottomSpace{
     margin-bottom: -1.1%;
+}
+
+.invalid {
+    border-color: red !important;
 }

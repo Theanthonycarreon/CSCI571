@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CustomerResultsService } from './customer-results.service';
 // 2 way binding to send data from one component and back 
 
@@ -21,6 +21,13 @@ export class AppComponent implements OnInit{
   clickedOut = false;
   getDifferentDataTab: string = 'results';
   formCleared = false;
+  streetControl = new FormControl('');
+  cityControl = new FormControl('');
+  stateControl = new FormControl('');
+  stateClickedOut = false;
+  cityClickedOut = false;
+  streetClickedOut = false;
+  started = false;
 
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
   @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
@@ -46,6 +53,7 @@ export class AppComponent implements OnInit{
     this.showResults = false; 
     this.showFavorites = false; 
     this.clickedOut = false;
+    this.streetClickedOut = false;
     this.inputForm.get('autodetect')?.valueChanges.subscribe((isAutoDetect: boolean) => {
       if (isAutoDetect) {
         this.inputForm.get('street')?.disable();
@@ -58,6 +66,7 @@ export class AppComponent implements OnInit{
       }
     });
     console.log('inside ngOnInit()');
+    this.started = true;
   }
 
   lockFields(){
@@ -93,6 +102,16 @@ export class AppComponent implements OnInit{
     console.log(this.inputForm.value);
   }
   
+  clickedOutStreet(){
+    this.started = false;
+  }
+  clickedOutCity(){
+    this.started = false;
+  }
+  clickedOutState(){
+    this.started = false;
+  }
+
   getResults(){
     // console.log('inside getResults()');
     // if(this.formSubmitted){
@@ -131,22 +150,24 @@ export class AppComponent implements OnInit{
         this.inputForm.get('street')?.enable();
         this.inputForm.get('city')?.enable();
         this.inputForm.get('state')?.enable();
-        if(this.inputForm.get("street")?.value != ""){
+        console.log('street value', this.inputForm.get("street")?.value)
+        if(this.inputForm.get("street")?.value != "" || !this.inputForm.get("street")){
           this.street = this.inputForm.get("street")?.value || '';
         } else {
-          console.log("please enter street");
+          console.log('inside the else')
+          // this.streetControl.disable();
           callbackend = false;
         }
         if(this.inputForm.get("city")?.value != ""){
           this.city = this.inputForm.get("city")?.value || '';
         } else {
-          console.log("please enter city");
           callbackend = false;
+          // this.cityControl.disable();
         }
         if(this.inputForm.get("state")?.value != ""){
           this.state = this.inputForm.get("state")?.value || '';
         } else {
-          console.log("please enter state");
+          // this.stateControl.disable();
           callbackend = false;
         }
       }
@@ -158,6 +179,5 @@ export class AppComponent implements OnInit{
       } 
       // console.log('after emitting, maybe running program?')
     }
- 
   
 }

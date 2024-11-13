@@ -29,6 +29,10 @@ form{
     margin-left: 12%;
 }
 
+.invalid {
+    border-color: red !important;
+}
+
 #street, #city {
     width: 70%;
     height: 35px;

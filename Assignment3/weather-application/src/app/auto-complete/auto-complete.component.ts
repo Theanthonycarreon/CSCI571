@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FormControl } from '@angular/forms';
 import { AutoCompleteService } from '../auto-complete.service';
 import { response } from 'express';
+import { color } from 'highcharts';
 
 @Component({
   selector: 'app-auto-complete',
@@ -18,8 +19,10 @@ export class AutoCompleteComponent implements OnInit{
   cityClicked = '';
   clickedOutOfBox = false;
   clickedCity = false;
+  startedTyping = false;
   //  prompt: how do I setup get city to print out to html component? - 4 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
   cityControl = new FormControl('');
+  invalidInput = false;
   @Input() set currCity(value: string) {
     this.cityControl.setValue(value, { emitEvent: false });
   }
@@ -36,6 +39,7 @@ export class AutoCompleteComponent implements OnInit{
     this.showDropDown = true;
     this.clickedOutOfBox = false;
     this.clickedCity = false;
+    console.log('inside NgOninit')
     if (this.clickedOut || this.disabled || this.formSubmitted) {
       this.hideDropdown();
       if(this.formSubmitted){
@@ -49,8 +53,13 @@ export class AutoCompleteComponent implements OnInit{
             const newCities = response.predictions.map((prediction: any) => prediction.terms[0].value);
               //  prompt: how do I filter to only 1 city? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
             this.cities = newCities.filter((city: any, index: any, self: string | any[]) => self.indexOf(city) === index);
+            console.log(newCities.length)
+            if(newCities.length == 0){
+              this.invalidInput = true;
+            }
           })
         } else {
+          // this.invalidInput = true;
           this.cities = [];
           this.showDropDown = false;
         }
@@ -59,31 +68,42 @@ export class AutoCompleteComponent implements OnInit{
       
   }
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes)
+    // console.log('inside changes' this.cityControl[changes]);
     if (this.clickedOut || this.disabled || this.formSubmitted) {
       this.hideDropdown();
       if(this.formSubmitted){
         this.cityControl.disable();
       }
     }
-    console.log(this.cities)
-    // if (changes['clickedOut'] && changes['clickedOut'].currentValue) {
-    //   this.hideDropdown();
-    // }
-    // if (changes['formSubmitted'] && changes['formSubmitted'].currentValue) {  // Hide dropdown on form submission
-    //   this.hideDropdown();
-    // }
-    // if (changes['disabled'] && changes['disabled'].currentValue) {
-    //   this.cityControl.disable();
-    //   this.hideDropdown();
-    // } else if (changes['disabled'] && !changes['disabled'].currentValue) {
-    //   this.cityControl.enable();
-    // }
+    if(this.cities.length > 0 && this.cityControl.value == ''){
+      this.invalidInput = true;
+    }
+    // console.log('cities' this.cities);
+    // console.log('city length', this.cities.length);
     
     
   }
-  
+  onBlur(){
+    console.log('inside onBlur()')
+    console.log('this.cityControl.value inside OnBlur()', this.cityControl.value)
+    if(this.cityControl.value == ''){
+      this.invalidInput = true;
+    }
+    
+  }
+
   currCityInput(){
+    console.log('inside currCityInput()')
+    if(this.cityControl.value == ''){
+      console.log('this.cityControl.value is empty')
+      this.invalidInput = true;
+    }
+    if(this.startedTyping && this.cityControl.value == ''){
+      this.invalidInput = true;
+    }
+    // if(this.cities.length > 0 && this.cityControl.value == ''){
+    //   this.invalidInput = true;
+    // }
     this.cityChanged.emit(this.cityControl.value || undefined);
   }
   //  prompt: how do I setup get city to print out to html component? - 3 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
