@@ -80,8 +80,10 @@ export class AppComponent implements OnInit{
 
   onCitySelected(city: string) {
     this.inputForm.get('city')?.setValue(city);
+    console.log('this.inputForm.get(city)?.value = ',this.inputForm.get('city')?.value);
+    console.log('passing from autocomplete city =',city);
+    console.log('this.cityControl.value =',this.cityControl.value);
     this.inputForm.get('city')?.disable();
-    // console.log('inside onCitySelected()');
   }
   clickedOutOfCity() {
     this.clickedOut = true;
@@ -165,6 +167,7 @@ export class AppComponent implements OnInit{
         }
         if(this.inputForm.get("city")?.value != ""){
           this.city = this.inputForm.get("city")?.value ?? '';
+          this.cityControl.setValue(this.city); 
         } else {
           callbackend = false;
           // this.cityControl.disable();
@@ -179,6 +182,8 @@ export class AppComponent implements OnInit{
       console.log("this.street =", this.street);
       console.log("this.state =", this.state);
       console.log("this.city =", this.city);
+      console.log("this.cityControl.value =", this.cityControl.value);
+      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
       if(callbackend){
         console.log("submitting form");
         this.inputData.emit({auto_loc:this.auto_loc, street: this.street, city: this.city, state: this.state});

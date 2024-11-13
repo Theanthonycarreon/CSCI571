@@ -51,43 +51,28 @@ export class AutoCompleteComponent implements OnInit{
             const newCities = response.predictions.map((prediction: any) => prediction.terms[0].value);
               //  prompt: how do I filter to only 1 city? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
             this.cities = newCities.filter((city: any, index: any, self: string | any[]) => self.indexOf(city) === index);
-            console.log(newCities.length)
-            if(newCities.length == 0){
-              this.invalidInput = true;
-            }
           })
         } else {
-          this.cities = [];
-          this.showDropDown = false;
+          this.hideDropdown();
         }
       });
     }
       
   }
-  ngOnChanges(changes: SimpleChanges) {
-    // console.log('inside changes' this.cityControl[changes]);
-    if (this.clickedOut || this.disabled || this.formSubmitted) {
-      this.hideDropdown();
-      if(this.formSubmitted){
-        this.cityControl.disable();
-      }
-    }
-    if(this.cities.length > 0 && this.cityControl.value == ''){
-      this.invalidInput = true;
-    }
-    
-    
-  }
+  
   onBlur(city: string){
+    console.log('city string =', city);
+    console.log('in OnBlur');
+    this.cityChanged.emit(city || undefined);
     if(!this.startedTyping && !this.invalidInput){
       this.startedTyping = true;
       this.invalidInput = true;
     } else if(this.startedTyping && this.cityControl.value == ''){
       this.invalidInput = true;
     } else if(this.startedTyping && this.cityControl.value != '' && this.invalidInput){
-      this.cityChanged.emit(city || undefined);  
+      // this.cityChanged.emit(city || undefined);  
     } else {
-      this.cityChanged.emit(city || undefined);  
+      // this.cityChanged.emit(city || undefined);  
     }
     
   
@@ -95,6 +80,7 @@ export class AutoCompleteComponent implements OnInit{
   }
 
   currCityInput(){
+    this.cityChanged.emit(this.cityControl.value || undefined);
     if(this.cityControl.value == ''){
       this.invalidInput = true;
     }
@@ -107,19 +93,31 @@ export class AutoCompleteComponent implements OnInit{
   }
   //  prompt: how do I setup get city to print out to html component? - 3 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
   selectCity(city: string) {
-    this.citySelected.emit(city); 
-    this.cities = [];
-    this.showDropDown = false;
-    this.clickedCity = true;
-    this.clickedOutOfBox = true;
+    console.log('Selected city:', city);
+
+  this.cityControl.setValue(city); // Update the cityControl value
+  this.citySelected.emit(city); // Emit the selected city to the parent component
+
+  this.showDropDown = false; // Hide the dropdown
+  this.cities = []; // Clear the city list
+  this.invalidInput = false; 
+    // console.log('cities length', this.cities.length)
+    // this.cityControl.setValue(city); 
+    // this.citySelected.emit(city); 
+    // this.cities = [];
+    // this.showDropDown = false;
+    // this.clickedCity = true;
+    // this.clickedOutOfBox = true;
+    // this.invalidInput = false;
+    // this.hideDropdown();
+    // this.cities = [];
+    
   }
 
   hideDropdown() {
-    console.log('inside hideDropdown()');
-    this.cities = [];
+    console.log('Hiding dropdown');
     this.showDropDown = false;
-    this.clickedCity = true;
-    this.clickedOutOfBox = true;
+    this.cities = [];
   }
 
   showDropdown() {

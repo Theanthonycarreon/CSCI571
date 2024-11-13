@@ -24,7 +24,7 @@
             (citySelected)="onCitySelected($event)">
           </app-auto-complete>
 
-          <input class="spacerCityBox" type="text" *ngIf="formSubmitted" id="cityInput" [formControl]="cityControl" [disabled]="inputForm.get('autodetect')?.value" [value]="inputForm.get('city')?.value"
+          <input class="spacerCityBox" type="text" *ngIf="formSubmitted" id="cityInput" [formControl]="cityControl" [disabled]="inputForm.get('autodetect')?.value"
           (click)="clickedOutCity()"
           [class.invalid]="cityControl.value === '' && !started">
           <div class="invalidInput" *ngIf="inputForm.get('city')?.invalid && formSubmitted">
