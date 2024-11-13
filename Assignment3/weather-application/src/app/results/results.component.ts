@@ -40,6 +40,8 @@ export class ResultsComponent implements OnInit {
     private meteogramService: MeteogramService,
   ) { 
   }  
+
+  
   ngOnInit() {
     this.dayViewTabClicked = true;
     this.chartTabClicked = false;
@@ -101,7 +103,6 @@ export class ResultsComponent implements OnInit {
           }
         });
       }
-      console.log('date object',  this.dateObject );
       this.dayViewTabClicked = false;
       this.chartTabClicked = false;
       this.meteogramTabClicked = false;

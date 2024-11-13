@@ -1,7 +1,7 @@
 
 <div class="container" *ngIf="(!detailsTabClicked) || ((!chartTabClicked && !meteogramTabClicked && !dayViewTabClicked) && detailsTabClicked) " >
     <div *ngIf="!detailsTabClicked">
-        <h2>Forcast at {{city}}, {{state}}</h2>
+        <h2>Forcast at {{address}}</h2>
             <div class="d-flex justify-content-between align-items-center mb-3" id="favorite_detail_holder">
                 <span>
                     <button type="button" class="btn btn-primary-star me-2" href="#favoritesData" (click)="addFavorite()">
