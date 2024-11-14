@@ -87,6 +87,13 @@ const client = new MongoClient(uri, {
 client.connect().then(() => console.log("Connected to MongoDB")).catch(err => console.error("MongoDB connection error:", err));
 const favorites_list = client.db('Assignment3').collection('Favorites');
 
+
+
+
+
+
+
+
 app.get('/api/postTweet', async (req, res) => {
   const { text } = req.query;
   try {
@@ -172,21 +179,7 @@ app.get('/api/dayView', async (req, res) => {
     console.error('Error fetching data:', error);
   }
 });
-// app.get('/api/tempChart', async (req, res) => {
-//   const {  latitude , longitude } = req.query; //might need longitude and latitude
-//   try {
-//     const tempChart = await axios.get('https://maps.googleapis.com/maps/api/place/autocomplete/json', { //change link
-//       params: { 
-//           // address, 
-//           key: mapsApiKey, 
-//       },
-//     });
-//     res.
-//     res.json(tempChart);
-//   } catch (error) {
-//     console.error('Error fetching data:', error);
-//   }
-// });
+
 app.get('/api/meteogram', async (req, res) => {
   const {  latitude , longitude } = req.query; //might need longitude and latitude
   // `https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=${latitude}&lon=${longitude}`
@@ -227,6 +220,23 @@ app.get('/api/autocomplete', async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch autocomplete data' });
   }
 });
+
+
+app.get('/api/initMap', async (req, res) => {
+  const { latitude, longitude } = req.query;
+  try {
+    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=8&size=600x300&key=${mapsApiKey}`;
+    
+    res.json({
+      center: { lat: parseFloat(latitude), lng: parseFloat(longitude) },
+      mapUrl
+    });
+  } catch (error) {
+    console.error('Error fetching map:', error);
+    res.status(500).json({ error: 'Failed to fetch map' });
+  }
+});
+
 
 
 

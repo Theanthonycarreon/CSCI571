@@ -48,10 +48,13 @@ export class DetailsPaneComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+    this.customerService.getMap(this.latitude ?? 0,this.longitude ?? 0).subscribe((response) => {this.map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
       center: { lat: this.latitude, lng: this.longitude },
-      zoom: 8,
+      zoom: 15,
     });
+  }, error => {
+    console.error('Error initializing map:', error);
+  });
   }
 
   postTweet() {

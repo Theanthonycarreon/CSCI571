@@ -13,7 +13,7 @@ export class CustomerResultsService  {
     const params = new HttpParams()
       .set('latitude', latitude.toString())
       .set('longitude', longitude.toString());
-    return this.http.get<any>('/api/map');
+    return this.http.get('/api/initMap');
   }
   postingTweet(text: string) {
     const params = new HttpParams()

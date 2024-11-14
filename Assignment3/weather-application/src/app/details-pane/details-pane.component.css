@@ -1,39 +1,4 @@
-/* .d-flex {
-    text-align: center;
-}
 
-
-.btn{
-    text-align: center;
-}
-
-.table-container {
-    text-align: center;
-    width: 100%;
-  }
-  
-  
-
-  .container{
-    text-align: center;
-  }
-
-  .row{
-    display: ruby;
-  }
-
-
-
-  .spacerLeft{
-    margin-left: 35%;
-  }
-  .spacerRight{
-    margin-right:  35%;
-  }
-
-  #backArrow{
-    font-size: 18px;
-  } */
 
   .table {
     font-size: 19px;
@@ -55,9 +20,7 @@
   .container{
     text-align: center;
   }
-  /* .table td{
-    padding: 0% 70%;
-  } */
+
 
   .d-flex{
     text-align: center;
