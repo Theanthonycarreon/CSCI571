@@ -30,6 +30,7 @@ export class AppComponent implements OnInit{
   started = false;
   doneLoading = false;
   noRecordsFound = true;
+  noStateInput = false;
 
   showProgressBar: boolean = false;
   progressWidth: number = 0;
@@ -54,6 +55,7 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    this.stateControl.setValue("no_state");
     this.formCleared = false;
     this.createForm();
     this.showResults = false; 
@@ -113,12 +115,13 @@ export class AppComponent implements OnInit{
     this.showFavorites = false;
     this.formSubmitted = false;
     this.formCleared = true;
-    console.log('emitting formCleared');
+    this.showProgressBar = false;
     this.clearedForm.emit({formCleared: this.formCleared});
     this.inputForm.get('city')?.setValue("");
     this.inputForm.reset({ autodetect: false }); 
-    // console.log("inside onClear()");
-    console.log(this.inputForm.value);
+    this.stateControl.setValue('no_state');
+    this.stateControl.value === 'no_state';
+    console.log('this.stateControl.value ',this.stateControl.value );
   }
   
   clickedOutStreet(){
@@ -140,11 +143,10 @@ export class AppComponent implements OnInit{
         this.progressWidth = 0;
         const interval = setInterval(() => {
           if (this.progressWidth < 100) {
-            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+            this.progressWidth += 20; 
           } else {
-            clearInterval(interval); // Stop the animation when it reaches 100%
-            this.showProgressBar = false; // Hide progress bar if desired
-            // this.loadResults(); // Call the method to load results or perform further actions
+            clearInterval(interval); 
+            this.showProgressBar = false; 
           }
         }, 500);
       } 
@@ -155,10 +157,17 @@ export class AppComponent implements OnInit{
     
   }
 
+  checkStateStatus(){
+    if (this.stateControl.value === 'no_state' || this.stateControl.value == '') {
+      this.noStateInput = true;
+      return true; 
+    } 
+    this.noStateInput = false;
+    return false;
+  }
+
+
   foundNoRecords(noneFound: boolean){
-    // this.noRecordsFound = noneFound;
-    console.log('inside foundNoRecords()- noneFound== ', noneFound);
-    console.log('inside foundNoRecords()- this.noRecordsFound == ', this.noRecordsFound);
     if(noneFound){
       this.noRecordsFound = true;  
     } else {
@@ -170,33 +179,28 @@ export class AppComponent implements OnInit{
   }
   
   getFavorites() {
-    // console.log('inside getFavorites()');
-    // console.log('before if in getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
     if(this.noRecordsFound){
       this.noRecordsFound = true;
       this.showProgressBar = false;
-      console.log('in if  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
-      console.log('in if  inside getFavorites()- this.showProgressBar == ', this.showProgressBar);
+      // console.log('in if  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
+      // console.log('in if  inside getFavorites()- this.showProgressBar == ', this.showProgressBar);
     } else {
-      console.log('in else  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
+      // console.log('in else  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
       this.noRecordsFound = false;
       this.showProgressBar = true;
         this.progressWidth = 0;
         const interval = setInterval(() => {
           if (this.progressWidth < 100) {
-            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+            this.progressWidth += 20; 
           } else {
-            clearInterval(interval); // Stop the animation when it reaches 100%
-            this.showProgressBar = false; // Hide progress bar if desired
-            // this.loadResults(); // Call the method to load results or perform further actions
+            clearInterval(interval); 
+            this.showProgressBar = false; 
           }
         }, 500);
     }
     this.showResults = false; 
     this.showFavorites = true; 
     this.getDifferentDataTab = 'favorites';
-    // if(this.formSubmitted){
-    // }
   }
 
   
@@ -204,12 +208,12 @@ export class AppComponent implements OnInit{
   onSubmit() {
     this.formSubmitted = true;
       var callbackend = false;
-      // console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
-      // console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
-      // console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
-      // console.log("this.streetControl.value =", this.streetControl.value);
-      // console.log("this.cityControl.value =", this.cityControl.value);
-      // console.log("this.stateControl.value =", this.stateControl.value);
+      console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
+      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
+      console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
+      console.log("this.streetControl.value =", this.streetControl.value);
+      console.log("this.cityControl.value =", this.cityControl.value);
+      console.log("this.stateControl.value =", this.stateControl.value);
       if(this.inputForm.get("autodetect")?.value == true){
         callbackend = true;
         this.auto_loc = true;
@@ -222,10 +226,12 @@ export class AppComponent implements OnInit{
         this.inputForm.get('city')?.enable();
         this.inputForm.get('state')?.enable();
         console.log('street value', this.inputForm.get("street")?.value)
-        if(this.streetControl.value != ""){
+        if(this.streetControl.value != "" || !this.streetControl ){
           this.street = this.inputForm.get("street")?.value || '';
         } else {
-          // this.streetControl.disable();
+          if(this.streetControl && !this.inputForm.get("city")?.value){
+            this.streetControl.setValue('');
+          }
           callbackend = false;
         }
         if(this.inputForm.get("city")?.value != ""){
@@ -233,12 +239,10 @@ export class AppComponent implements OnInit{
           this.cityControl.setValue(this.city); 
         } else {
           callbackend = false;
-          // this.cityControl.disable();
         }
         if(this.stateControl.value != ""){
           this.state = this.stateControl.value ?? '';
         } else {
-          // this.stateControl.disable();
           callbackend = false;
         }
       }
@@ -262,9 +266,9 @@ export class AppComponent implements OnInit{
         this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
       } else {
-        console.log('put error message here?')
+          this.noStateInput = true;
+          return; 
       }
-      // console.log('after emitting, maybe running program?')
     }
   
 }

@@ -12,7 +12,15 @@
     text-align: center;
     margin-top: 1%;
 }
+.invalid-border {
+    border: 1px solid red;
+    border-radius: 4px;
+    color: red;
+  }
 
+  .invalidText{
+    color:red;
+  }
 #title{
     text-align: center;
 }
