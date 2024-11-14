@@ -31,6 +31,7 @@ export class AppComponent implements OnInit{
   doneLoading = false;
   noRecordsFound = true;
   noStateInput = false;
+  chosenFavoriteCityData = {};
 
   showProgressBar: boolean = false;
   progressWidth: number = 0;
@@ -39,7 +40,7 @@ export class AppComponent implements OnInit{
   @Output() inputData = new EventEmitter<{auto_loc: boolean,street:string, city:string, state:string}>();
   @Output() inTextBox = new EventEmitter<{clickedOut: boolean}>();
   @Output() clearedForm = new EventEmitter<{formCleared: boolean}>();
-
+  @Output() favoriteCity = new EventEmitter<any>();
 // prompt: how do I setup a responsive form in typescript? - 6 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
   constructor(
     private fb: FormBuilder,
@@ -77,6 +78,33 @@ export class AppComponent implements OnInit{
     });
     console.log('inside ngOnInit()');
     this.started = true;
+  }
+
+  loadFavoriteCity(city:string,state:string){
+    console.log('City:', city, 'State:', state); // Debugging
+    this.city = city;
+    this.state = state;
+    this.showResults = true; 
+    this.customerService.getWeatherData(false,'',city,state).subscribe(response => {
+      const { latitude, longitude, address, weatherData } = response;
+      this.chosenFavoriteCityData = weatherData.data?.timelines[0]?.intervals;
+      // console.log('inside loadFavor() - chosenFavoriteCityData= ', this.chosenFavoriteCityData); 
+      this.favoriteCity.emit({chosenData: this.chosenFavoriteCityData});
+      
+    });
+    // this.doneLoading = true;
+    //     console.log("submitting form");
+    //     this.showProgressBar = true;
+    //     this.progressWidth = 0;
+    //     const interval = setInterval(() => {
+    //       if (this.progressWidth < 100) {
+    //         this.progressWidth += 10; 
+    //       } else {
+    //         clearInterval(interval); 
+    //         this.showProgressBar = false; 
+    //       }
+    //     }, 500);
+    //     this.favoriteCity.emit({})
   }
 
   noLoadBar(){
@@ -121,7 +149,7 @@ export class AppComponent implements OnInit{
     this.inputForm.reset({ autodetect: false }); 
     this.stateControl.setValue('no_state');
     this.stateControl.value === 'no_state';
-    console.log('this.stateControl.value ',this.stateControl.value );
+    // console.log('this.stateControl.value ',this.stateControl.value );
   }
   
   clickedOutStreet(){
@@ -208,12 +236,12 @@ export class AppComponent implements OnInit{
   onSubmit() {
     this.formSubmitted = true;
       var callbackend = false;
-      console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
-      console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
-      console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
-      console.log("this.streetControl.value =", this.streetControl.value);
-      console.log("this.cityControl.value =", this.cityControl.value);
-      console.log("this.stateControl.value =", this.stateControl.value);
+      // console.log("this.inputForm.get(street.value)", this.inputForm.get("street")?.value);
+      // console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
+      // console.log("this.inputForm.get(state.value)", this.inputForm.get("state")?.value);
+      // console.log("this.streetControl.value =", this.streetControl.value);
+      // console.log("this.cityControl.value =", this.cityControl.value);
+      // console.log("this.stateControl.value =", this.stateControl.value);
       if(this.inputForm.get("autodetect")?.value == true){
         callbackend = true;
         this.auto_loc = true;

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CustomerResultsService } from '../customer-results.service';
 import { TempChartService } from '../temp-chart.service';
 import { MeteogramService } from '../meteogram.service';
@@ -29,6 +29,7 @@ export class ResultsComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
   @Input() formCleared?: boolean;
+  @Input() favoriteCity = {};
   @Output() noLoadingBar = new EventEmitter<void>(); 
 
   dayViewTabClicked = true;
@@ -55,14 +56,11 @@ export class ResultsComponent implements OnInit {
     private meteogramService: MeteogramService,
   ) { 
   }  
-
+  
   
   ngOnInit() {
     console.log('inside ngOnInit() in results component');
-    // if(this.dayViewTabClicked || this.chartTabClicked || this.detailsTabClicked || this.meteogramTabClicked ){
-      // console.log("one is clicked")
-      // this.noLoadingBar.emit();
-    // }
+    // console.log('chosen city =', this.favoriteCity);
     this.dayViewTabClicked = true;
     this.chartTabClicked = false;
     this.meteogramTabClicked = false;
@@ -89,11 +87,14 @@ export class ResultsComponent implements OnInit {
         });
       });
     });
-    console.log('done ??Loading data???');
+    // console.log('done ??Loading data???');
   }
   
+  
+
+
   loadedResults(){
-    console.log("inside loadedResults in results component")
+    // console.log("inside loadedResults in results component")
     // this.noLoadingBar.emit();
   }
   

@@ -250,6 +250,7 @@ app.get('/api/weather', async (req, res) => {
       inputAddress = ipinfoResponse.data['city'] + ', ' + ipinfoResponse.data['region'];
     } else {
       const address = [street,city,state].join(', ');
+      console.log("address in server.js = ", address);
       const coordinates = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { 
         params: {
           address, 
@@ -257,6 +258,7 @@ app.get('/api/weather', async (req, res) => {
         },
         headers
       });
+      // console.log("coord response: ", coordinates);
       inputLatitude = coordinates.data['results'][0]['geometry']['location']['lat'];
       inputLongitude = coordinates.data['results'][0]['geometry']['location']['lng'];
        // prompt: how do I split the response? - 4 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264
@@ -264,8 +266,7 @@ app.get('/api/weather', async (req, res) => {
       // const city = temp[1].trim(); 
       // const state = temp[2].trim().split(' ')[0];
       // const cityState = `${city}, ${state}`;
-      inputAddress = temp;
-      console.log(inputAddress);
+      inputAddress = temp;;
     }
     
     const weatherData = await axios.get('https://api.tomorrow.io/v4/timelines', { 
@@ -281,7 +282,6 @@ app.get('/api/weather', async (req, res) => {
       },
       headers 
     });
-
     weatherData.data.data.timelines[0].intervals.forEach(interval => {
     const weatherCode = interval.values.weatherCode;
     const [imageFile, description] = IMAGE_CODES[weatherCode] || ["clear_day.svg", "Clear"];

@@ -10,20 +10,24 @@ import { CustomerResultsService } from '../customer-results.service';
 export class FavoritesComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
-  @Input()
+  @Output() pickedFavorite = new EventEmitter<{city: string; state: string }>();
   alreadyLoaded = false; 
   row: any[] = [];
   @Output() noRecords = new EventEmitter<boolean>(); 
+  pickedACity = false;
+
   constructor(
     private customerService: CustomerResultsService,
   ) { 
   } 
   ngOnInit(): void {
+    this.pickedACity = false;
+    console.log('inside ngOninIt() in side favorites component pickacity = ', this.pickedACity)
     // console.log('Here will be where to fix the favorites progress bar speed- maybe add a timer here?', this.alreadyLoaded);
     this.customerService.getFavorites().subscribe((response: any) =>{
       // this.row = response
-      console.log('this.row', this.row);
-      console.log('Inside removeFavortie -response', response.length)
+      // console.log('this.row', this.row);
+      // console.log('Inside removeFavortie -response', response.length)
       if(response.length == 0){
         this.row = [];
         this.noRecords.emit(true);
@@ -38,8 +42,8 @@ export class FavoritesComponent implements OnInit {
     this.customerService.removeFavoriteRow(latitude, longitude, city, state).subscribe({});
     this.customerService.getFavorites().subscribe((response: any) =>{
       // this.row = response
-      console.log('Inside removeFavortie -response', response.length)
-      console.log('this.row.length', this.row.length)
+      // console.log('Inside removeFavortie -response', response.length)
+      // console.log('this.row.length', this.row.length)
       if( response.length == 0){
         this.row = [];
         this.noRecords.emit(true);
@@ -51,5 +55,9 @@ export class FavoritesComponent implements OnInit {
     });
   }
 
-
+  getWeather(city: string, state: string){
+    this.pickedACity = true;
+    this.pickedFavorite.emit({ city, state });
+    console.log('inside ngOninIt() in side favorites component pickacity = ', this.pickedACity)
+  }
 }

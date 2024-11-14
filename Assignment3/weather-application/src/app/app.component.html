@@ -151,7 +151,8 @@
       [city]="city"
       [state]="state"
       [formCleared] = "formCleared"
-      (noLoadingBar) = "noLoadBar()">
+      (noLoadingBar) = "noLoadBar()"
+      [favoriteCity]="chosenFavoriteCityData">
     </app-results>
   </div>
 
@@ -160,7 +161,8 @@
       *ngIf="showFavorites"
       [city]="city"
       [state]="state"
-      (noRecords) = "foundNoRecords($event)">
+      (noRecords) = "foundNoRecords($event)"
+      (pickedFavorite) = "loadFavoriteCity($event.city, $event.state)">
     </app-favorites>
   </div>
 </main>
