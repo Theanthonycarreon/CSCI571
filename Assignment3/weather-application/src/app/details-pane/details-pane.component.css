@@ -1,29 +1,18 @@
-.d-flex {
+/* .d-flex {
     text-align: center;
 }
 
-/* .row{
-    text-align: center;
-} */
 
 .btn{
     text-align: center;
 }
-/* .table{
-    text-align: left;
-} */
 
 .table-container {
     text-align: center;
     width: 100%;
   }
   
-  .table {
-    text-align: left;
-    width: 42%;
-    font-weight: bold;
-    font-size: 19px;
-  }
+  
 
   .container{
     text-align: center;
@@ -44,4 +33,58 @@
 
   #backArrow{
     font-size: 18px;
+  } */
+
+  .table {
+    font-size: 19px;
+    width: 100%;
+    text-align: left;
+    border-spacing: 0px 0px; 
+    
   }
+  .table-responsive th, .table-responsive td {
+    padding: .5%;
+    text-align: left;
+    border-bottom: 1px solid #aaaaaa;
+}
+
+  .headerDayView{
+    font-weight: bold;
+  }
+
+  .container{
+    text-align: center;
+  }
+  /* .table td{
+    padding: 0% 70%;
+  } */
+
+  .d-flex{
+    text-align: center;
+  }
+
+  .greyRow{
+    background-color: #efefef;
+  }
+  
+  #map{
+    height: 600px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .centered {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .button-spacing > button {
+    margin: 0 91px;
+  }
+
+  .non-button{
+    background-color: transparent;
+  }
+  

@@ -1,67 +1,71 @@
-    <div class="container d-flex">
-        <div class="row justify-content-center align-items-center mt-3">
-
+    <!-- <div class="d-flex justify-content-center align-items-center mt-3">
           <div class="col-sm-auto">
             <button type="button" class="btn btn-primary" (click)="backToDetailsView()"><span id="backArrow">&lt;</span> List</button>
           </div>
-          <div class="spacerLeft"></div>
               <div class="col-sm text-center">
-                  <h2 class="m-0 mx-2 datePadding">{{ theDate.date | date:'EEEE, MMM. d, y' }}</h2>
+                  <h2 >{{ theDate.date | date:'EEEE, MMM. d, y' }}</h2>
               </div>
-            <div class="spacerRight"></div>
           <div class="col-sm-auto">
             <button type="button" class="btn btn-primary" (click)="postTweet()"><img [src]="'../assets/images/twitter-x.svg'" width="30" height="30"></button>
           </div>
+      </div> -->
+      <div class="container centered">
+        <div class="button-spacing mt-3">
+          <button type="button" class="btn btn-primary" (click)="backToDetailsView()"><span id="backArrow">&lt;</span> List</button>
+          <button type="button non-button" class="btn btn-secondary" style="background-color: transparent; border-width: 0px;"><h2>{{ theDate.date | date:'EEEE, MMM. d, y' }}</h2></button>
+          <button type="button" class="btn btn-success" (click)="postTweet()"><img [src]="'../assets/images/twitter-x.svg'" width="30" height="30"></button>
         </div>
       </div>
 
 <div class="d-flex justify-content-center align-items-center mt-3" *ngIf="theDate">
     <div class="table-container">
         <table class="table table-responsive table-striped">
-            <tr>
-                <td>Status</td>
-                <td>{{theDate.status}}</td>
-            </tr>
-            <tr>
-                <td>Max Temperature</td>
-                <td>{{theDate.temperatureMax}}°F</td>
-            </tr>
-            <tr>
-                <td>Min Temperature</td>
-                <td>{{theDate.temperatureMin}}°F</td>
-            </tr>
-            <tr>
-                <td>Apparent Temperature</td>
-                <td>{{theDate.temperatureApparent}}°F</td>
-            </tr>
-            <tr>
-                <td>Sun Rise Time</td>
-                <td>{{theDate.sunriseTime  | date: 'h a'}}</td>
-            </tr>
-            <tr>
-                <td>Sun Set Time</td>
-                <td>{{theDate.sunsetTime  | date: 'h a'}}</td>
-            </tr>
-            <tr>
-                <td>Humidity</td>
-                <td>{{theDate.humidity}}%</td>
-            </tr>
-            <tr>
-                <td>Wind Speed</td>
-                <td>{{theDate.windSpeed}}mph</td>
-            </tr>
-            <tr>
-                <td>Visibility</td>
-                <td>{{theDate.visibility}}mi</td>
-            </tr>
-            <tr>
-                <td>Cloud Cover</td>
-                <td>{{theDate.cloudCover}}%</td>
-            </tr>
+            <tr class="greyRow">
+                <td class="headerDayView">Status</td>
+                <td>{{ theDate.status }}</td>
+              </tr>
+              <tr>
+                <td class="headerDayView">Max Temperature</td>
+                <td>{{ theDate.temperatureMax }}°F</td>
+              </tr>
+              <tr class="greyRow">
+                <td class="headerDayView">Min Temperature</td>
+                <td>{{ theDate.temperatureMin }}°F</td>
+              </tr>
+              <tr>
+                <td class="headerDayView">Apparent Temperature</td>
+                <td>{{ theDate.temperatureApparent }}°F</td>
+              </tr>
+              <tr class="greyRow">
+                <td class="headerDayView">Sun Rise Time</td>
+                <td>{{ theDate.sunriseTime | date: 'h a' }}</td>
+              </tr>
+              <tr>
+                <td class="headerDayView">Sun Set Time</td>
+                <td>{{ theDate.sunsetTime | date: 'h a' }}</td>
+              </tr>
+              <tr class="greyRow">
+                <td class="headerDayView">Humidity</td>
+                <td>{{ theDate.humidity }}%</td>
+              </tr>
+              <tr>
+                <td class="headerDayView">Wind Speed</td>
+                <td>{{ theDate.windSpeed }}mph</td>
+              </tr>
+              <tr class="greyRow">
+                <td class="headerDayView">Visibility</td>
+                <td>{{ theDate.visibility }}mi</td>
+              </tr>
+              <tr>
+                <td class="headerDayView">Cloud Cover</td>
+                <td>{{ theDate.cloudCover }}%</td>
+              </tr>
         </table>
     </div>
-    <div id="map" style="height: 400px; width: 100%;">
-        
-    </div>
+    
+</div>
 
-    </div>
+<div class="d-flex justify-content-center align-items-center mt-3" *ngIf="theDate">
+
+    <div id="map"></div>
+</div>
