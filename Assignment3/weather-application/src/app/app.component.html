@@ -67,6 +67,11 @@
       [ngClass]="{'active-btn': getDifferentDataTab === 'favorites', 'inactive-btn': getDifferentDataTab !== 'favorites'}">Favorites</button>
     </div>
   </div>
+
+  <div class="alert alert-warning" role="alert" *ngIf="noRecordsFound && showFavorites">
+    Sorry. No Records Found.
+  </div>
+
   <div class="progress" *ngIf="(showResults || showFavorites) || (doneLoading)" [ngStyle]="{'background-color': showProgressBar ? '#f3f3f3' : 'transparent'}">
     <div *ngIf="showProgressBar && started " class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"
     [style.width]="progressWidth + '%'"
@@ -89,7 +94,8 @@
     <app-favorites 
       *ngIf="showFavorites"
       [city]="city"
-      [state]="state">
+      [state]="state"
+      (noRecords) = "foundNoRecords($event)">
     </app-favorites>
   </div>
 </main>

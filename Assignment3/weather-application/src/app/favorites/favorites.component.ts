@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CustomerResultsService } from '../customer-results.service';
 
 @Component({
@@ -10,27 +10,44 @@ import { CustomerResultsService } from '../customer-results.service';
 export class FavoritesComponent implements OnInit {
   @Input() city?: string;
   @Input() state?: string;
+  @Input()
   alreadyLoaded = false; 
   row: any[] = [];
+  @Output() noRecords = new EventEmitter<boolean>(); 
   constructor(
     private customerService: CustomerResultsService,
   ) { 
   } 
   ngOnInit(): void {
-    console.log('Inside ngOninIt inside favorites component')
-    console.log('Here will be where to fix the favorites progress bar speed- maybe add a timer here?', this.alreadyLoaded);
+    // console.log('Here will be where to fix the favorites progress bar speed- maybe add a timer here?', this.alreadyLoaded);
     this.customerService.getFavorites().subscribe((response: any) =>{
-      this.alreadyLoaded = true;
-      this.row = response
+      // this.row = response
+      console.log('this.row', this.row);
+      console.log('Inside removeFavortie -response', response.length)
+      if(response.length == 0){
+        this.row = [];
+        this.noRecords.emit(true);
+      } else {
+        this.alreadyLoaded = true;
+        this.row = response
+        this.noRecords.emit(false);
+      }
     });
-    this.alreadyLoaded = true;
   }
   removeFavorite(latitude: number, longitude: number, city: string, state: string){
-    console.log('Inside removeFavortie')
     this.customerService.removeFavoriteRow(latitude, longitude, city, state).subscribe({});
-    this.row = [];
     this.customerService.getFavorites().subscribe((response: any) =>{
-      this.row = response
+      // this.row = response
+      console.log('Inside removeFavortie -response', response.length)
+      console.log('this.row.length', this.row.length)
+      if( response.length == 0){
+        this.row = [];
+        this.noRecords.emit(true);
+      } else {
+        this.alreadyLoaded = true;
+        this.row = response;
+        this.noRecords.emit(false);
+      }
     });
   }
 

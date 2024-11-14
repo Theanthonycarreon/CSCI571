@@ -29,6 +29,7 @@ export class AppComponent implements OnInit{
   streetClickedOut = false;
   started = false;
   doneLoading = false;
+  noRecordsFound = true;
 
   showProgressBar: boolean = false;
   progressWidth: number = 0;
@@ -131,7 +132,7 @@ export class AppComponent implements OnInit{
   }
 
   getResults(){
-    // console.log('inside getResults()');
+    console.log('inside getResults()');
     // if(this.formSubmitted){
       if(this.formSubmitted){
         this.showResults = true;
@@ -153,13 +154,32 @@ export class AppComponent implements OnInit{
 
     
   }
+
+  foundNoRecords(noneFound: boolean){
+    // this.noRecordsFound = noneFound;
+    console.log('inside foundNoRecords()- noneFound== ', noneFound);
+    console.log('inside foundNoRecords()- this.noRecordsFound == ', this.noRecordsFound);
+    if(noneFound){
+      this.noRecordsFound = true;  
+    } else {
+      this.noRecordsFound = false;  
+    }
+
+    
+
+  }
   
   getFavorites() {
     // console.log('inside getFavorites()');
-    // if(this.formSubmitted){
-      this.showResults = false; 
-      this.showFavorites = true; 
-      this.getDifferentDataTab = 'favorites';
+    // console.log('before if in getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
+    if(this.noRecordsFound){
+      this.noRecordsFound = true;
+      this.showProgressBar = false;
+      console.log('in if  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
+      console.log('in if  inside getFavorites()- this.showProgressBar == ', this.showProgressBar);
+    } else {
+      console.log('in else  inside getFavorites()- this.noRecordsFound == ', this.noRecordsFound);
+      this.noRecordsFound = false;
       this.showProgressBar = true;
         this.progressWidth = 0;
         const interval = setInterval(() => {
@@ -171,6 +191,11 @@ export class AppComponent implements OnInit{
             // this.loadResults(); // Call the method to load results or perform further actions
           }
         }, 500);
+    }
+    this.showResults = false; 
+    this.showFavorites = true; 
+    this.getDifferentDataTab = 'favorites';
+    // if(this.formSubmitted){
     // }
   }
 
@@ -217,11 +242,6 @@ export class AppComponent implements OnInit{
           callbackend = false;
         }
       }
-      // console.log("this.street =", this.street);
-      // console.log("this.state =", this.state);
-      // console.log("this.city =", this.city);
-      // console.log("this.cityControl.value =", this.cityControl.value);
-      // console.log("this.inputForm.get(city.value)", this.inputForm.get("city")?.value);
       if(callbackend){
         this.doneLoading = true;
         console.log("submitting form");
@@ -229,11 +249,10 @@ export class AppComponent implements OnInit{
         this.progressWidth = 0;
         const interval = setInterval(() => {
           if (this.progressWidth < 100) {
-            this.progressWidth += 10; // Increase width in increments (adjust as needed)
+            this.progressWidth += 10; 
           } else {
-            clearInterval(interval); // Stop the animation when it reaches 100%
-            this.showProgressBar = false; // Hide progress bar if desired
-            // this.loadResults(); // Call the method to load results or perform further actions
+            clearInterval(interval); 
+            this.showProgressBar = false; 
           }
         }, 500);
 
@@ -242,7 +261,9 @@ export class AppComponent implements OnInit{
         this.inputData.emit({auto_loc:this.auto_loc, street: this.street, city: this.city, state: this.state});
         this.inTextBox.emit({clickedOut: this.clickedOut});
         this.showResults = true;
-      } 
+      } else {
+        console.log('put error message here?')
+      }
       // console.log('after emitting, maybe running program?')
     }
   
