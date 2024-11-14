@@ -2,12 +2,15 @@
     border: 1px solid red;
 }
 
+
 #weatherSearchContainer{
     background-color: #eaeaea;
-    width: 90%;
-    margin: 0 auto;
-    height: 245px;
+    width: 80%;
+    margin: 0 auto; 
+    margin: 20px auto; 
 }
+
+
 .container-results-favorites{
     text-align: center;
     margin-top: 1%;
@@ -20,6 +23,11 @@
 
   .invalidText{
     color:red;
+  }
+
+  .col-auto {
+    display: flex;
+    gap: 1rem; 
   }
 #title{
     text-align: center;
@@ -70,9 +78,7 @@ form{
     font-size: 20px;
 }
 
-/* .form-check-input input[type="checkbox"]:checked {
-    background-color: orange;
-} */
+
 .custom-checkbox{
     text-align: center;
 }
@@ -95,8 +101,7 @@ form{
       color: white;
       border-radius: 5px;
       border-width: 0px;
-      width: 6.5%;
-      height: 35px;
+      width: 8.5%;
       font-size: 18px;
     }
 
@@ -104,8 +109,7 @@ form{
         color: #696969;
         border-radius: 5px;
         border-width: 1px;
-        width: 6.5%;
-        height: 35px;
+        width: 8.5%;
         font-size: 18px;
     }
 
@@ -152,3 +156,20 @@ form{
     border-radius: 5px;
     margin: 0 5%; 
   }
+/* .btn {
+    border-radius: 5px;
+    padding: 6px 12px;
+    font-weight: bold;
+  }
+  
+  
+  
+  .btn-primary {
+    background-color: transparent;
+    color: #a8a8a8;
+    border-width: 0px;
+    font-size: 15px;
+    text-decoration: underline;
+    font-weight: 100;
+  } */
+  
