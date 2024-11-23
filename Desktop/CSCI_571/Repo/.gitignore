@@ -1,3 +1,15 @@
+../../../
+../../
+../
+.DS_Store
+*.docx
+*.numbers
+*.sql
+google-cloud-sdk/
+eclipse-workspace/
+msdocs-python-flask-webapp-quickstart/
+
+
 ../../../.CFUserTextEncoding
 ../../../.IdentityService/
 ../../../.anaconda/
