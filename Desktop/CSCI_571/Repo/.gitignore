@@ -1,3 +1,17 @@
+../../../*
+../../*
+../*
+.DS_Store
+*.docx
+*.png
+*.pdf
+*.sql
+*.numbers
+eclipse-workspace/
+google-cloud-sdk/
+msdocs-python-flask-webapp-quickstart/
+
+
 ../../../
 ../../
 ../
