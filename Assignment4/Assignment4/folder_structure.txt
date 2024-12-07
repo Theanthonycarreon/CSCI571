@@ -1,0 +1,26 @@
+.
+├── Assignment4
+│   ├── Assets.xcassets
+│   ├── Assignment4App.swift
+│   ├── ContentView.swift
+│   ├── Models
+│   ├── Preview Content
+│   ├── Services
+│   ├── ViewModels
+│   ├── Views
+│   └── folder_structure.txt
+├── Assignment4.xcodeproj
+│   ├── project.pbxproj
+│   ├── project.xcworkspace
+│   └── xcuserdata
+├── Assignment4Tests
+│   └── Assignment4Tests.swift
+├── Assignment4UITests
+│   ├── Assignment4UITests.swift
+│   └── Assignment4UITestsLaunchTests.swift
+├── Resources
+│   ├── Config
+│   └── WeatherImages
+└── folder_structure.txt
+
+16 directories, 8 files

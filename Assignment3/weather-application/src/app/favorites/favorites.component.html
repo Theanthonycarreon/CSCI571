@@ -1,0 +1,29 @@
+
+  <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+      <!-- <div class="tab-pan"> -->
+        <table class="table table-responsive table-striped">
+          <thead>
+            <tr id="headerDayView" *ngIf="!pickedACity">
+              <th>#</th>
+              <th>City</th>
+              <th>State</th>
+              <th></th>
+            </tr>
+          </thead>
+         <!-- prompt: how do I get MongoDb to work with this assignment? - 2 line - https://chatgpt.com/share/672eedda-3c38-800b-b507-3d11cc7aa0ec -->
+         <tbody *ngIf="!pickedACity">
+            <tr *ngFor="let x of row; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td><a href="#weekWeather" (click)="getWeather(x.City, x.State)">{{x.City}}</a></td>
+              <td><a href="#weekWeather" (click)="getWeather(x.City, x.State)">{{x.State}}</a></td>
+              <td>
+                <!-- prompt: how do I get MongoDb to work with this assignment? - 2 line - https://chatgpt.com/share/672eedda-3c38-800b-b507-3d11cc7aa0ec  -->
+                <button class="trashCan" (click)="removeFavorite(x.Latitude, x.Longitude,x.City,x.State)"><img [src]="'../assets/images/trash3.svg'" width="20" height="20" class="trashCan">
+                </button> 
+              </td>
+            </tr>
+          </tbody>
+        </table>       
+    </div>
+  </div>

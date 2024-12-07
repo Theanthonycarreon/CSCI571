@@ -1,0 +1,9 @@
+
+<input type="text" [formControl]="cityControl" [disabled]="disabled" class="form-control" class="cityInput" 
+    [class.invalid]="invalidInput"
+    (input)="currCityInput()"
+    (blur)="onBlur(cityControl.value ?? '')">
+<ul class="dropdown-menu w-100 show removeBottomSpace" *ngIf="showDropdown">
+    <li class="dropdown-item" *ngFor="let city of cities"  (click)="selectCity(city)">{{ city }}</li>
+</ul>
+

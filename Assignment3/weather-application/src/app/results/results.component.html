@@ -1,0 +1,126 @@
+
+<div class="container" *ngIf="(!detailsTabClicked) || ((!chartTabClicked && !meteogramTabClicked && !dayViewTabClicked) && detailsTabClicked) " 
+(resultsLoaded) = loadedResults()
+[ngClass]="slideDirection">
+    <div *ngIf="!detailsTabClicked">
+        <h2>Forcast at {{address}}</h2>
+            <div class="d-flex justify-content-between align-items-center mb-3" id="favorite_detail_holder">
+                <span>
+                    <button type="button" class="btn btn-primary-star me-2" href="#favoritesData" (click)="addFavorite()">
+                        <img class="starButton" [class.starButton-change]="gettingClicked" [src]="clickedFavorite ? '../assets/images/star-fill.svg' : '../assets/images/star.svg'" width="20" height="20">
+                    </button>
+                </span>
+                <span>
+                    <button type="button" class="btn btn-primary" href="#dayDetail" (click)="detailsTAB('')">Details <span id="forwardArrow">&gt;</span></button>
+                </span> 
+            </div>
+            <ul class="nav nav-tabs custom-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" 
+                        id="dayView-tab" 
+                        data-toggle="tab"
+                        href="#dayViewData" 
+                        [ngClass]="{'active': activeTab === 'dayView'}"
+                        role="tab" 
+                        aria-controls="dayViewData"
+                        aria-selected="true" 
+                        (click)="dayViewTAB()">
+                        Day View
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="tempChart-tab" data-toggle="tab" href="#tempChartData" role="tab" 
+                    [ngClass]="{'active': activeTab === 'tempChartTab'}"
+                    aria-controls="tempChartData" aria-selected="false"(click)="tempChartTAB()">Daily Temp. Chart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="meteogram-tab" data-toggle="tab" href="#meteogramData" role="tab" 
+                    [ngClass]="{'active': activeTab === 'meteogramTab'}"
+                    aria-controls="meteogramData" aria-selected="false" (click)="meteogramTAB()">Meteogram</a>
+                </li>
+            </ul>
+        </div>
+
+
+    <div class="tab-content mt-3" id="myTabContent">
+        <div class="tab-pane fade show active"  *ngIf="dayViewTabClicked" id="dayViewData" role="tabpanel" aria-labelledby="dayView-tab">
+                <table class="table custom-table">
+                    <thead>
+                        <tr id="headerDayView">
+                            <th>#</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Temp. High(°F)</th>
+                            <th>Temp. Low(°F)</th>
+                            <th>Wind Speed(mph)</th> 
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr *ngFor="let x of row; let i = index">
+                            <td id="numOfDays">{{ i + 1 }}</td> 
+                            <td>
+                                <a href="#dayDetail" (click)="detailsTAB(x.date)">
+                                     <!-- prompt: how print date in the format needed? - 1 lines - https://chatgpt.com/share/672dc350-5f4c-800b-84ed-cf012ba21264 -->
+                                    {{ x.date | date:'EEEE, MMM. d, y' }}
+                                </a>
+                                <div class="container" *ngIf="detailsTabClicked">
+                                    <app-details-pane
+                                        [city]="city"
+                                        [state]="state"
+                                        [latitude]="latitude"
+                                        [longitude]="longitude"
+                                        [weekData]="weekData"
+                                        [address] = "address"
+                                        [dateClicked]= "dateClicked"
+                                        [dateObject] = "dateObject"
+                                        (backToResults)="dayViewTAB()"
+                                    ></app-details-pane>
+                                </div>
+                            </td> 
+                            <td>
+                                <img [src]="'../assets/images/weatherCodes/' + x.icon" width="30" height="30">
+                                {{x.status}}
+                            </td>
+                            <td>{{x.temperatureMax}}</td>
+                            <td>{{x.temperatureMin}}</td>
+                            <td>{{x.windSpeed}}</td>
+                        </tr>
+                    </tbody>
+
+                </table>
+        </div>
+
+
+        <div class="tab-pane fade" *ngIf="chartTabClicked" id="tempChartData" role="tabpanel" aria-labelledby="tempChart-tab">
+            <highcharts-chart 
+                [Highcharts]="highcharts" 
+                [options]="chartOptions"
+                style="width: 100%; height: 400px; display: block;"
+            ></highcharts-chart>
+        </div>
+
+
+        <div class="tab-pane fade" *ngIf="meteogramTabClicked" id="meteogramData" role="tabpanel" aria-labelledby="meteogram-tab">
+            <div id="hourly_chart"></div>
+        </div>
+
+
+    </div>
+
+
+<div class="container p-4" *ngIf="detailsTabClicked">
+    <app-details-pane
+        [city]="city"
+        [state]="state"
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [weekData]="weekData"
+        [address] = "address"
+        [dateObject] = "dateObject"
+        [dateClicked] = dateClicked
+        (backToResults)="dayViewTAB()"
+    ></app-details-pane>
+</div>
+
+</div>
