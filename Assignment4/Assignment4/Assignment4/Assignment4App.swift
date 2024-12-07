@@ -11,12 +11,7 @@ import SwiftUI
 struct Assignment4App: App {
     var body: some Scene {
         WindowGroup {
-            ZStack{
-                Image("App_background")
-                    .resizable()
-                    .edgesIgnoringSafeArea(.all)
-                HomeView()
-            }
+            HomeView()
         }
     }
 }

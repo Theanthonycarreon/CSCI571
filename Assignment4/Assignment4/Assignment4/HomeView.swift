@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct HomeView: View {
+    @State private var searchText: String = ""
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("LETS GET THIS DONE!!")
+        ZStack {
+            Image("App_background")
+                .resizable()
+                .edgesIgnoringSafeArea(.all)
+            HStack{
+                SearchBar(searchText: $searchText)
+            }
         }
-        .padding()
+        
     }
 }
 
