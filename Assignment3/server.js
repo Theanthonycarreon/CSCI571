@@ -245,8 +245,9 @@ app.get('/api/weather', async (req, res) => {
   let inputLatitude = 0;
   let inputLongitude = 0;
   let inputAddress = '';
-  const { auto_loc, street, city, state } = req.query;
+  const { auto_loc, street, city, state, lat, long} = req.query;
   try {
+
     if(auto_loc === 'true'){
       const ipinfoResponse = await axios.get('https://ipinfo.io', {
         params: { 
@@ -260,7 +261,8 @@ app.get('/api/weather', async (req, res) => {
       inputLongitude = parseFloat(coords[1]);
       inputAddress = ipinfoResponse.data['city'] + ', ' + ipinfoResponse.data['region'];
     } else {
-      const address = [street,city,state].join(', ');
+	if(!lat && !long) {
+	const address = [street,city,state].join(', ');
       console.log("address in server.js = ", address);
       const coordinates = await axios.get('https://maps.googleapis.com/maps/api/geocode/json', { 
         params: {
@@ -278,6 +280,12 @@ app.get('/api/weather', async (req, res) => {
       // const state = temp[2].trim().split(' ')[0];
       // const cityState = `${city}, ${state}`;
       inputAddress = temp;;
+	
+	} else {
+		inputLatitude = parseFloat(lat)
+		inputLongitude = parseFloat(long)
+		inputAddress = city + ", " + state
+	}
     }
     
     const weatherData = await axios.get('https://api.tomorrow.io/v4/timelines', { 

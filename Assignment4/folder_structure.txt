@@ -1,0 +1,26 @@
+.
+├── Assignment4
+│   ├── Assignment4
+│   ├── Assignment4.xcodeproj
+│   ├── Assignment4Tests
+│   ├── Assignment4UITests
+│   ├── Resources
+│   └── folder_structure.txt
+├── Assignment4.xcodeproj
+│   ├── project.pbxproj
+│   ├── project.xcworkspace
+│   └── xcuserdata
+├── Assignment4Tests
+│   └── Assignment4Tests.swift
+├── Assignment4UITests
+│   ├── Assignment4UITests.swift
+│   └── Assignment4UITestsLaunchTests.swift
+├── Package.resolved
+├── Package.swift
+├── Sources
+│   └── Assignment4
+├── Tests
+│   └── Assignment4Tests
+└── folder_structure.txt
+
+16 directories, 8 files

@@ -4,7 +4,7 @@
 //
 //  Created by Anthony Carreon on 11/27/24.
 //
-
+//
 import SwiftUI
 
 struct HomeView: View {
@@ -13,12 +13,10 @@ struct HomeView: View {
         ZStack {
             Image("App_background")
                 .resizable()
+                .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
-            HStack{
-                SearchBar(searchText: $searchText)
-            }
+                TodayView()
         }
-        
     }
 }
 

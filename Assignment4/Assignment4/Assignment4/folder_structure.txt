@@ -1,0 +1,38 @@
+.
+├── Assets.xcassets
+│   ├── AccentColor.colorset
+│   ├── AppIcon.appiconset
+│   ├── App_Icon.imageset
+│   ├── App_background.imageset
+│   ├── Contents.json
+│   ├── Parameters Logos
+│   ├── Powered_by_Tomorrow-Black.imageset
+│   ├── Tab Images
+│   ├── Weather Icons
+│   ├── close-circle.imageset
+│   ├── plus-circle.imageset
+│   └── twitter.imageset
+├── Assignment4App.swift
+├── HomeView.swift
+├── Launch Screen.storyboard
+├── Models
+│   ├── FavoriteModel.swift
+│   ├── LocationModel.swift
+│   └── WeatherModel.swift
+├── Preview Content
+│   └── Preview Assets.xcassets
+├── SearchBar.swift
+├── Services
+│   ├── LocationService.swift
+│   └── WeatherService.swift
+├── ViewModels
+│   ├── FavoriteViewModel.swift
+│   └── WeatherViewModel.swift
+├── Views
+│   ├── FavoriteListView.swift
+│   ├── TodayView.swift
+│   ├── WeatherDataView.swift
+│   └── WeeklyView.swift
+└── folder_structure.txt
+
+19 directories, 17 files

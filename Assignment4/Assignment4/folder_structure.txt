@@ -2,13 +2,14 @@
 ├── Assignment4
 │   ├── Assets.xcassets
 │   ├── Assignment4App.swift
-│   ├── ContentView.swift
+│   ├── HomeView.swift
+│   ├── Launch Screen.storyboard
 │   ├── Models
 │   ├── Preview Content
+│   ├── SearchBar.swift
 │   ├── Services
 │   ├── ViewModels
-│   ├── Views
-│   └── folder_structure.txt
+│   └── Views
 ├── Assignment4.xcodeproj
 │   ├── project.pbxproj
 │   ├── project.xcworkspace
@@ -23,4 +24,4 @@
 │   └── WeatherImages
 └── folder_structure.txt
 
-16 directories, 8 files
+16 directories, 9 files
