@@ -13,7 +13,8 @@ struct HomeView: View {
         ZStack {
             Image("App_background")
                 .resizable()
-                .scaledToFill() 
+                .scaledToFill()
+//                .edgesIgnoringSafeArea([.bottom])
                 .edgesIgnoringSafeArea(.all)
                 TodayView()
         }

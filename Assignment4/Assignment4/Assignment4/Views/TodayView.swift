@@ -13,31 +13,43 @@ struct TodayView: View {
     @ObservedObject var weatherViewModel: 
     WeatherViewModel = WeatherViewModel()
     @State private var searchText: String = "searchText" //change to ""
-//    @StateObject private var weatherViewModel = WeatherViewModel()
     
-    fileprivate func weeklyData() -> HStack<TupleView<(VStack<Text>, VStack<Text>, VStack<Text>, VStack<Text>)>> {
-        return //weekly weather
-            HStack{
-                VStack{
-                    Text("date")
-                }
-                VStack{
-                    Text("stauts IMG")
-                }
-                VStack{
-                    Text("SunRiseIMG")
-                }
-                VStack{
-                    Text("SunSetIMG")
+    fileprivate func weeklyData(for dayData: [String: Any]) -> some View {
+        HStack {
+            VStack (spacing:10){
+                if let date = dayData["date"] as? String {
+                    Text(date)
+                } else {
+                    Text("N/A")
                 }
             }
+            VStack (spacing:15){
+                if let status = dayData["status"] as? String {
+                    Image(status)
+                    // prompt: how to scale the image? - 2 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width:20, height: 20)
+                } else {
+                    Text("N/A")
+                }
+            }
+            VStack (spacing:15) {
+                Image("sun-rise")
+            }
+            VStack {
+                Image("sun-set")
+            }
+        }
     }
+
     
     var body: some View {
         VStack{
             HStack(){ //search bar
                 Text("search bar here")
             }
+            .searchable(text: $searchText, prompt: "Enter City Name")
             Spacer()
             
             HStack{
@@ -91,52 +103,67 @@ struct TodayView: View {
                     }
                     HStack{
                         VStack{
-                            Text("IMG")
+                            Image("Humidity")
                         }
                         VStack{
-                            Text("IMG")
+                            Image("WindSpeed")
                         }
                         VStack{
-                            Text("IMG")
+                            Image("Visibility")
                         }
                         VStack{
-                            Text("IMG")
+                            Image("Pressure")
                         }
                     }
                     HStack{
                         VStack{
-                            Text("temp%")
+                           if let humidity = weatherViewModel.weekData.first?["humidity"] as? Double{
+                               Text("\(Int(humidity)) %")
+                           } else {
+                               Text("0 %")
+                           }
                         }
                         VStack{
-                            Text("speed mph")
+                            if let windSpeed = weatherViewModel.weekData.first?["windSpeed"] as? Double{
+                                Text("\(String(format: "%.2f", windSpeed)) mph")
+                            } else {
+                                Text("0 mph")
+                            }
                         }
                         VStack{
-                            Text("visibility mi")
+                            if let visibility = weatherViewModel.weekData.first?["visibility"] as? Double{
+                                Text("\(String(format: "%.2f", visibility)) mi")
+                            } else {
+                                Text("0 mi")
+                            }
                         }
                         VStack{
-                            Text("Pressure inHg")
+                            if let pressureSeaLevel = weatherViewModel.weekData.first?["pressureSeaLevel"] as? Double{
+                                Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
+                            } else {
+                                Text("0 inHg")
+                            }
                         }
                     }
                 }
                 .frame(width:400, height: 175)
             }
             VStack{
-                ForEach(0..<6){ index in
+                //// prompt: how to iterate through weekData? - 2 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                ForEach(weatherViewModel.weekData.indices.dropFirst(), id: \.self) { index in
                     HStack{
-                        weeklyData()
+                        weeklyData(for: weatherViewModel.weekData[index])
                     }
                 }
             }
-            .frame(width:400, height: 175)
+            .frame(width:400, height: 250)
             .background(Color.yellow.opacity(0.3))
             .cornerRadius(10)
-//            .onAppear(){
-//                weatherViewModel.getCurrentLocation()
-//            }
         }
         .onAppear(){
             weatherViewModel.getCurrentLocation()
         }
+        .environmentObject(weatherViewModel)
     }
     
 }
@@ -155,50 +182,7 @@ struct TodayView: View {
             //                }
             //                SearchBar(searchText: $searchText)
 
-//        VStack (spacing: 20){
-//            ZStack {
-//                Rectangle()
-//                    .foregroundColor(.blue)
-//                HStack {
-//                    Text(weatherViewModel.lastSymbol)
-//                        .font(.largeTitle)
-//                        .foregroundColor(.white)
-//                        
-//                    Spacer()
-//                    Text("\(weatherViewModel.displayValue)")
-//                        .font(.largeTitle)
-//                        .foregroundColor(.white)
-//                }
-//                .padding()
-//            }
-//            .frame(height: 100)
-//            Group {
-//                HStack (spacing: 20) {
-//                    NumericButtonView(digit: 7)
-//                    NumericButtonView(digit: 8)
-//                    NumericButtonView(digit: 9)
-//                }
-//                HStack (spacing: 20) {
-//                    NumericButtonView(digit: 4)
-//                    NumericButtonView(digit: 5)
-//                    NumericButtonView(digit: 6)
-//                }
-//                HStack (spacing: 20) {
-//                    NumericButtonView(digit: 1)
-//                    NumericButtonView(digit: 2)
-//                    NumericButtonView(digit: 3)
-//                }
-//                HStack (spacing: 20) {
-//                    OperatorButtonView(symbol: "+")
-//                    NumericButtonView(digit: 0)
-//                    OperatorButtonView(symbol: "=")
-//                }
-//            }
-//            .frame(height: 100)
-//        }
-//        .padding()
-//        .environmentObject(weatherViewModel)
-//    }
+
 
 
 struct TodayView_Previews: PreviewProvider {

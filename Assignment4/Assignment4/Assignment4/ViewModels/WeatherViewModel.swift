@@ -71,16 +71,31 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
            let data = weatherData["weatherData"]["data"]["timelines"].array,
            let week = data.first?["intervals"].array {
             self.city = cityName
+            
             for day in week {
-// prompt: how properly save the data? - 7 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                // prompt: how properly save the data? - 13 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
                 guard let startTime = day["startTime"].string,
-                    let values = day["values"].dictionaryObject else {
-                        continue
-                    }
-                let trimmedDate = String(startTime.split(separator: "T").first ?? "")
+                      let values = day["values"].dictionaryObject else {
+                    continue
+                }
+
+                // Parse "startTime" into a Date and format it as "MM/dd/yyyy"
+                let isoFormatter = ISO8601DateFormatter()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "MM/dd/yyyy"
+                
+                let formattedDate: String
+                if let date = isoFormatter.date(from: startTime) {
+                    formattedDate = dateFormatter.string(from: date)
+                } else {
+                    formattedDate = "Invalid Date" // Fallback in case of parsing failure
+                }
+
+                // Add the formatted date to the daily data
                 var dailyData = values
-                dailyData["date"] = trimmedDate // Add trimmed date to daily data
-                                
+                dailyData["date"] = formattedDate
+                
+                // Append to weekData
                 self.weekData.append(dailyData)
             }
             print("Processed weekData: \(self.weekData)")
