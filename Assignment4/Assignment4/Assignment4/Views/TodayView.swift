@@ -34,97 +34,111 @@ struct TodayView: View {
     }
     
     var body: some View {
+        VStack{
+            HStack(){ //search bar
+                Text("search bar here")
+            }
+            Spacer()
+            
+            HStack{
                 VStack{
-//                    let weather = weatherViewModel.weather
-                    HStack(){ //search bar
-                        Text("search bar here")
-                    }
-                    Spacer()
-                    
-                    HStack{
-                        VStack{
-//                            Image()
-                                Text("Image")
-                        }
-                        VStack{
-                            HStack{
-                                Text("Temp-F")
-                            }
-                            HStack{
-                                Text("description")
-                            }
-                            HStack{
-                                Text(weatherViewModel.city)
-                                    
-                            }
-                        }
-                    }
-                    .frame(width:400, height: 175)
-                    .background(Color.yellow.opacity(0.3))
-                    .cornerRadius(10)
-                    
-                    HStack{ //day info
-                        VStack{
-                            HStack{
-                                VStack{
-                                    Text("Humidity")
-                                }
-                                VStack{
-                                    Text("Wind Speed")
-                                }
-                                VStack{
-                                    Text("Visibility")
-                                }
-                                VStack{
-                                    Text("Pressure")
-                                }
-                            }
-                            HStack{
-                                VStack{
-                                    Text("IMG")
-                                }
-                                VStack{
-                                    Text("IMG")
-                                }
-                                VStack{
-                                    Text("IMG")
-                                }
-                                VStack{
-                                    Text("IMG")
-                                }
-                            }
-                            HStack{
-                                VStack{
-                                    Text("temp%")
-                                }
-                                VStack{
-                                    Text("speed mph")
-                                }
-                                VStack{
-                                    Text("visibility mi")
-                                }
-                                VStack{
-                                    Text("Pressure inHg")
-                                }
-                            }
-                        }
-                        .frame(width:400, height: 175)
-                    }
-                    VStack{
-                        ForEach(0..<6){ index in
-                            HStack{
-                                weeklyData()
-                            }
-                        }
-                    }
-                    .frame(width:400, height: 175)
-                    .background(Color.yellow.opacity(0.3))
-                    .cornerRadius(10)
-                    .onAppear(){
-                        weatherViewModel.getCurrentLocation()
+                    if let status = weatherViewModel.weekData.first?["status"] as? String {
+                        Image(status)
+                    } else {
+                        Text("N/A")
                     }
                 }
+                VStack{
+                    HStack{
+                        if let temp = weatherViewModel.weekData.first?["temperature"] as? Double{
+                            Text("\(Int(temp))°F")
+                        } else {
+                            Text("0°F")
+                        }
+
+                    }
+                    HStack{
+                        if let status = weatherViewModel.weekData.first?["status"] as? String {
+                            Text(status)
+                        } else {
+                            Text("N/A")
+                        }
+                    }
+                    HStack{
+                        Text(weatherViewModel.city)
+                            
+                    }
+                }
+            }
+            .frame(width:400, height: 175)
+            .background(Color.yellow.opacity(0.3))
+            .cornerRadius(10)
+            HStack{ //day info
+                VStack{
+                    HStack{
+                        VStack{
+                            Text("Humidity")
+                        }
+                        VStack{
+                            Text("Wind Speed")
+                        }
+                        VStack{
+                            Text("Visibility")
+                        }
+                        VStack{
+                            Text("Pressure")
+                        }
+                    }
+                    HStack{
+                        VStack{
+                            Text("IMG")
+                        }
+                        VStack{
+                            Text("IMG")
+                        }
+                        VStack{
+                            Text("IMG")
+                        }
+                        VStack{
+                            Text("IMG")
+                        }
+                    }
+                    HStack{
+                        VStack{
+                            Text("temp%")
+                        }
+                        VStack{
+                            Text("speed mph")
+                        }
+                        VStack{
+                            Text("visibility mi")
+                        }
+                        VStack{
+                            Text("Pressure inHg")
+                        }
+                    }
+                }
+                .frame(width:400, height: 175)
+            }
+            VStack{
+                ForEach(0..<6){ index in
+                    HStack{
+                        weeklyData()
+                    }
+                }
+            }
+            .frame(width:400, height: 175)
+            .background(Color.yellow.opacity(0.3))
+            .cornerRadius(10)
+//            .onAppear(){
+//                weatherViewModel.getCurrentLocation()
+//            }
+        }
+        .onAppear(){
+            weatherViewModel.getCurrentLocation()
+        }
     }
+    
 }
            
 //                    List(parks) { park in

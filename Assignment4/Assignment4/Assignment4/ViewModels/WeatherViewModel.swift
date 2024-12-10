@@ -13,6 +13,14 @@ import SwiftyJSON
 class WeatherViewModel: ObservableObject { // ViewModels usually inherits “ObservableObject”, it will send updates to Views
     private var model = WeatherModel()
     @Published var city : String = ""
+//    @Published var status : String = ""
+//    @Published var currentTemp : Double = 0
+//    @Published var humidity : Double = 0
+//    @Published var windSpeed : Double = 0
+//    @Published var visibility : Double = 0
+//    @Published var pressure : Double = 0
+    @Published var weekData : [[String:Any]] = []
+    
     
     @Published var response: String = ""
     @Published var displayValue: Int = 0 // ViewModel have @Published property wrapper.
@@ -58,6 +66,27 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
             displayValue = 0
         }
     }
+    fileprivate func setData(weatherData: JSON) {
+        if let cityName = weatherData["address"].string,
+           let data = weatherData["weatherData"]["data"]["timelines"].array,
+           let week = data.first?["intervals"].array {
+            self.city = cityName
+            for day in week {
+// prompt: how properly save the data? - 7 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                guard let startTime = day["startTime"].string,
+                    let values = day["values"].dictionaryObject else {
+                        continue
+                    }
+                let trimmedDate = String(startTime.split(separator: "T").first ?? "")
+                var dailyData = values
+                dailyData["date"] = trimmedDate // Add trimmed date to daily data
+                                
+                self.weekData.append(dailyData)
+            }
+            print("Processed weekData: \(self.weekData)")
+        }
+    }
+    
     private func getWeather(city: String, state: String, latitude: String, longitude: String) {
         let url = "https://assignment3-440805.wl.r.appspot.com/api/weather/"
         let parameters = ["city": city, "state": state ,"lat": latitude, "long": longitude]
@@ -69,9 +98,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                    case .success(let data):
                         json = JSON(data)
                         self.model.setWeather(weather: json)
-                        if let cityName = json["address"].string {
-                                   self.city = cityName
-                        }
+                        self.setData(weatherData: json)
                    case .failure(let error):
                        print("Error:", error)
                    }
