@@ -12,8 +12,9 @@ import Alamofire
 struct TodayView: View {
     @ObservedObject var weatherViewModel: 
     WeatherViewModel = WeatherViewModel()
-    @State private var searchText: String = "searchText" //change to ""
-    
+//    @State var searchText: String = "" //change to ""
+    @Binding var searchText: String //change to ""
+    @State private var cities: [String] = []
     fileprivate func weeklyData(for dayData: [String: Any]) -> some View {
         HStack {
             VStack (spacing:10){
@@ -29,7 +30,7 @@ struct TodayView: View {
                     // prompt: how to scale the image? - 2 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
                         .resizable()
                         .scaledToFit()
-                        .frame(width:20, height: 20)
+                        .frame(width:20, height: 20 )
                 } else {
                     Text("N/A")
                 }
@@ -42,14 +43,43 @@ struct TodayView: View {
             }
         }
     }
+    var filteredWeekData: [[String: Any]] {
+           if searchText.isEmpty {
+               return weatherViewModel.weekData
+           } else {
+               return weatherViewModel.weekData.filter { day in
+                   if let city = day["city"] as? String {
+                       return city.localizedCaseInsensitiveContains(searchText)
+                   }
+                   return false
+               }
+           }
+       }
 
+    
     
     var body: some View {
         VStack{
-            HStack(){ //search bar
-                Text("search bar here")
+//            HStack(){ //search bar
+//                NavigationView{
+//                    
+//                }
+            TextField("Enter City Name", text: $searchText)
+            .padding()
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            .onChange(of: searchText) { newValue in
+               print("current input: \(newValue)")
+               weatherViewModel.getCities(newValue) { currCities in
+                   self.cities = currCities
+               }
             }
-            .searchable(text: $searchText, prompt: "Enter City Name")
+
+            if !cities.isEmpty {
+               List(cities, id: \.self) { city in
+                   Text(city)
+               }
+               .frame(height: 200)
+            }
             Spacer()
             
             HStack{
@@ -167,28 +197,37 @@ struct TodayView: View {
     }
     
 }
-           
-//                    List(parks) { park in
-//                        NavigationLink(park.name, value: park)
-//                    }
-//                    .navigationDestination(for: Park.self) { park in
-//                        ParkDetails(park: park)
-//                    }
-                
-            //            Spacer()
-            //                    VStack{
-            //                NavigationSplitView {
-            //                    .searchable(text: $searchText)
-            //                }
-            //                SearchBar(searchText: $searchText)
 
 
+#Preview {
+    @Previewable @State var previewSearchText: String = ""
+    TodayView(searchText: $previewSearchText)
+}
+//struct TodayView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        @State var previewSearchText: String = ""
+//        TodayView(searchText: $previewSearchText)
+//            .previewDevice("iPhone 16")
+//    }
+//}
 
 
-struct TodayView_Previews: PreviewProvider {
-    static var previews: some View {
-        TodayView()
-            .previewDevice("iPhone 16")
+struct UserCityInput: View {
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
+    //You can also pass data to all sub-Views using EnvironmentObject
+    var currInput: String
+    var body: some View {
+//        Button(action: {weatherViewModel.digitTouched(currInput)}, label: {
+            ZStack {
+                Rectangle()
+                    .foregroundColor(.gray)
+//                Text("\(digit)")
+                    .font(.title)
+                    .foregroundColor(.white)
+                    .padding()
+            }
+//        })
+        
     }
 }
 

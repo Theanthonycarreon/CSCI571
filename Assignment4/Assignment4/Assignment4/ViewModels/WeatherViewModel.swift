@@ -20,6 +20,8 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
 //    @Published var visibility : Double = 0
 //    @Published var pressure : Double = 0
     @Published var weekData : [[String:Any]] = []
+    @Published var userInput: String = ""
+    @Published var cities: [String] = []
     
     
     @Published var response: String = ""
@@ -50,6 +52,46 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                    }
            }
         }
+    func getCities(_ currUserInput: String, completion: @escaping ([String]) -> Void)  {
+//        displayValue = displayValue*10 + digit
+        let url = "https://assignment3-440805.wl.r.appspot.com/api/autocomplete"
+        let parameters = ["input": currUserInput]
+        var cityNames: [String] = []
+
+        AF.request(url, parameters: parameters).responseJSON { response in
+           // Handle the response
+           switch response.result {
+                   case .success(let data):
+                        let json = JSON(data)
+               // prompt: how properly save the data? - 6 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+               // Extract all city names as Strings
+                        let predictions = json["predictions"].arrayValue // Access the predictions array
+
+                        // Extract all city names as Strings
+                           cityNames = predictions.compactMap { prediction in
+                           prediction["terms"].arrayValue.first?["value"].stringValue
+                        }
+
+                        // Check if all city names are the same
+                        if Set(cityNames).count == 1, let uniqueCity = cityNames.first {
+                           // If all names are the same, keep only one instance
+                           cityNames = [uniqueCity]
+                        } else {
+                           // Remove duplicates and keep unique city names
+                           cityNames = Array(Set(cityNames))
+                        }
+
+                        // Update the `cities` property
+                        self.cities = cityNames
+                        completion(cityNames)
+                        print("Cities:", self.cities)
+               
+                   case .failure(let error):
+                       print("Error:", error)
+                       completion([])
+                   }
+           }
+    }
     
     func digitTouched(_ digit: Int) {
         displayValue = displayValue*10 + digit
@@ -98,7 +140,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                 // Append to weekData
                 self.weekData.append(dailyData)
             }
-            print("Processed weekData: \(self.weekData)")
+//            print("Processed weekData: \(self.weekData)")
         }
     }
     

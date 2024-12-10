@@ -16,7 +16,8 @@ struct HomeView: View {
                 .scaledToFill()
 //                .edgesIgnoringSafeArea([.bottom])
                 .edgesIgnoringSafeArea(.all)
-                TodayView()
+            TodayView(searchText: $searchText)
+//            TodayView()
         }
     }
 }
