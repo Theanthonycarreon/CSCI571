@@ -10,15 +10,26 @@ import SwiftUI
 struct HomeView: View {
     @State private var searchText: String = ""
     var body: some View {
-        ZStack {
-            Image("App_background")
-                .resizable()
-                .scaledToFill()
-//                .edgesIgnoringSafeArea([.bottom])
-                .edgesIgnoringSafeArea(.all)
-            TodayView(searchText: $searchText)
-//            TodayView()
+        NavigationView {
+            ZStack {
+                Image("App_background")
+                    .resizable()
+                    .scaledToFill()
+    //                .edgesIgnoringSafeArea([.bottom])
+                    .edgesIgnoringSafeArea(.all)
+                TodayView(searchText: $searchText)
+    //            TodayView()
+            }
         }
+//        ZStack {
+//            Image("App_background")
+//                .resizable()
+//                .scaledToFill()
+////                .edgesIgnoringSafeArea([.bottom])
+//                .edgesIgnoringSafeArea(.all)
+//            TodayView(searchText: $searchText)
+////            TodayView()
+//        }
     }
 }
 

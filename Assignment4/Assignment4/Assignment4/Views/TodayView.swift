@@ -15,6 +15,7 @@ struct TodayView: View {
 //    @State var searchText: String = "" //change to ""
     @Binding var searchText: String //change to ""
     @State private var cities: [String] = []
+    @State private var ifClicked: Bool = false
     fileprivate func weeklyData(for dayData: [String: Any]) -> some View {
         HStack {
             VStack (spacing:10){
@@ -55,6 +56,7 @@ struct TodayView: View {
                }
            }
        }
+    
 
     
     
@@ -68,17 +70,30 @@ struct TodayView: View {
             .padding()
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .onChange(of: searchText) { newValue in
-               print("current input: \(newValue)")
-               weatherViewModel.getCities(newValue) { currCities in
+//               print("current input: \(newValue)")
+                   weatherViewModel.getCities(newValue) { currCities in
                    self.cities = currCities
+                       
                }
             }
 
-            if !cities.isEmpty {
-               List(cities, id: \.self) { city in
-                   Text(city)
-               }
-               .frame(height: 200)
+            if !cities.isEmpty && !ifClicked {
+//                NavigationView {
+                    List(cities, id: \.self) { city in
+//                        NavigationLink(destination: SwiftSpinnerView()){
+                            Text(city)
+                                .onTapGesture {
+                                    print("Selected City: \(city)")
+                                    self.searchText = city
+                                    //                                weatherViewModel.getLocation(city: city)
+                                    ifClicked = true
+                                    //call getWeather and create subview
+                                    //                           weatherViewModel.
+                                }
+                        }
+//                    }
+                    .frame(height: 200)
+//                }
             }
             Spacer()
             
@@ -191,7 +206,7 @@ struct TodayView: View {
             .cornerRadius(10)
         }
         .onAppear(){
-            weatherViewModel.getCurrentLocation()
+            weatherViewModel.getLocation(city: "")
         }
         .environmentObject(weatherViewModel)
     }

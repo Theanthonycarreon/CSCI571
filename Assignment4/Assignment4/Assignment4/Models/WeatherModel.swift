@@ -40,6 +40,9 @@ class WeatherModel {
 
     func setWeather(weather: JSON) {
      //   accumulator = weather.temperature
+        if !self.weatherData.isEmpty {
+            weatherData = JSON()
+        }
         weatherData = weather
         print("Inside setWeather in WeatherModel")
 //        print("weatherData", weatherData)

@@ -30,27 +30,53 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     @Published var weatherData: WeatherModel?
     
     
-    func getCurrentLocation() {
-        let url = "https://ipinfo.io"
-        let parameters = ["token": "5b2286d51fefe2"]
+    
+    func getLocation(city: String) {
+        if city == "" {
+            let url = "https://ipinfo.io"
+            let parameters = ["token": "5b2286d51fefe2"]
 
-        AF.request(url, parameters: parameters).responseJSON { response in
-           // Handle the response
-           switch response.result {
-                   case .success(let data):
-                        let json = JSON(data)
-               if let city = json["city"].string, let state = json["region"].string {
-                   if let returnedJSON = json["loc"].string {
-                       let coords = returnedJSON.split(separator: ",")
-                       let inputLatitude = String(coords[0])
-                       let inputLongitude = String(coords[1])
-                       self.getWeather(city: city, state: state, latitude: inputLatitude, longitude: inputLongitude)
+            AF.request(url, parameters: parameters).responseJSON { response in
+               // Handle the response
+               switch response.result {
+                       case .success(let data):
+                            let json = JSON(data)
+                   if let city = json["city"].string, let state = json["region"].string {
+                       if let returnedJSON = json["loc"].string {
+                           let coords = returnedJSON.split(separator: ",")
+                           let inputLatitude = String(coords[0])
+                           let inputLongitude = String(coords[1])
+                           self.getWeather(city: city, state: state, latitude: inputLatitude, longitude: inputLongitude)
+                       }
                    }
+                       case .failure(let error):
+                           print("Error:", error)
+                       }
                }
-                   case .failure(let error):
-                       print("Error:", error)
+        } else {
+            let url = "https://assignment3-440805.wl.r.appspot.com/api/weather"
+            let parameters = ["city": city]
+
+            AF.request(url, parameters: parameters).responseJSON { response in
+               // Handle the response
+               switch response.result {
+                       case .success(let data):
+                            let json = JSON(data)
+//                            print(json)
+                   if let city = json["city"].string, let state = json["region"].string {
+                       if let returnedJSON = json["loc"].string {
+                           let coords = returnedJSON.split(separator: ",")
+                           let inputLatitude = String(coords[0])
+                           let inputLongitude = String(coords[1])
+                           self.getWeather(city: city, state: state, latitude: inputLatitude, longitude: inputLongitude)
+                       }
                    }
-           }
+                       case .failure(let error):
+                           print("Error:", error)
+                       }
+               }
+        }
+        
         }
     func getCities(_ currUserInput: String, completion: @escaping ([String]) -> Void)  {
 //        displayValue = displayValue*10 + digit
@@ -84,7 +110,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                         // Update the `cities` property
                         self.cities = cityNames
                         completion(cityNames)
-                        print("Cities:", self.cities)
+//                        print("Cities:", self.cities)
                
                    case .failure(let error):
                        print("Error:", error)
