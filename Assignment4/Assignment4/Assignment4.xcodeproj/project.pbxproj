@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		925236B02D0695F2008BA930 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 925236AF2D0695F2008BA930 /* Alamofire */; };
 		925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 925236B22D06962E008BA930 /* SwiftyJSON */; };
+		9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 9263BD4A2D098A0000E65D41 /* SwiftSpinner */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 			files = (
 				925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */,
 				925236B02D0695F2008BA930 /* Alamofire in Frameworks */,
+				9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +138,7 @@
 			packageProductDependencies = (
 				925236AF2D0695F2008BA930 /* Alamofire */,
 				925236B22D06962E008BA930 /* SwiftyJSON */,
+				9263BD4A2D098A0000E65D41 /* SwiftSpinner */,
 			);
 			productName = Assignment4;
 			productReference = 92736BB82CF7A78800720C5B /* Assignment4.app */;
@@ -222,6 +225,7 @@
 			packageReferences = (
 				925236AE2D0695F2008BA930 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				925236B12D06962E008BA930 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92736BB92CF7A78800720C5B /* Products */;
@@ -614,6 +618,14 @@
 				version = 5.0.2;
 			};
 		};
+		9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/SwiftSpinner";
+			requirement = {
+				kind = exactVersion;
+				version = 2.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -626,6 +638,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 925236B12D06962E008BA930 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
+		};
+		9263BD4A2D098A0000E65D41 /* SwiftSpinner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */;
+			productName = SwiftSpinner;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

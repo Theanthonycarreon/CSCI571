@@ -1,5 +1,5 @@
 {
-  "originHash" : "91393b540335b0d2a8eb1ab5676e9368b58fd3e128b01d886940bfd9d3cae474",
+  "originHash" : "2a1fb33c160c6f1aa1354dd5ba6d556e86c3bb91eb265ddbef700502b374bca5",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -8,6 +8,15 @@
       "state" : {
         "revision" : "513364f870f6bfc468f9d2ff0a95caccc10044c5",
         "version" : "5.10.2"
+      }
+    },
+    {
+      "identity" : "swiftspinner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/icanzilb/SwiftSpinner",
+      "state" : {
+        "revision" : "f6cfeb6f1780571bdef8bdaf924ccdb573d23e33",
+        "version" : "2.2.0"
       }
     },
     {

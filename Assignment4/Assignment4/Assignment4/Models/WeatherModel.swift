@@ -46,7 +46,7 @@ class WeatherModel {
         weatherData = weather
         print("Inside setWeather in WeatherModel")
 //        print("weatherData", weatherData)
-//        print("address:", weatherData["address"])
+        print("address:", weatherData["address"])
         
     }
     func setOperand(operand: Int) {

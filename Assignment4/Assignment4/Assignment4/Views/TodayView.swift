@@ -61,10 +61,21 @@ struct TodayView: View {
     
     
     var body: some View {
+        NavigationView {
+            ZStack {
+                Image("App_background")
+                    .resizable()
+                    .scaledToFill()
+    //                .edgesIgnoringSafeArea([.bottom])
+                    .edgesIgnoringSafeArea(.all)
+//                TodayView(searchText: $searchText)
+    //            TodayView()
+//            }
+//        }
         VStack{
 //            HStack(){ //search bar
 //                NavigationView{
-//                    
+//
 //                }
             TextField("Enter City Name", text: $searchText)
             .padding()
@@ -80,20 +91,19 @@ struct TodayView: View {
             if !cities.isEmpty && !ifClicked {
 //                NavigationView {
                     List(cities, id: \.self) { city in
-//                        NavigationLink(destination: SwiftSpinnerView()){
-                            Text(city)
-                                .onTapGesture {
-                                    print("Selected City: \(city)")
-                                    self.searchText = city
-                                    //                                weatherViewModel.getLocation(city: city)
-                                    ifClicked = true
-                                    //call getWeather and create subview
-                                    //                           weatherViewModel.
-                                }
+                        NavigationLink(
+                            destination: SearchedLocationView(weatherViewModel: weatherViewModel, city: city)
+                                        .onAppear {
+                                            print("Selected City: \(city)")
+                                            self.searchText = city
+                                            self.cities.removeAll()
+                                        },
+                                    label: {
+                                        Text(city)
+                                    }
+                                )
                         }
-//                    }
                     .frame(height: 200)
-//                }
             }
             Spacer()
             
@@ -206,9 +216,19 @@ struct TodayView: View {
             .cornerRadius(10)
         }
         .onAppear(){
-            weatherViewModel.getLocation(city: "")
+            if searchText == "" {
+                weatherViewModel.getLocation(city: ""){
+                    
+                }
+            } else {
+                weatherViewModel.getLocation(city: searchText){
+                    
+                }
+            }
         }
         .environmentObject(weatherViewModel)
+    }
+        }
     }
     
 }
@@ -218,13 +238,6 @@ struct TodayView: View {
     @Previewable @State var previewSearchText: String = ""
     TodayView(searchText: $previewSearchText)
 }
-//struct TodayView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        @State var previewSearchText: String = ""
-//        TodayView(searchText: $previewSearchText)
-//            .previewDevice("iPhone 16")
-//    }
-//}
 
 
 struct UserCityInput: View {

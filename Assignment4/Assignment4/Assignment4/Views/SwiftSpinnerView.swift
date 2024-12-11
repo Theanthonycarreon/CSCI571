@@ -1,26 +1,32 @@
+////
+////  SwiftSpinnerView.swift
+////  Assignment4
+////
+////  Created by Anthony Carreon on 12/10/24.
+////
+//import SwiftUI
+//import Foundation
+//import SwiftSpinner
 //
-//  SwiftSpinnerView.swift
-//  Assignment4
-//
-//  Created by Anthony Carreon on 12/10/24.
-//
-import SwiftUI
-import Foundation
-
-struct SwiftSpinnerView: View {
-    
-    var body: some View {
-        Text("Hello, World!")
-    }
-}
-
-#Preview {
-//////    @Previewable @State var previewSearchText: String = ""
-    SwiftSpinnerView()
-}
-
-//struct SwiftSpinnerView_Previews: PreviewProvider {
-//    static var previews: Previews {
-//        SwiftSpinnerView()
+//struct SwiftSpinnerView: View {
+//    @State var city: String
+//    @ObservedObject var weatherViewModel: WeatherViewModel
+//    
+//    var body: some View {
+//        SearchedLocationView(weatherViewModel: weatherViewModel, city: city)
+//        .onAppear {
+//            SwiftSpinner.show("Fetching Weather Details for \(city)...")
+//            weatherViewModel.getLocation(city: city) {
+//            SwiftSpinner.hide()
+//            }
+//        }
+//        
 //    }
 //}
+//
+//#Preview {
+//    @Previewable @State var previewCity: String = ""
+//    @Previewable @ObservedObject var preweatherViewModel: WeatherViewModel = WeatherViewModel()
+//    SwiftSpinnerView(city: previewCity, weatherViewModel: preweatherViewModel)
+//}
+//

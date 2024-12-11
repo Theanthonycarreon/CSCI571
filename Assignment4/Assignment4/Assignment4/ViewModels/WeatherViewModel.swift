@@ -31,9 +31,8 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     
     
     
-    func getLocation(city: String) {
-        if city == "" {
-            let url = "https://ipinfo.io"
+    func getLocation(city: String, completion: @escaping () -> Void) {
+        if city == "" {            let url = "https://ipinfo.io"
             let parameters = ["token": "5b2286d51fefe2"]
 
             AF.request(url, parameters: parameters).responseJSON { response in
@@ -49,32 +48,14 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                            self.getWeather(city: city, state: state, latitude: inputLatitude, longitude: inputLongitude)
                        }
                    }
+                   completion()
                        case .failure(let error):
                            print("Error:", error)
                        }
                }
         } else {
-            let url = "https://assignment3-440805.wl.r.appspot.com/api/weather"
-            let parameters = ["city": city]
-
-            AF.request(url, parameters: parameters).responseJSON { response in
-               // Handle the response
-               switch response.result {
-                       case .success(let data):
-                            let json = JSON(data)
-//                            print(json)
-                   if let city = json["city"].string, let state = json["region"].string {
-                       if let returnedJSON = json["loc"].string {
-                           let coords = returnedJSON.split(separator: ",")
-                           let inputLatitude = String(coords[0])
-                           let inputLongitude = String(coords[1])
-                           self.getWeather(city: city, state: state, latitude: inputLatitude, longitude: inputLongitude)
-                       }
-                   }
-                       case .failure(let error):
-                           print("Error:", error)
-                       }
-               }
+            self.getWeather(city: city, state: "", latitude: "", longitude: "")
+            completion()
         }
         
         }
@@ -89,6 +70,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
            switch response.result {
                    case .success(let data):
                         let json = JSON(data)
+//               print(json)
                // prompt: how properly save the data? - 6 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
                // Extract all city names as Strings
                         let predictions = json["predictions"].arrayValue // Access the predictions array
@@ -135,11 +117,20 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
         }
     }
     fileprivate func setData(weatherData: JSON) {
-        if let cityName = weatherData["address"].string,
-           let data = weatherData["weatherData"]["data"]["timelines"].array,
+        print("Inside setData:  \(weatherData)")
+        let cityName: String?
+            if let addressString = weatherData["address"].string {
+                cityName = addressString
+            } else if let addressArray = weatherData["address"].array {
+                cityName = addressArray.compactMap { $0.string }.joined(separator: ", ")
+            } else {
+                cityName = nil
+            }
+        
+           if let cityName = cityName, let data = weatherData["weatherData"]["data"]["timelines"].array,
            let week = data.first?["intervals"].array {
             self.city = cityName
-            
+            print("in setData \(self.city)")
             for day in week {
                 // prompt: how properly save the data? - 13 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
                 guard let startTime = day["startTime"].string,
@@ -166,6 +157,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
                 // Append to weekData
                 self.weekData.append(dailyData)
             }
+            print("inside setWeather")
 //            print("Processed weekData: \(self.weekData)")
         }
     }
@@ -180,6 +172,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
            switch response.result {
                    case .success(let data):
                         json = JSON(data)
+//               print(json)
                         self.model.setWeather(weather: json)
                         self.setData(weatherData: json)
                    case .failure(let error):
