@@ -16,177 +16,176 @@ struct DayDetailView: View {
     @State var weatherViewModel: WeatherViewModel
     fileprivate func getBackground() -> some View {
         return
-        
-            ZStack {
-                Image("App_background")
-                    .resizable()
-                    .scaledToFill()
-                
-                VStack{
-                    HStack{
-                        //column 1
-                        VStack{
-                            Image("WindSpeed")
-                            if let windSpeed = searchedLocationViewModel.weekData.first?["windSpeed"] as? Double{
-                                Text("\(String(format: "%.2f", windSpeed)) mph")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("0 mph")
-                                    .padding(.bottom,5)
-                            }
-//                                .padding(.bottom,5)
-                            Text("Wind Speed")
+        ZStack {
+            Image("App_background")
+                .resizable()
+                .scaledToFill()
+            
+            VStack{
+                HStack{
+                    //column 1
+                    VStack{
+                        Image("WindSpeed")
+                        if let windSpeed = searchedLocationViewModel.weekData.first?["windSpeed"] as? Double{
+                            Text("\(String(format: "%.2f", windSpeed)) mph")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("0 mph")
+                                .padding(.bottom,5)
                         }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 25)
-    //                    .foregroundStyle(.black)
-                        //column 2
-                        VStack{
-                            Image("Pressure")
-                            if let pressureSeaLevel = searchedLocationViewModel.weekData.first?["pressureSeaLevel"] as? Double{
-                                Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("0 inHg")
-                                    .padding(.bottom,5)
-                            }
-//                                .padding(.bottom,5)
-                            Text("Pressure")
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 25)
-                        // column 3
-                        VStack{
-                            Image("Precipitation")
-                            if let precipitation = searchedLocationViewModel.weekData.first?["precipitationProbability"] as? Double{
-                                Text("\(Int(precipitation))%")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("0%")
-                                    .padding(.bottom,5)
-                            }
-                            Text("Precipitation")
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
+                        //                                .padding(.bottom,5)
+                        Text("Wind Speed")
                     }
-                    .padding(.bottom, 300)
-                }
-                
-                VStack{
-                    HStack{
-                        //column 1
-                        VStack{
-                            Image("Temperature")
-                            if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double{
-                                Text("\(Int(temp))°F")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("0°F")
-                                    .padding(.bottom,5)
-                            }
-                            Text("Temperature")
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 25)
+                    //                    .foregroundStyle(.black)
+                    //column 2
+                    VStack{
+                        Image("Pressure")
+                        if let pressureSeaLevel = searchedLocationViewModel.weekData.first?["pressureSeaLevel"] as? Double{
+                            Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("0 inHg")
+                                .padding(.bottom,5)
                         }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 30)
-                        //column 2
-                        VStack{
-                            if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
-                                Image(status)
-                                    .resizable()
-                                    .frame(width: 75, height: 75)
-                                    .padding(.bottom,10)
-                                Text(status)
-                            } else {
-                                Text("N/A")
-                                Text("N/A")
-                            }
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 30)
-                        // column 3
-                        VStack{
-                            Image("Humidity")
-                            if let humidity = searchedLocationViewModel.weekData.first?["humidity"] as? Double {
-                                Text("\(Int(humidity))%")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("N/A")
-                                    .padding(.bottom,5)
-                            }
-                            Text("Humidity")
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
+                        //                                .padding(.bottom,5)
+                        Text("Pressure")
+                        
                     }
-                    .padding(.top,30)
-                    
-                }
-                VStack{
-                    HStack{
-                        //column 1
-                        VStack{
-                            Image("Visibility")
-                            if let visibility = searchedLocationViewModel.weekData.first?["visibility"] as? Double {
-                                Text("\(String(format: "%.2f", visibility)) mi")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("N/A")
-                                    .padding(.bottom,5)
-                            }
-                            Text("Visibility")
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 25)
+                    // column 3
+                    VStack{
+                        Image("Precipitation")
+                        if let precipitation = searchedLocationViewModel.weekData.first?["precipitationProbability"] as? Double{
+                            Text("\(Int(precipitation))%")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("0%")
+                                .padding(.bottom,5)
                         }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 25)
-                        //column 2
-                        VStack{
-                            Image("CloudCover")
-                            if let cloudCover = searchedLocationViewModel.weekData.first?["cloudCover"] as? Double {
-                                Text("\(Int(cloudCover))%")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("N/A")
-                                    .padding(.bottom,5)
-                            }
-                            Text("Cloud Cover")
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
-                        .padding(.trailing, 25)
-                        // column 3
-                        VStack{
-                            Image("UVIndex")
-                            if let uVIndex = searchedLocationViewModel.weekData.first?["uVIndex"] as? Double {
-                                Text("\(Int(uVIndex))")
-                                    .padding(.bottom,5)
-                            } else {
-                                Text("N/A")
-                                    .padding(.bottom,5)
-                            }
-                            Text("UVIndex")
-                            
-                        }
-                        .background(.white)
-                        .opacity(0.5)
+                        Text("Precipitation")
+                        
                     }
-                    .padding(.top, 350)
-                    
+                    .background(.white)
+                    .opacity(0.5)
                 }
-    //            .padding(.bottom, 400)
-                
+                .padding(.bottom, 300)
             }
             
-        }//end of getBackgroundFunction
+            VStack{
+                HStack{
+                    //column 1
+                    VStack{
+                        Image("Temperature")
+                        if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double{
+                            Text("\(Int(temp))°F")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("0°F")
+                                .padding(.bottom,5)
+                        }
+                        Text("Temperature")
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 30)
+                    //column 2
+                    VStack{
+                        if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+                            Image(status)
+                                .resizable()
+                                .frame(width: 75, height: 75)
+                                .padding(.bottom,10)
+                            Text(status)
+                        } else {
+                            Text("N/A")
+                            Text("N/A")
+                        }
+                        
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 30)
+                    // column 3
+                    VStack{
+                        Image("Humidity")
+                        if let humidity = searchedLocationViewModel.weekData.first?["humidity"] as? Double {
+                            Text("\(Int(humidity))%")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("N/A")
+                                .padding(.bottom,5)
+                        }
+                        Text("Humidity")
+                        
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                }
+                .padding(.top,30)
+                
+            }
+            VStack{
+                HStack{
+                    //column 1
+                    VStack{
+                        Image("Visibility")
+                        if let visibility = searchedLocationViewModel.weekData.first?["visibility"] as? Double {
+                            Text("\(String(format: "%.2f", visibility)) mi")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("N/A")
+                                .padding(.bottom,5)
+                        }
+                        Text("Visibility")
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 25)
+                    //column 2
+                    VStack{
+                        Image("CloudCover")
+                        if let cloudCover = searchedLocationViewModel.weekData.first?["cloudCover"] as? Double {
+                            Text("\(Int(cloudCover))%")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("N/A")
+                                .padding(.bottom,5)
+                        }
+                        Text("Cloud Cover")
+                        
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                    .padding(.trailing, 25)
+                    // column 3
+                    VStack{
+                        Image("UVIndex")
+                        if let uVIndex = searchedLocationViewModel.weekData.first?["uVIndex"] as? Double {
+                            Text("\(Int(uVIndex))")
+                                .padding(.bottom,5)
+                        } else {
+                            Text("N/A")
+                                .padding(.bottom,5)
+                        }
+                        Text("UVIndex")
+                        
+                    }
+                    .background(.white)
+                    .opacity(0.5)
+                }
+                .padding(.top, 350)
+                
+            }
+        }
+        
+        
+        
+    }//end of getBackgroundFunction
     
     var body: some View {
         
@@ -219,11 +218,14 @@ struct DayDetailView: View {
                 }
             }
         }
+    }
+}
+    
 
            
-    }
     
-}
+    
+
 #Preview {
     @Previewable @State var previewCity: String = ""
     @Previewable @State var presearchedLocationViewModel: SearchedLocationViewModel = SearchedLocationViewModel()

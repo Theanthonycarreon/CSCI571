@@ -77,7 +77,7 @@ struct SearchedLocationView: View {
                 Image("App_background")
                     .resizable()
                     .scaledToFit()
-                    .ignoresSafeArea(.all)
+//                    .ignoresSafeArea(.all)
 
                 NavigationLink(
                     destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
@@ -225,44 +225,73 @@ struct SearchedLocationView: View {
                     .padding(.bottom,75)
                     
                 }
-                VStack {
-                    VStack() { // Contains all rows
-                        ForEach(0..<6) { _ in // Create 6 rows
-                            HStack {
-                                VStack {
-                                    Text("01/01/24")
-                                }
-                                VStack {
-                                    Image("Clear")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
-                                }
-                                .padding(.trailing,30)
-                                VStack {
-                                    Image("sun-rise")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
-                                }
-                                .padding(.trailing, 40)
-                                .padding(.leading, 40)
-                                VStack {
-                                    Image("sun-set")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
-                                }
-                            }
-                        }
-                    }
-                    .frame(width:350)
-                    .background(Color.yellow)
-                    .cornerRadius(10)
-                
-                }
+//                VStack {
+//                    VStack() { // Contains all rows
+//                        ForEach(0..<6) { _ in // Create 6 rows
+//                            HStack {
+//                                VStack {
+//                                    Text("01/01/24")
+//                                }
+//                                VStack {
+//                                    Image("Clear")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 32, height: 32)
+//                                }
+//                                .padding(.trailing,30)
+//                                VStack {
+//                                    Image("sun-rise")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 32, height: 32)
+//                                }
+//                                .padding(.trailing, 40)
+//                                .padding(.leading, 40)
+//                                VStack {
+//                                    Image("sun-set")
+//                                        .resizable()
+//                                        .scaledToFit()
+//                                        .frame(width: 32, height: 32)
+//                                }
+//                            }
+//                        }
+//                    }
+//                    .frame(width:350)
+//                    .background(Color.yellow)
+//                    .cornerRadius(10)
+//                
+//                }
                 .padding(.top, 420)
+                TabView (selection: $tabs) {
+                    if tabs.first == tabs[0] { // Only load when this tab is the active one!
+                        EmptyView()
+                            .tabItem{
+                                Image(tabs[0])
+                                Text(tabsNames[0])
+                            }
+                        
+                    } else {
+                        SearchedLocationView(searchText: $searchText, city: city)
+                            .tabItem{
+                                Image(tabs[0])
+                                Text(tabsNames[0])
+                            }
+                    }
+                    WeeklyView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel)
+                        .tabItem{
+                            Image(tabs[1])
+                            Text(tabsNames[1])
+                        }
+                    WeatherDataView(city: city)
+                        .tabItem{
+                            Image(tabs[2])
+                            Text(tabsNames[2])
+                        }
+                    
+                }
+                
             }
+            
             .navigationBarTitleDisplayMode(.inline)
         }
     }

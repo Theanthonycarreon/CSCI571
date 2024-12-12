@@ -64,78 +64,112 @@ struct WeeklyView: View {
         return options
     }
 
-    fileprivate func getBackground() -> some View {
-        return
-            ZStack {
-                Image("App_background")
-                    .resizable()
-                    .scaledToFit()
-                
-                VStack {
-                    NavigationLink(
-                        destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
-                        label: {
-                            HStack {
-                                VStack {
+//    fileprivate func getBackground() -> some View {
+//        return
+//            ZStack {
+//                Image("App_background")
+//                    .resizable()
+//                    .scaledToFit()
+//                
+//                VStack {
+//                    NavigationLink(
+//                        destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
+//                        label: {
+//                            HStack {
+//                                VStack {
+//                                    if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+//                                        Image(status)
+//                                    } else {
+//                                        Text("N/A")
+//                                    }
+//                                }
+//                                VStack {
+//                                    HStack {
+//                                        if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double {
+//                                            Text("\(Int(temp))°F")
+//                                        } else {
+//                                            Text("0°F")
+//                                        }
+//                                    }
+//                                    HStack {
+//                                        if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+//                                            Text(status)
+//                                        } else {
+//                                            Text("N/A")
+//                                        }
+//                                    }
+//                                    HStack {
+//                                        Text(searchedLocationViewModel.city)
+//                                    }
+//                                }
+//                                .foregroundStyle(.black)
+//                            }
+//                            .frame(width: 400, height: 175)
+//                            .background(Color.yellow.opacity(0.3))
+//                            .cornerRadius(10)
+//                            .foregroundStyle(.black)
+//                            .padding(.bottom, 380)
+//                        }
+//                    )
+//                }
+//
+//                ChartView(options: chartOptions)
+//                    .padding(.top, 250)
+//                    .frame(width: 400, height: 600)
+//            }
+//    }
+    
+    var body: some View {
+        ZStack {
+            Image("App_background")
+                .resizable()
+                .scaledToFit()
+            
+            VStack {
+                NavigationLink(
+                    destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
+                    label: {
+                        HStack {
+                            VStack {
+                                if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+                                    Image(status)
+                                } else {
+                                    Text("N/A")
+                                }
+                            }
+                            VStack {
+                                HStack {
+                                    if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double {
+                                        Text("\(Int(temp))°F")
+                                    } else {
+                                        Text("0°F")
+                                    }
+                                }
+                                HStack {
                                     if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
-                                        Image(status)
+                                        Text(status)
                                     } else {
                                         Text("N/A")
                                     }
                                 }
-                                VStack {
-                                    HStack {
-                                        if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double {
-                                            Text("\(Int(temp))°F")
-                                        } else {
-                                            Text("0°F")
-                                        }
-                                    }
-                                    HStack {
-                                        if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
-                                            Text(status)
-                                        } else {
-                                            Text("N/A")
-                                        }
-                                    }
-                                    HStack {
-                                        Text(searchedLocationViewModel.city)
-                                    }
+                                HStack {
+                                    Text(searchedLocationViewModel.city)
                                 }
-                                .foregroundStyle(.black)
                             }
-                            .frame(width: 400, height: 175)
-                            .background(Color.yellow.opacity(0.3))
-                            .cornerRadius(10)
                             .foregroundStyle(.black)
-                            .padding(.bottom, 380)
                         }
-                    )
-                }
-
-                ChartView(options: chartOptions)
-                    .padding(.top, 250)
-                    .frame(width: 400, height: 600)
+                        .frame(width: 400, height: 175)
+                        .background(Color.yellow.opacity(0.3))
+                        .cornerRadius(10)
+                        .foregroundStyle(.black)
+                        .padding(.bottom, 380)
+                    }
+                )
             }
-    }
-    
-    var body: some View {
-        TabView(selection: $tabs) {
-            getBackground()
-                .tabItem {
-                    Image(tabs[0])
-                    Text(tabsNames[0])
-                }
-            getBackground()
-                .tabItem {
-                    Image(tabs[1])
-                    Text(tabsNames[1])
-                }
-            getBackground()
-                .tabItem {
-                    Image(tabs[2])
-                    Text(tabsNames[2])
-                }
+
+            ChartView(options: chartOptions)
+                .padding(.top, 250)
+                .frame(width: 400, height: 600)
         }
         .onAppear {
             if searchedLocationViewModel.city != "" {

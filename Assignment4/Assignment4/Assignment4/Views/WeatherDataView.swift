@@ -21,10 +21,10 @@ struct WeatherDataView: View {
 //                .edgesIgnoringSafeArea([.bottom])
 //        }
             VStack{
-                HStack{
-                    Text("City here and navigation bar & twitter button")
-                        
-                }
+//                HStack{
+//                    Text("City here and navigation bar & twitter button")
+//                        
+//                }
 //                Spacer()
                 
                 HStack {
