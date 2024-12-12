@@ -9,11 +9,9 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-import Highcharts
 
-
-class WeatherViewModel: ObservableObject { // ViewModels usually inherits “ObservableObject”, it will send updates to Views
-    private var model = WeatherModel()
+class SearchedLocationViewModel: ObservableObject { // ViewModels usually inherits “ObservableObject”, it will send updates to Views
+    private var customModel = WeatherModel()
     @Published var city : String = ""
 //    @Published var status : String = ""
 //    @Published var currentTemp : Double = 0
@@ -30,10 +28,6 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     @Published var displayValue: Int = 0 // ViewModel have @Published property wrapper.
     @Published var lastSymbol: String = "" // ViewModels will only send changes to View if those fields are modified.
     @Published var weatherData: WeatherModel?
-    @Published var favoriteCities: [String] = []
-    @Published var changeFavoriteSign = false
-    private var differentButtons: [String] = ["plus-circle", "close-circle"]
-    @Published var showThisButton = "plus-circle"
     
     
     
@@ -65,47 +59,6 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
         }
         
         }
-    
-    func removeFavorite(city: String) {
-        if let index = favoriteCities.firstIndex(of: city) {
-                favoriteCities.remove(at: index)
-            changeFavoriteSign = true
-            showThisButton = "plus-circle"
-        } else {
-            changeFavoriteSign = false
-        }
-    }
-    
-    func addFavorite(city: String){
-        print("Inside addFavorite")
-        if !favoriteCities.contains(city) {
-            favoriteCities.append(city)
-            changeFavoriteSign = true
-            showThisButton = "close-circle"
-        } else {
-            changeFavoriteSign = false
-        }
-    }
-    
-    func getHighChartsData() -> [[Any]] {
-        print("Inside getHighChartsData")
-        return weekData.compactMap { dayData in
-            guard
-                let startTime = dayData["startTime"] as? String,
-                let temperatureMin = dayData["temperatureMin"] as? Double,
-                let temperatureMax = dayData["temperatureMax"] as? Double,
-                let date = ISO8601DateFormatter().date(from: startTime)
-            else {
-                return nil
-            }
-            // Convert date to timestamp in milliseconds
-            let timestamp = date.timeIntervalSince1970 * 1000
-            return [timestamp, temperatureMin, temperatureMax]
-        }
-    }
-    
-    
-    
     func getCities(_ currUserInput: String, completion: @escaping ([String]) -> Void)  {
 //        displayValue = displayValue*10 + digit
         let url = "https://assignment3-440805.wl.r.appspot.com/api/autocomplete"
@@ -154,10 +107,10 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     
     func performOperation(_ symbol: String) {
         lastSymbol = symbol
-        model.setOperand(operand: displayValue)
-        model.performOperation(symbol: symbol)
+        customModel.setOperand(operand: displayValue)
+        customModel.performOperation(symbol: symbol)
         if symbol == "=" {
-            displayValue = model.result
+            displayValue = customModel.result
         }
         else {
             displayValue = 0
@@ -220,12 +173,8 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
            switch response.result {
                    case .success(let data):
                         json = JSON(data)
-                        self.model = WeatherModel()
-                        self.weatherData = nil
-//               self.weatherData = WeatherViewModel?
-//                    weatherData = WeatherViewModel()
 //               print(json)
-                        self.model.setWeather(weather: json)
+                        self.customModel.setWeather(weather: json)
                         self.setData(weatherData: json)
                    case .failure(let error):
                        print("Error:", error)

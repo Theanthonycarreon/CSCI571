@@ -10,6 +10,7 @@
 		925236B02D0695F2008BA930 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 925236AF2D0695F2008BA930 /* Alamofire */; };
 		925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 925236B22D06962E008BA930 /* SwiftyJSON */; };
 		9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 9263BD4A2D098A0000E65D41 /* SwiftSpinner */; };
+		926B81812D0ACAF7009C410E /* Highcharts in Frameworks */ = {isa = PBXBuildFile; productRef = 926B81802D0ACAF7009C410E /* Highcharts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 				925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */,
 				925236B02D0695F2008BA930 /* Alamofire in Frameworks */,
 				9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */,
+				926B81812D0ACAF7009C410E /* Highcharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 				925236AF2D0695F2008BA930 /* Alamofire */,
 				925236B22D06962E008BA930 /* SwiftyJSON */,
 				9263BD4A2D098A0000E65D41 /* SwiftSpinner */,
+				926B81802D0ACAF7009C410E /* Highcharts */,
 			);
 			productName = Assignment4;
 			productReference = 92736BB82CF7A78800720C5B /* Assignment4.app */;
@@ -226,6 +229,7 @@
 				925236AE2D0695F2008BA930 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				925236B12D06962E008BA930 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
+				926B817F2D0ACAF7009C410E /* XCRemoteSwiftPackageReference "highcharts-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92736BB92CF7A78800720C5B /* Products */;
@@ -626,6 +630,14 @@
 				version = 2.2.0;
 			};
 		};
+		926B817F2D0ACAF7009C410E /* XCRemoteSwiftPackageReference "highcharts-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/highcharts/highcharts-ios";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 11.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -643,6 +655,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */;
 			productName = SwiftSpinner;
+		};
+		926B81802D0ACAF7009C410E /* Highcharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 926B817F2D0ACAF7009C410E /* XCRemoteSwiftPackageReference "highcharts-ios" */;
+			productName = Highcharts;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
