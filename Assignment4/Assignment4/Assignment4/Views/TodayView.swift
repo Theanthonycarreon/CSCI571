@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Alamofire
+import SwiftSpinner
 
 struct TodayView: View {
     @ObservedObject var weatherViewModel = WeatherViewModel()
@@ -133,13 +134,13 @@ struct TodayView: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width:150, height: 150 )
-                                            .padding(.trailing,20)
+//                                            .padding(.trailing,10)
                                     } else {
                                         Image("Cloudy")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width:150, height: 150 )
-                                            .padding(.trailing,20)
+//                                            .padding(.trailing,20)
                                     }
                                 }
                                 VStack (spacing:15){
@@ -167,12 +168,15 @@ struct TodayView: View {
                                         }
                                     }
                                     HStack{
-                                        Text(weatherViewModel.city)
+                                        Text(weatherViewModel.city.split(separator: ",").first?.trimmingCharacters(in: .whitespacesAndNewlines) ?? weatherViewModel.city)
+                                            .frame(width: 100)
+                                            .font(.system(size: 14))
+                                            .fontWeight(.bold)
                                         
                                     }
                                 }
                                 .padding(.top, 30)
-                                .padding(.trailing,100)
+                                .padding(.trailing,50)
                                 .foregroundStyle(.black)
                             }
                             .frame(width: 350, height: 175)
@@ -306,18 +310,23 @@ struct TodayView: View {
                     .background(Color.yellow)
                     .cornerRadius(10)
                 }
+                
                 .padding(.top, 420)
                 .onAppear {
-                    //            SwiftSpinner.show("Fetching Weather Details for \(city)...")
+                                SwiftSpinner.show("Fetching Weather Details for \(city)...")
                     print("searchedLocationViewModel.city: \(weatherViewModel.city)")
                     weatherViewModel.getLocation(city: city) {
-                        //                SwiftSpinner.hide()
+                                        SwiftSpinner.hide()
                         print("searchedLocationViewModel.city: \(weatherViewModel.city)")
                     }
                 }
             }
+            .navigationTitle("Weather")
+             .navigationBarHidden(true)
         }
     }
+    
+       
 }
     
     
@@ -350,247 +359,3 @@ struct UserCityInput: View {
 }
 
 
-
-//var body: some View {
-//    ZStack{
-//        Image("App_background")
-//            .resizable()
-//            .scaledToFit()
-//            .ignoresSafeArea(.all)
-////                .edgesIgnoringSafeArea([.bottom])
-////                .edgesIgnoringSafeArea(.all)
-//        
-//        
-//        VStack {
-//               TextField("Enter City Name", text: $searchText)
-//                   .padding()
-//                   .background(Color.white)
-//                   .onChange(of: searchText) { newValue in
-//                       weatherViewModel.getCities(newValue) { currCities in
-//                           self.cities = currCities
-//                       }
-//                   }
-//
-//               if !cities.isEmpty && !ifClicked {
-//                   List(cities, id: \.self) { city in
-//                       NavigationLink(
-//                           destination: SwiftSpinnerView(city: city, weatherViewModel: weatherViewModel),
-//                           label: {
-//                               Text(city)
-//                           }
-//                       )
-//                   }
-//                   .frame(height: 200)
-//               }
-//               Spacer()
-//           }
-//        
-//        
-//        
-//        
-//        
-//        
-//        VStack{
-//            Button(action: {
-//                // Action for the button
-//                print("Add to Favorites")
-//            }) {
-//                Image("plus-circle") // Use SF Symbol or a custom image
-//                    .resizable()
-//                    .scaledToFit()
-//                    .frame(width: 25, height: 25) // Adjust the size of the image
-//            }
-//            .padding(.leading, 320)
-//        
-//            
-//            NavigationLink(
-//                destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
-//                label: {
-//                    HStack{
-//                        VStack{
-//                            if let status = weatherViewModel.weekData.first?["status"] as? String {
-//                                Image("Cloudy")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width:150, height: 150 )
-//                                    .padding(.trailing,20)
-//                            } else {
-//                                Image("Cloudy")
-//                                    .resizable()
-//                                    .scaledToFit()
-//                                    .frame(width:150, height: 150 )
-//                                    .padding(.trailing,20)
-//                            }
-//                        }
-//                        VStack (spacing:15){
-//                            HStack{
-//                                if let temp = weatherViewModel.weekData.first?["temperature"] as? Double{
-//                                    Text("\(Int(temp))°F")
-//                                        .font(.system(size: 30)) // Set font size
-//                                        .fontWeight(.bold)
-//                                } else {
-//                                    Text("0°F")
-//                                        .font(.system(size: 30)) // Set font size
-//                                        .fontWeight(.bold)
-//                                }
-//                                
-//                            }
-//                            HStack{
-//                                if let status = weatherViewModel.weekData.first?["status"] as? String {
-//                                    Text("Cloudy")
-//                                } else {
-//                                    Text("Cloudy")
-//                                }
-//                                
-//                            }
-//                            HStack{
-//                                if let status = weatherViewModel.weekData.first?["status"] as? String {
-//                                    Text(status)
-//                                        .font(.system(size: 20)) // Set font size
-//                                        .fontWeight(.bold)
-//                                } else {
-//                                    Text("N/A")
-//                                        .font(.system(size: 20)) // Set font size
-//                                        .fontWeight(.bold)
-//                                }
-//                            }
-//                            HStack{
-//                                Text(weatherViewModel.city)
-//                                
-//                            }
-//                        }
-//                        .padding(.top, 30)
-//                        .padding(.trailing,100)
-//                        .foregroundStyle(.black)
-//                    }
-//                    .frame(width: 350, height: 175)
-//                    .background(Color.yellow.opacity(0.3))
-//                    .cornerRadius(10)
-//                    .foregroundStyle(.black)
-//                    .padding(.bottom, 450)
-//                }
-//            )
-//            
-//            
-//        }
-//        VStack{
-//            HStack{
-//                VStack{
-//                    Text("Humidity")
-//                }
-//                VStack{
-//                    Text("Wind Speed")
-//                }
-//                VStack{
-//                    Text("Visibility")
-//                }
-//                VStack{
-//                    Text("Pressure")
-//                }
-//            }
-//            HStack{
-//                VStack{
-//                    Image("Humidity")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width:80,height:80)
-//                }
-//                VStack{
-//                    Image("WindSpeed")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width:80,height:80)
-//                }
-//                VStack{
-//                    Image("Visibility")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width:80,height:80)
-//                }
-//                VStack{
-//                    Image("Pressure")
-//                        .resizable()
-//                        .scaledToFit()
-//                        .frame(width:80,height:80)
-//                }
-//            }
-//            HStack{
-//                VStack{
-//                    if let humidity = weatherViewModel.weekData.first?["humidity"] as? Double{
-//                        Text("\(Int(humidity)) %")
-//                    } else {
-//                        Text("0 %")
-//                    }
-//                }
-//                VStack{
-//                    if let windSpeed = weatherViewModel.weekData.first?["windSpeed"] as? Double{
-//                        Text("\(String(format: "%.2f", windSpeed)) mph")
-//                    } else {
-//                        Text("0 mph")
-//                    }
-//                }
-//                VStack{
-//                    if let visibility = weatherViewModel.weekData.first?["visibility"] as? Double{
-//                        Text("\(String(format: "%.2f", visibility)) mi")
-//                    } else {
-//                        Text("0 mi")
-//                    }
-//                }
-//                VStack{
-//                    if let pressureSeaLevel = weatherViewModel.weekData.first?["pressureSeaLevel"] as? Double{
-//                        Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
-//                    } else {
-//                        Text("0 inHg")
-//                    }
-//                }
-//            }
-//            .padding(.bottom,75)
-//            
-//        }
-//        VStack {
-//            VStack() { // Contains all rows
-//                ForEach(0..<6) { _ in // Create 6 rows
-//                    HStack {
-//                        VStack {
-//                            Text("01/01/24")
-//                        }
-//                        VStack {
-//                            Image("Clear")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 32, height: 32)
-//                        }
-//                        .padding(.trailing,30)
-//                        VStack {
-//                            Image("sun-rise")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 32, height: 32)
-//                        }
-//                        .padding(.trailing, 40)
-//                        .padding(.leading, 40)
-//                        VStack {
-//                            Image("sun-set")
-//                                .resizable()
-//                                .scaledToFit()
-//                                .frame(width: 32, height: 32)
-//                        }
-//                    }
-//                }
-//            }
-//            .frame(width:350)
-//            .background(Color.yellow)
-//            .cornerRadius(10)
-//        }
-//        .padding(.top, 420)
-//    }
-//    
-//    .onAppear {
-////            SwiftSpinner.show("Fetching Weather Details for \(city)...")
-//        print("searchedLocationViewModel.city: \(searchedLocationViewModel.city)")
-//        searchedLocationViewModel.getLocation(city: city) {
-////                SwiftSpinner.hide()
-//            print("searchedLocationViewModel.city: \(searchedLocationViewModel.city)")
-//        }
-//    }
-//}
