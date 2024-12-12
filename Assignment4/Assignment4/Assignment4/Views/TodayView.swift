@@ -26,73 +26,92 @@ struct TodayView: View {
     
     
     fileprivate func weeklyData(for dayData: [String: Any]) -> some View {
-        HStack {
-            VStack (spacing:10){
-                if let date = dayData["date"] as? String {
-                    Text(date)
-                } else {
-                    Text("N/A")
+        return
+            HStack {
+                VStack (spacing:10){
+                    if let date = dayData["date"] as? String {
+                        Text(date)
+                    } else {
+                        Text("N/A")
+                    }
                 }
-            }
-            VStack (spacing:15){
-                if let status = dayData["status"] as? String {
-                    Image(status)
-                    // prompt: how to scale the image? - 2 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                VStack (spacing:15){
+                    if let status = dayData["status"] as? String {
+                        Image(status)
+                        // prompt: how to scale the image? - 2 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 32, height: 32)
+                    } else {
+                        Text("N/A")
+                    }
+                }
+                .padding(.trailing,30)
+                VStack {
+                    Image("sun-rise")
                         .resizable()
                         .scaledToFit()
-                        .frame(width:20, height: 20 )
-                } else {
-                    Text("N/A")
+                        .frame(width: 32, height: 32)
+                }
+                .padding(.trailing, 40)
+                .padding(.leading, 40)
+                VStack {
+                    Image("sun-set")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 32, height: 32)
                 }
             }
-            VStack (spacing:15) {
-                Image("sun-rise")
-            }
-            VStack {
-                Image("sun-set")
-            }
         }
-    }
-    var filteredWeekData: [[String: Any]] {
-           if searchText.isEmpty {
-               return weatherViewModel.weekData
-           } else {
-               return weatherViewModel.weekData.filter { day in
-                   if let city = day["city"] as? String {
-                       return city.localizedCaseInsensitiveContains(searchText)
+        var filteredWeekData: [[String: Any]] {
+               if searchText.isEmpty {
+                   return weatherViewModel.weekData
+               } else {
+                   return weatherViewModel.weekData.filter { day in
+                       if let city = day["city"] as? String {
+                           return city.localizedCaseInsensitiveContains(searchText)
+                       }
+                       return false
                    }
-                   return false
                }
            }
-       }
     
 
     var body: some View {
         NavigationView {
             ZStack{
                 Image("App_background")
+//                    .frame(height: 100)
                     .resizable()
                     .scaledToFit()
-                    .ignoresSafeArea(.all)
+//                    .ignoresSafeArea(.all)
                 //        }
                 //                .edgesIgnoringSafeArea([.bottom])
-                //                .edgesIgnoringSafeArea(.all)
+                                .edgesIgnoringSafeArea(.all)
                 
                 
                 VStack {
                     TextField("Enter City Name", text: $searchText)
-                        .padding()
+                        .padding(.horizontal,10)
                         .background(Color.white)
                         .onChange(of: searchText) { newValue in
                             weatherViewModel.getCities(newValue) { currCities in
-                                self.cities = currCities
+                                if newValue.isEmpty {
+                                    self.cities = []
+                                } else {
+                                    self.cities = currCities
+                                }
                             }
                         }
                     
                     if !cities.isEmpty && !ifClicked {
                         List(cities, id: \.self) { city in
                             NavigationLink(
-                                destination: SwiftSpinnerView(city: city, weatherViewModel: weatherViewModel),
+                                destination: SwiftSpinnerView(city: city, weatherViewModel: weatherViewModel)
+                                    .onAppear {
+                                        // Clear the cities list when navigating
+                                        self.cities = []
+                                    },
                                 label: {
                                     Text(city)
                                 }
@@ -272,23 +291,34 @@ struct TodayView: View {
                             }
                         }
                     }
-                    .padding(.bottom,75)
-                    
-                }
-                VStack {
-                    VStack() { // Contains all rows
-                        ForEach(0..<6) { _ in // Create 6 rows
+                    .padding(.bottom, 150)
+                    VStack {
+                        ForEach(weatherViewModel.weekData.indices, id: \.self) { index in
+                            let dayData = weatherViewModel.weekData[index]
                             HStack {
-                                VStack {
-                                    Text("01/01/24")
+                                // Date column
+                                VStack(spacing: 10) {
+                                    if let date = dayData["date"] as? String {
+                                        Text(date)
+                                    } else {
+                                        Text("N/A")
+                                    }
                                 }
-                                VStack {
-                                    Image("Clear")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
+                                
+                                // Weather status column
+                                VStack(spacing: 15) {
+                                    if let status = dayData["status"] as? String {
+                                        Image(status)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: 32, height: 32)
+                                    } else {
+                                        Text("N/A")
+                                    }
                                 }
-                                .padding(.trailing,30)
+                                .padding(.trailing, 30)
+                                
+                                // Sunrise image column
                                 VStack {
                                     Image("sun-rise")
                                         .resizable()
@@ -297,6 +327,8 @@ struct TodayView: View {
                                 }
                                 .padding(.trailing, 40)
                                 .padding(.leading, 40)
+                                
+                                // Sunset image column
                                 VStack {
                                     Image("sun-set")
                                         .resizable()
@@ -306,12 +338,14 @@ struct TodayView: View {
                             }
                         }
                     }
-                    .frame(width:350)
+//                    .padding(.bottom, 200)
+                    .frame(width: 350)
                     .background(Color.yellow)
                     .cornerRadius(10)
                 }
+
                 
-                .padding(.top, 420)
+                .padding(.top, 200)
                 .onAppear {
                                 SwiftSpinner.show("Fetching Weather Details for \(city)...")
                     print("searchedLocationViewModel.city: \(weatherViewModel.city)")

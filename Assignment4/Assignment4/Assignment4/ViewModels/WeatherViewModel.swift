@@ -34,6 +34,31 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     @Published var changeFavoriteSign = false
     private var differentButtons: [String] = ["plus-circle", "close-circle"]
     @Published var showThisButton = "plus-circle"
+    @Published var tweet: String = ""
+    
+    
+    func PostTweet(completion: @escaping ([String]) -> Void)  {
+        
+        
+                print("Inside PostTweet()")
+        //        print("weatherData \(weatherData)")
+        tweet = ""
+        //        HStack {
+        if let temp = weekData.first?["temperature"] as? Double,
+           let status = weekData.first?["status"] as? String,
+        let currCity = city.split(separator: ",").first?.trimmingCharacters(in: .whitespacesAndNewlines) {
+            tweet = "The current temperature at \(currCity) is \(Int(temp))°F. The weather conditions are \(status) #CSCI571WeatherSearch"
+            if let encodedTweet = tweet.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed),
+                      let tweetURL = URL(string: "https://twitter.com/intent/tweet?text=\(encodedTweet)") {
+                       
+                       // Open the URL in the browser
+                       UIApplication.shared.open(tweetURL, options: [:], completionHandler: nil)
+                   } else {
+                       print("Failed to encode tweet or create URL.")
+                   }
+        }
+        tweet = ""
+    }
     
     
     

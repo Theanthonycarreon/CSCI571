@@ -12,6 +12,7 @@ import UIKit
 
 struct WeatherDataView: View {
     @State var city: String = ""
+    @State var weatherViewModel: WeatherViewModel
     
     var body: some View {
         ZStack{
@@ -37,7 +38,11 @@ struct WeatherDataView: View {
                                 .frame(width:50,height:50)
                                 .padding(.trailing,50)
                             Text("Precipitation: ")
-                            Text("%")
+                            if let status = weatherViewModel.weekData.first?["precipitationProbability"] as? Int {
+                                Text("\(status)%")
+                            } else {
+                                Text("0%")
+                            }
                         }
                         HStack{
                             Image("Humidity")
@@ -46,7 +51,11 @@ struct WeatherDataView: View {
                                 .frame(width:50,height:50)
                                 .padding(.trailing,75)
                             Text("Humidity: ")
-                            Text("%")
+                            if let humidity = weatherViewModel.weekData.first?["humidity"] as? Int {
+                                Text("\(humidity)%")
+                            } else {
+                                Text("0%")
+                            }
                         }
                         HStack{
                             Image("CloudCover")
@@ -55,7 +64,11 @@ struct WeatherDataView: View {
                                 .frame(width:50,height:50)
                                 .padding(.trailing,50)
                             Text("Cloud Cover: ")
-                            Text("%")
+                            if let cloudCover = weatherViewModel.weekData.first?["cloudCover"] as? Int {
+                                Text("\(cloudCover)%")
+                            } else {
+                                Text("0%")
+                            }
                         }
                         
                     }
@@ -66,16 +79,10 @@ struct WeatherDataView: View {
                 .cornerRadius(10)
                 .foregroundStyle(.black)
                 .padding(.bottom, 500)
-                
-                
-//                HStack{
-//                    Text("Weather Data Chart goes here")
-//                }
-//                .padding(.bottom, 30)
             }
             VStack{
                 HStack{
-                    SolidGaugeChartView()
+                    SolidGaugeChartView(weatherViewModel: weatherViewModel)
                 }
                 .padding(.top, 260)
             }
@@ -87,14 +94,23 @@ struct WeatherDataView: View {
 
 
 
-
 #Preview {
     @Previewable @State var previewCity: String = ""
-    WeatherDataView(city: previewCity)
+//    @Previewable @State var presearchedLocationViewModel: SearchedLocationViewModel = SearchedLocationViewModel()
+    @Previewable @State var preWeatherViewModel: WeatherViewModel = WeatherViewModel()
+    WeatherDataView(city: previewCity, weatherViewModel: preWeatherViewModel)
 }
 
 
+//#Preview {
+//    @Previewable @State var previewCity: String = ""
+//    @Previewable @State var preWeatherViewModel: WeatherViewModel = WeatherViewModel()
+//    WeatherDataView(city: previewCity, searchedLocationViewModel: preWeatherViewModel)
+//}
+
+
 struct SolidGaugeChartView: UIViewRepresentable {
+    var weatherViewModel: WeatherViewModel
     func makeUIView(context: Context) -> HIChartView {
         let chartView = HIChartView(frame: .zero)
         chartView.plugins = ["solid-gauge"]
@@ -113,6 +129,7 @@ struct SolidGaugeChartView: UIViewRepresentable {
         options.title = title
 
         let tooltip = HITooltip()
+        
         tooltip.borderWidth = 0
         tooltip.shadow = HIShadowOptionsObject()
         tooltip.shadow.opacity = 0
@@ -128,19 +145,19 @@ struct SolidGaugeChartView: UIViewRepresentable {
         pane.endAngle = 360
 
         let background1 = HIBackground()
-        background1.backgroundColor = HIColor(rgba: 106, green: 165, blue: 231, alpha: 0.35)
+        background1.backgroundColor = HIColor(rgba: 130, green: 238, blue: 106, alpha: 0.35) 
         background1.outerRadius = "112%"
         background1.innerRadius = "88%"
         background1.borderWidth = 0
 
         let background2 = HIBackground()
-        background2.backgroundColor = HIColor(rgba: 51, green: 52, blue: 56, alpha: 0.35)
+        background2.backgroundColor = HIColor(rgba: 106, green: 165, blue: 231, alpha: 0.35)//HIColor(rgba: 130, green: 238, blue: 106, alpha: 0.35)
         background2.outerRadius = "87%"
         background2.innerRadius = "63%"
         background2.borderWidth = 0
 
         let background3 = HIBackground()
-        background3.backgroundColor = HIColor(rgba: 130, green: 238, blue: 106, alpha: 0.35)
+        background3.backgroundColor = HIColor(rgba: 255, green: 99, blue: 71, alpha: 0.35)
         background3.outerRadius = "62%"
         background3.innerRadius = "38%"
         background3.borderWidth = 0
@@ -152,7 +169,8 @@ struct SolidGaugeChartView: UIViewRepresentable {
         yAxis.min = 0
         yAxis.max = 100
         yAxis.lineWidth = 0
-        yAxis.tickPosition = ""
+        yAxis.tickPositions = []
+        yAxis.labels = nil
         options.yAxis = [yAxis]
 
         let plotOptions = HIPlotOptions()
@@ -166,31 +184,31 @@ struct SolidGaugeChartView: UIViewRepresentable {
         options.plotOptions = plotOptions
 
         let move = HISolidgauge()
-        move.name = "Move"
+        move.name = "Cloud Cover"
         let moveData = HIData()
-        moveData.color = HIColor(rgba: 106, green: 165, blue: 231, alpha: 1)
+        moveData.color = HIColor(rgba: 130, green: 238, blue: 106, alpha: 1)
         moveData.radius = "112%"
         moveData.innerRadius = "88%"
-        moveData.y = 80
-        move.data = [moveData]
+        moveData.y = (weatherViewModel.weekData.first?["cloudCover"] as? Int ?? 0) as NSNumber
+        move.data = [moveData] //chnage this for cloud cover data
 
         let exercise = HISolidgauge()
-        exercise.name = "Exercise"
+        exercise.name = "Precipitation"
         let exerciseData = HIData()
-        exerciseData.color = HIColor(rgba: 51, green: 52, blue: 56, alpha: 1)
+        exerciseData.color = HIColor(rgba: 106, green: 165, blue: 231, alpha: 1)
         exerciseData.radius = "87%"
         exerciseData.innerRadius = "63%"
-        exerciseData.y = 65
-        exercise.data = [exerciseData]
+        exerciseData.y = (weatherViewModel.weekData.first?["precipitationProbability"] as? Int ?? 0) as NSNumber
+        exercise.data = [exerciseData] //chnage this for precipitationProbability data
 
         let stand = HISolidgauge()
-        stand.name = "Stand"
+        stand.name = "Humidity"
         let standData = HIData()
-        standData.color = HIColor(rgba: 130, green: 238, blue: 106, alpha: 1)
+        standData.color = HIColor(rgba: 255, green: 99, blue: 71, alpha: 1)
         standData.radius = "62%"
         standData.innerRadius = "38%"
-        standData.y = 50
-        stand.data = [standData]
+        standData.y = (weatherViewModel.weekData.first?["humidity"] as? Int ?? 0) as NSNumber
+        stand.data = [standData] //chnage this for humidity data
 
         options.series = [move, exercise, stand]
 

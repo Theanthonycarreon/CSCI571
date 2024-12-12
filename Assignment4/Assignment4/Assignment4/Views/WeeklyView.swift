@@ -124,6 +124,7 @@ struct WeeklyView: View {
             Image("App_background")
                 .resizable()
                 .scaledToFit()
+//                .ignoresSafeArea(.all)
             
             VStack {
                 NavigationLink(

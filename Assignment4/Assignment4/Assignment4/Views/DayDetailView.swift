@@ -19,7 +19,7 @@ struct DayDetailView: View {
         ZStack {
             Image("App_background")
                 .resizable()
-                .scaledToFill()
+                .scaledToFit()
             
             VStack{
                 HStack{
@@ -36,6 +36,7 @@ struct DayDetailView: View {
                         //                                .padding(.bottom,5)
                         Text("Wind Speed")
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                     .padding(.trailing, 25)
@@ -54,6 +55,7 @@ struct DayDetailView: View {
                         Text("Pressure")
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                     .padding(.trailing, 25)
@@ -70,6 +72,7 @@ struct DayDetailView: View {
                         Text("Precipitation")
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                 }
@@ -90,9 +93,10 @@ struct DayDetailView: View {
                         }
                         Text("Temperature")
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
-                    .padding(.trailing, 30)
+                    .padding(.trailing, 25)
                     //column 2
                     VStack{
                         if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
@@ -107,9 +111,10 @@ struct DayDetailView: View {
                         }
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
-                    .padding(.trailing, 30)
+                    .padding(.trailing, 23)
                     // column 3
                     VStack{
                         Image("Humidity")
@@ -123,6 +128,7 @@ struct DayDetailView: View {
                         Text("Humidity")
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                 }
@@ -143,6 +149,7 @@ struct DayDetailView: View {
                         }
                         Text("Visibility")
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                     .padding(.trailing, 25)
@@ -159,6 +166,7 @@ struct DayDetailView: View {
                         Text("Cloud Cover")
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                     .padding(.trailing, 25)
@@ -175,15 +183,17 @@ struct DayDetailView: View {
                         Text("UVIndex")
                         
                     }
+                    .frame(width:100, height:150)
                     .background(.white)
                     .opacity(0.5)
                 }
                 .padding(.top, 350)
                 
             }
+            
         }
         
-        
+//        .padding(.bottom,50)
         
     }//end of getBackgroundFunction
     
@@ -201,7 +211,7 @@ struct DayDetailView: View {
                     Image(tabs[1])
                     Text(tabsNames[1])
                 }
-            WeatherDataView(city: city)
+            WeatherDataView(city: city, weatherViewModel: weatherViewModel)
                 .tabItem{
                     Image(tabs[2])
                     Text(tabsNames[2])

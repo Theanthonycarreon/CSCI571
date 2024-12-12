@@ -77,6 +77,7 @@ struct SearchedLocationView: View {
                 Image("App_background")
                     .resizable()
                     .scaledToFit()
+                    .ignoresSafeArea(.all)
 //                    .ignoresSafeArea(.all)
 
                 NavigationLink(
@@ -225,74 +226,135 @@ struct SearchedLocationView: View {
                     .padding(.bottom,75)
                     
                 }
-//                VStack {
-//                    VStack() { // Contains all rows
-//                        ForEach(0..<6) { _ in // Create 6 rows
-//                            HStack {
-//                                VStack {
-//                                    Text("01/01/24")
-//                                }
-//                                VStack {
-//                                    Image("Clear")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 32, height: 32)
-//                                }
-//                                .padding(.trailing,30)
-//                                VStack {
-//                                    Image("sun-rise")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 32, height: 32)
-//                                }
-//                                .padding(.trailing, 40)
-//                                .padding(.leading, 40)
-//                                VStack {
-//                                    Image("sun-set")
-//                                        .resizable()
-//                                        .scaledToFit()
-//                                        .frame(width: 32, height: 32)
-//                                }
-//                            }
-//                        }
-//                    }
-//                    .frame(width:350)
-//                    .background(Color.yellow)
-//                    .cornerRadius(10)
-//                
-//                }
-                .padding(.top, 420)
-                TabView (selection: $tabs) {
-                    if tabs.first == tabs[0] { // Only load when this tab is the active one!
-                        EmptyView()
-                            .tabItem{
-                                Image(tabs[0])
-                                Text(tabsNames[0])
+                VStack {
+                    ForEach(weatherViewModel.weekData.indices, id: \.self) { index in
+                        let dayData = weatherViewModel.weekData[index]
+                        HStack {
+                            // Date column
+                            VStack(spacing: 10) {
+                                if let date = dayData["date"] as? String {
+                                    Text(date)
+                                } else {
+                                    Text("N/A")
+                                }
                             }
-                        
-                    } else {
-                        SearchedLocationView(searchText: $searchText, city: city)
-                            .tabItem{
-                                Image(tabs[0])
-                                Text(tabsNames[0])
+                            
+                            // Weather status column
+                            VStack(spacing: 15) {
+                                if let status = dayData["status"] as? String {
+                                    Image(status)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(width: 32, height: 32)
+                                } else {
+                                    Text("N/A")
+                                }
                             }
-                    }
-                    WeeklyView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel)
-                        .tabItem{
-                            Image(tabs[1])
-                            Text(tabsNames[1])
-                        }
-                    WeatherDataView(city: city)
-                        .tabItem{
-                            Image(tabs[2])
-                            Text(tabsNames[2])
+                            .padding(.trailing, 30)
+                            
+                            // Sunrise image column
+                            VStack {
+                                Image("sun-rise")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                            }
+                            .padding(.trailing, 40)
+                            .padding(.leading, 40)
+                            
+                            // Sunset image column
+                            VStack {
+                                Image("sun-set")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 32, height: 32)
+                            }
                         }
                     
                 }
+                .frame(width: 350)
+                .background(Color.yellow)
+                .cornerRadius(10)
+                
+                }
+                .padding(.top, 420)
+//                TabView (selection: $tabs) {
+//                    if tabs.first == tabs[0] { // Only load when this tab is the active one!
+//                        EmptyView()
+//                            .tabItem{
+//                                Image(tabs[0])
+//                                Text(tabsNames[0])
+//                            }
+//                        
+//                    } else {
+//                        SearchedLocationView(searchText: $searchText, city: city)
+//                            .tabItem{
+//                                Image(tabs[0])
+//                                Text(tabsNames[0])
+//                            }
+//                    }
+//                    WeeklyView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel)
+//                        .tabItem{
+//                            Image(tabs[1])
+//                            Text(tabsNames[1])
+//                        }
+//                    WeatherDataView(city: city)
+//                        .tabItem{
+//                            Image(tabs[2])
+//                            Text(tabsNames[2])
+//                        }
+//                    
+//                }
                 
             }
-            
-            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                    // Left-side custom back button label
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button(action: {
+                            // Handle back navigation
+                            if let navigationController = UIApplication.shared.windows.first?.rootViewController as? UINavigationController {
+                                navigationController.popViewController(animated: true)
+                            }
+                        }) {
+                            Text("<")
+                                .font(.system(size: 30))
+                                .fontWeight(.bold)
+                            Text("Weather") // Custom back button label
+                                .font(.system(size: 20))
+//                                .fontWeight(.bold)
+                        }
+                    }
+                    
+                    // Center title
+                    ToolbarItem(placement: .principal) {
+                        Text(city)
+                            .font(.system(size: 20))
+                            .fontWeight(.bold)
+                    }
+                    
+                    // Right-side button with image
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            // Action for the Twitter button
+                            print("Twitter button tapped")
+                            weatherViewModel.PostTweet { response in
+                                // Handle the completion response if needed
+                                print("Tweet posted with response: \(response)")
+                            }
+                        }) {
+                            HStack {
+                                Image("twitter")
+                                    .resizable()
+                                    .frame(width: 24, height: 24) // Adjust size as needed
+                                    .foregroundColor(.blue) // Set the image color
+                            }
+                        }
+                    }
+
+                }
+                .navigationBarTitleDisplayMode(.inline) // En
+//            .navigationBarTitleDisplayMode(.inline)
+//            .navigationTitle(city)
         }
     }
 }
