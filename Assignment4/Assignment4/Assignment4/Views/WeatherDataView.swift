@@ -11,8 +11,7 @@ import Highcharts
 import UIKit
 
 struct WeatherDataView: View {
-    @State var city: String = ""
-    @State var weatherViewModel: WeatherViewModel
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
     
     var body: some View {
         ZStack{
@@ -84,7 +83,7 @@ struct WeatherDataView: View {
                 HStack{
                     SolidGaugeChartView(weatherViewModel: weatherViewModel)
                 }
-                .padding(.top, 260)
+                .padding(.top, 230)
             }
         }
     }
@@ -95,12 +94,9 @@ struct WeatherDataView: View {
 
 
 #Preview {
-    @Previewable @State var previewCity: String = ""
-//    @Previewable @State var presearchedLocationViewModel: SearchedLocationViewModel = SearchedLocationViewModel()
-    @Previewable @State var preWeatherViewModel: WeatherViewModel = WeatherViewModel()
-    WeatherDataView(city: previewCity, weatherViewModel: preWeatherViewModel)
+    WeatherDataView()
+        .environmentObject(WeatherViewModel()) // Inject WeatherViewModel for Preview
 }
-
 
 //#Preview {
 //    @Previewable @State var previewCity: String = ""
@@ -198,7 +194,7 @@ struct SolidGaugeChartView: UIViewRepresentable {
         exerciseData.color = HIColor(rgba: 106, green: 165, blue: 231, alpha: 1)
         exerciseData.radius = "87%"
         exerciseData.innerRadius = "63%"
-        exerciseData.y = (weatherViewModel.weekData.first?["precipitationProbability"] as? Int ?? 0) as NSNumber
+        exerciseData.y =  (weatherViewModel.weekData.first?["humidity"] as? Int ?? 0) as NSNumber
         exercise.data = [exerciseData] //chnage this for precipitationProbability data
 
         let stand = HISolidgauge()
@@ -207,7 +203,7 @@ struct SolidGaugeChartView: UIViewRepresentable {
         standData.color = HIColor(rgba: 255, green: 99, blue: 71, alpha: 1)
         standData.radius = "62%"
         standData.innerRadius = "38%"
-        standData.y = (weatherViewModel.weekData.first?["humidity"] as? Int ?? 0) as NSNumber
+        standData.y = (weatherViewModel.weekData.first?["precipitationProbability"] as? Int ?? 0) as NSNumber
         stand.data = [standData] //chnage this for humidity data
 
         options.series = [move, exercise, stand]

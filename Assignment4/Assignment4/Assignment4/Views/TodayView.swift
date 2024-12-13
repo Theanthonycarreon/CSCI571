@@ -9,9 +9,10 @@
 import SwiftUI
 import Alamofire
 import SwiftSpinner
+import AlertToast
 
 struct TodayView: View {
-    @ObservedObject var weatherViewModel = WeatherViewModel()
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
     @ObservedObject var searchedLocationViewModel = SearchedLocationViewModel()
 //    @State var searchText: String = "" //change to ""
     @Binding var searchText: String //change to ""
@@ -20,7 +21,9 @@ struct TodayView: View {
     @State private var tabs = ["Today_Tab", "Weekly_Tab", "Weather_Data_Tab"]
     @State private var tabsNames = ["Today", "Weekly", "Weather Data"]
     @State var city: String
-    
+    @State private var showToolbar: Bool = false
+    @State private var showToast = false
+    @State private var toastMessage = ""
     
     
     
@@ -107,10 +110,14 @@ struct TodayView: View {
                     if !cities.isEmpty && !ifClicked {
                         List(cities, id: \.self) { city in
                             NavigationLink(
-                                destination: SwiftSpinnerView(city: city, weatherViewModel: weatherViewModel)
+                                destination: TodayView(searchText: $searchText, city: city)
                                     .onAppear {
                                         // Clear the cities list when navigating
                                         self.cities = []
+                                        self.showToolbar = true
+                                    }
+                                    .onDisappear{
+                                        self.showToolbar = false
                                     },
                                 label: {
                                     Text(city)
@@ -126,13 +133,18 @@ struct TodayView: View {
                 
                 VStack{
                     Button(action: {
+                        
                         // Action for the button
                         if !weatherViewModel.favoriteCities.contains(city) {
                             weatherViewModel.addFavorite(city: city)
+                            toastMessage = "\(weatherViewModel.city) was added to the Favorite List"
                             print("Add to Favorites")
+                            
                         } else {
                             weatherViewModel.removeFavorite(city: city)
+                            toastMessage = "\(weatherViewModel.city) was removed from the Favorite List"
                         }
+                        showToast = true
                         
                     }) {
                         Image(weatherViewModel.showThisButton) // Use SF Symbol or a custom image
@@ -141,10 +153,18 @@ struct TodayView: View {
                             .frame(width: 25, height: 25) // Adjust the size of the image
                     }
                     .padding(.leading, 320)
-                    
+                    .toast(isPresenting: $showToast) {
+                        AlertToast(
+                                displayMode: .banner(.slide),
+                                type: .regular,
+                                title: toastMessage
+                            )
+            
+                    }
+//                    .padding(.top, 10)
                     
                     NavigationLink(
-                        destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
+                        destination: DayDetailView(city: city, weatherViewModel: _weatherViewModel),
                         label: {
                             HStack{
                                 VStack{
@@ -291,7 +311,7 @@ struct TodayView: View {
                             }
                         }
                     }
-                    .padding(.bottom, 150)
+//                    .padding(.bottom, 150)
                     VStack {
                         ForEach(weatherViewModel.weekData.indices, id: \.self) { index in
                             let dayData = weatherViewModel.weekData[index]
@@ -338,7 +358,6 @@ struct TodayView: View {
                             }
                         }
                     }
-//                    .padding(.bottom, 200)
                     .frame(width: 350)
                     .background(Color.yellow)
                     .cornerRadius(10)
@@ -348,28 +367,64 @@ struct TodayView: View {
                 .padding(.top, 200)
                 .onAppear {
                                 SwiftSpinner.show("Fetching Weather Details for \(city)...")
-                    print("searchedLocationViewModel.city: \(weatherViewModel.city)")
+                    print("weatherViewModel.city: \(weatherViewModel.city)")
                     weatherViewModel.getLocation(city: city) {
                                         SwiftSpinner.hide()
-                        print("searchedLocationViewModel.city: \(weatherViewModel.city)")
+                        print("weatherViewModel.city: \(weatherViewModel.city)")
+                    }
+                }
+            }
+            .toolbar(showToolbar ? .visible : .hidden)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        // Handle custom back button action
+                        print("Back button tapped")
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .font(.system(size: 20))
+                            Text("Weather")
+                                .font(.system(size: 18))
+                                .fontWeight(.bold)
+                        }
+                    }
+                }
+
+                ToolbarItem(placement: .principal) {
+                                Text(weatherViewModel.city)
+                                    .font(.system(size: 20))
+                                    .fontWeight(.bold)
+                }
+
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        // Action for the Twitter button
+                        print("Twitter button tapped")
+                        weatherViewModel.PostTweet { response in
+                            print("Tweet posted with response: \(response)")
+                        }
+                    }) {
+                        Image("twitter")
+                            .resizable()
+                            .frame(width: 24, height: 24)
                     }
                 }
             }
             .navigationTitle("Weather")
-             .navigationBarHidden(true)
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
     
        
 }
-    
-    
-    
+
     
 #Preview {
     @Previewable @State var previewSearchText: String = ""
     @Previewable @State var previewCity: String = ""
     TodayView(searchText: $previewSearchText, city: previewCity)
+        .environmentObject(WeatherViewModel())
 }
 
 

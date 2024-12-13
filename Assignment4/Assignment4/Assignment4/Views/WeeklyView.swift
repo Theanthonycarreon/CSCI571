@@ -11,8 +11,9 @@ struct WeeklyView: View {
     @State var city: String = ""
     @State private var tabs = ["Today_Tab", "Weekly_Tab", "Weather_Data_Tab"]
     @State private var tabsNames = ["Today", "Weekly", "Weather Data"]
-    @State var searchedLocationViewModel: SearchedLocationViewModel
-    @State var weatherViewModel: WeatherViewModel
+//    @State var searchedLocationViewModel: SearchedLocationViewModel
+//    @State var weatherViewModel: WeatherViewModel
+    @EnvironmentObject var weatherViewModel: WeatherViewModel
 
     private var chartOptions: HIOptions {
         let options = HIOptions()
@@ -52,72 +53,11 @@ struct WeeklyView: View {
            options.series = [series]
 
 
-//                  series: [{
-//                    type: 'arearange',
-//                    name: 'Temperatures',
-//                    data: this.weekData.map((dayData: any) => [
-//                        new Date(dayData.startTime).getTime(),
-//                        dayData.values?.temperatureMin,
-//                        dayData.values?.temperatureMax
-//                    ]),
-        
+           
         return options
     }
 
-//    fileprivate func getBackground() -> some View {
-//        return
-//            ZStack {
-//                Image("App_background")
-//                    .resizable()
-//                    .scaledToFit()
-//                
-//                VStack {
-//                    NavigationLink(
-//                        destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
-//                        label: {
-//                            HStack {
-//                                VStack {
-//                                    if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
-//                                        Image(status)
-//                                    } else {
-//                                        Text("N/A")
-//                                    }
-//                                }
-//                                VStack {
-//                                    HStack {
-//                                        if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double {
-//                                            Text("\(Int(temp))°F")
-//                                        } else {
-//                                            Text("0°F")
-//                                        }
-//                                    }
-//                                    HStack {
-//                                        if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
-//                                            Text(status)
-//                                        } else {
-//                                            Text("N/A")
-//                                        }
-//                                    }
-//                                    HStack {
-//                                        Text(searchedLocationViewModel.city)
-//                                    }
-//                                }
-//                                .foregroundStyle(.black)
-//                            }
-//                            .frame(width: 400, height: 175)
-//                            .background(Color.yellow.opacity(0.3))
-//                            .cornerRadius(10)
-//                            .foregroundStyle(.black)
-//                            .padding(.bottom, 380)
-//                        }
-//                    )
-//                }
-//
-//                ChartView(options: chartOptions)
-//                    .padding(.top, 250)
-//                    .frame(width: 400, height: 600)
-//            }
-//    }
+
     
     var body: some View {
         ZStack {
@@ -128,11 +68,11 @@ struct WeeklyView: View {
             
             VStack {
                 NavigationLink(
-                    destination: DayDetailView(city: city, searchedLocationViewModel: searchedLocationViewModel, weatherViewModel: weatherViewModel),
+                    destination: DayDetailView(city: city, weatherViewModel: _weatherViewModel),
                     label: {
                         HStack {
                             VStack {
-                                if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+                                if let status = weatherViewModel.weekData.first?["status"] as? String {
                                     Image(status)
                                 } else {
                                     Text("N/A")
@@ -140,21 +80,21 @@ struct WeeklyView: View {
                             }
                             VStack {
                                 HStack {
-                                    if let temp = searchedLocationViewModel.weekData.first?["temperature"] as? Double {
+                                    if let temp = weatherViewModel.weekData.first?["temperature"] as? Double {
                                         Text("\(Int(temp))°F")
                                     } else {
                                         Text("0°F")
                                     }
                                 }
                                 HStack {
-                                    if let status = searchedLocationViewModel.weekData.first?["status"] as? String {
+                                    if let status = weatherViewModel.weekData.first?["status"] as? String {
                                         Text(status)
                                     } else {
                                         Text("N/A")
                                     }
                                 }
                                 HStack {
-                                    Text(searchedLocationViewModel.city)
+                                    Text(weatherViewModel.city)
                                 }
                             }
                             .foregroundStyle(.black)
@@ -172,17 +112,17 @@ struct WeeklyView: View {
                 .padding(.top, 250)
                 .frame(width: 400, height: 600)
         }
-        .onAppear {
-            if searchedLocationViewModel.city != "" {
-                searchedLocationViewModel.getLocation(city: searchedLocationViewModel.city) {
-                    // Perform actions when location is fetched
-                }
-            } else {
-                weatherViewModel.getLocation(city: weatherViewModel.city) {
-                    // Perform actions when location is fetched
-                }
-            }
-        }
+//        .onAppear {
+//            if weatherViewModel.city != "" {
+//                weatherViewModel.getLocation(city: weatherViewModel.city) {
+//                    // Perform actions when location is fetched
+//                }
+//            } else {
+//                weatherViewModel.getLocation(city: weatherViewModel.city) {
+//                    // Perform actions when location is fetched
+//                }
+//            }
+//        }
     }
 }
 
@@ -203,9 +143,14 @@ struct ChartView: UIViewRepresentable {
 
 
 
+//#Preview {
+//    @Previewable @State var previewCity: String = ""
+//    @Previewable @State var presearchedLocationViewModel: SearchedLocationViewModel = SearchedLocationViewModel()
+//    @Previewable @State var preWeatherViewModel: WeatherViewModel = WeatherViewModel()
+//    WeeklyView(city: previewCity, searchedLocationViewModel: presearchedLocationViewModel, weatherViewModel: preWeatherViewModel)
+//}
+
 #Preview {
-    @Previewable @State var previewCity: String = ""
-    @Previewable @State var presearchedLocationViewModel: SearchedLocationViewModel = SearchedLocationViewModel()
-    @Previewable @State var preWeatherViewModel: WeatherViewModel = WeatherViewModel()
-    WeeklyView(city: previewCity, searchedLocationViewModel: presearchedLocationViewModel, weatherViewModel: preWeatherViewModel)
+    WeeklyView()
+        .environmentObject(WeatherViewModel()) // Inject WeatherViewModel
 }

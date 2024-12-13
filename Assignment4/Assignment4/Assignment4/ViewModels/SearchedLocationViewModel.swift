@@ -31,6 +31,7 @@ class SearchedLocationViewModel: ObservableObject { // ViewModels usually inheri
     
     
     
+    
     func getLocation(city: String, completion: @escaping () -> Void) {
         if city == "" {            let url = "https://ipinfo.io"
             let parameters = ["token": "5b2286d51fefe2"]

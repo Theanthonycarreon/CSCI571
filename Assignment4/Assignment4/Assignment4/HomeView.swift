@@ -7,6 +7,7 @@ struct HomeView: View {
 //    @State private var tabs = ["Today_Tab", "Weekly_Tab", "Weather_Data_Tab"]
 //    @State private var tabsNames = ["Today", "Weekly", "Weather Data"]
     @State private var activeTab: String = "Today_Tab"
+    @StateObject var weatherViewModel = WeatherViewModel()
     fileprivate func getBackground() -> some View {
         return
             Image("App_background")
@@ -15,12 +16,14 @@ struct HomeView: View {
     }
     
     var body: some View {
-//        NavigationView{
+        //        NavigationView{
         
         TodayView(searchText: $searchText, city: "")
-//        }
-//        TodayView(searchText: $searchText)
-               
+            .environmentObject(weatherViewModel)
+        //        }
+        //        TodayView(searchText: $searchText)
+        
+    
     }
 
     

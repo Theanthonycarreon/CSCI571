@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		921194322D0BB712006A30B6 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 921194312D0BB712006A30B6 /* Toast */; };
+		921194352D0BBB0A006A30B6 /* AlertToast in Frameworks */ = {isa = PBXBuildFile; productRef = 921194342D0BBB0A006A30B6 /* AlertToast */; };
 		925236B02D0695F2008BA930 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 925236AF2D0695F2008BA930 /* Alamofire */; };
 		925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 925236B22D06962E008BA930 /* SwiftyJSON */; };
 		9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */ = {isa = PBXBuildFile; productRef = 9263BD4A2D098A0000E65D41 /* SwiftSpinner */; };
@@ -67,6 +69,8 @@
 				925236B32D06962E008BA930 /* SwiftyJSON in Frameworks */,
 				925236B02D0695F2008BA930 /* Alamofire in Frameworks */,
 				9263BD4B2D098A0000E65D41 /* SwiftSpinner in Frameworks */,
+				921194352D0BBB0A006A30B6 /* AlertToast in Frameworks */,
+				921194322D0BB712006A30B6 /* Toast in Frameworks */,
 				926B81812D0ACAF7009C410E /* Highcharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +146,8 @@
 				925236B22D06962E008BA930 /* SwiftyJSON */,
 				9263BD4A2D098A0000E65D41 /* SwiftSpinner */,
 				926B81802D0ACAF7009C410E /* Highcharts */,
+				921194312D0BB712006A30B6 /* Toast */,
+				921194342D0BBB0A006A30B6 /* AlertToast */,
 			);
 			productName = Assignment4;
 			productReference = 92736BB82CF7A78800720C5B /* Assignment4.app */;
@@ -230,6 +236,8 @@
 				925236B12D06962E008BA930 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				9263BD492D098A0000E65D41 /* XCRemoteSwiftPackageReference "SwiftSpinner" */,
 				926B817F2D0ACAF7009C410E /* XCRemoteSwiftPackageReference "highcharts-ios" */,
+				921194302D0BB712006A30B6 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				921194332D0BBB0A006A30B6 /* XCRemoteSwiftPackageReference "AlertToast" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92736BB92CF7A78800720C5B /* Products */;
@@ -606,6 +614,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		921194302D0BB712006A30B6 /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scalessec/Toast-Swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
+			};
+		};
+		921194332D0BBB0A006A30B6 /* XCRemoteSwiftPackageReference "AlertToast" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/elai950/AlertToast.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.9;
+			};
+		};
 		925236AE2D0695F2008BA930 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -641,6 +665,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		921194312D0BB712006A30B6 /* Toast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 921194302D0BB712006A30B6 /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
+		};
+		921194342D0BBB0A006A30B6 /* AlertToast */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 921194332D0BBB0A006A30B6 /* XCRemoteSwiftPackageReference "AlertToast" */;
+			productName = AlertToast;
+		};
 		925236AF2D0695F2008BA930 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 925236AE2D0695F2008BA930 /* XCRemoteSwiftPackageReference "Alamofire" */;

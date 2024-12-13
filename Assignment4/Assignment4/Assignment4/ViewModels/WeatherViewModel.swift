@@ -113,21 +113,16 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
     }
     
     func getHighChartsData() -> [[Any]] {
-        print("Inside getHighChartsData")
-        return weekData.compactMap { dayData in
-            guard
-                let startTime = dayData["startTime"] as? String,
-                let temperatureMin = dayData["temperatureMin"] as? Double,
-                let temperatureMax = dayData["temperatureMax"] as? Double,
-                let date = ISO8601DateFormatter().date(from: startTime)
-            else {
-                return nil
-            }
-            // Convert date to timestamp in milliseconds
-            let timestamp = date.timeIntervalSince1970 * 1000
-            return [timestamp, temperatureMin, temperatureMax]
-        }
-    }
+           return weekData.compactMap { dayData in
+               if let startTime = dayData["startTime"] as? String,
+                  let temperatureMin = dayData["temperatureMin"] as? Double,
+                  let temperatureMax = dayData["temperatureMax"] as? Double {
+                   let timestamp = ISO8601DateFormatter().date(from: startTime)?.timeIntervalSince1970 ?? 0
+                   return [timestamp * 1000, temperatureMin, temperatureMax]
+               }
+               return nil
+           }
+       }
     
     
     
@@ -189,7 +184,9 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
         }
     }
     fileprivate func setData(weatherData: JSON) {
-        print("Inside setData:  \(weatherData)")
+//        print("Inside setData:  \(weatherData)")
+//            self.city = ""
+//            self.weekData.removeAll()
         // prompt: how to check if address is a string or array? - 7 lines https://chatgpt.com/share/67577826-624c-800b-ab2b-8ccb7f5d4e25
         let cityName: String?
             if let addressString = weatherData["address"].string {
@@ -239,14 +236,18 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
         let url = "https://assignment3-440805.wl.r.appspot.com/api/weather/"
         let parameters = ["city": city, "state": state ,"lat": latitude, "long": longitude]
         var json = JSON()
+        self.weekData = []
+        self.city.removeAll()
+       self.weatherData = nil
 
         AF.request(url, parameters: parameters).responseJSON { response in
            // Handle the response
            switch response.result {
                    case .success(let data):
                         json = JSON(data)
-                        self.model = WeatherModel()
-                        self.weatherData = nil
+//                        self.model = WeatherModel()
+//                        self.weatherData = nil
+        
 //               self.weatherData = WeatherViewModel?
 //                    weatherData = WeatherViewModel()
 //               print(json)
