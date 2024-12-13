@@ -218,7 +218,7 @@ struct TodayView: View {
                                 .foregroundStyle(.black)
                             }
                             .frame(width: 350, height: 175)
-                            .background(Color.yellow.opacity(0.3))
+                            .background(Color.white.opacity(0.3))
                             .cornerRadius(10)
                             .foregroundStyle(.black)
                             .padding(.bottom, 450)
@@ -361,9 +361,11 @@ struct TodayView: View {
                                            }
                                        }
                                    }
+//                                   .frame(width: 350)
                                    .frame(width: 350)
-                                   .background(Color.yellow)
+                                   .background(Color.white.opacity(0.3))
                                    .cornerRadius(10)
+                                   .foregroundStyle(.black)
                                }
                
                

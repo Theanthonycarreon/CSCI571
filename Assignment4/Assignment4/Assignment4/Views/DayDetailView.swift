@@ -43,10 +43,11 @@ struct DayDetailView: View {
                         Text("Wind Speed")
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 25)
-                    //                    .foregroundStyle(.black)
+                    
                     //column 2
                     VStack{
                         Image("Pressure")
@@ -62,8 +63,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 25)
                     // column 3
                     VStack{
@@ -79,8 +81,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                 }
                 .padding(.bottom, 300)
             }
@@ -100,8 +103,9 @@ struct DayDetailView: View {
                         Text("Temperature")
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 25)
                     //column 2
                     VStack{
@@ -118,8 +122,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 23)
                     // column 3
                     VStack{
@@ -135,8 +140,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                 }
                 .padding(.top,30)
                 
@@ -156,8 +162,9 @@ struct DayDetailView: View {
                         Text("Visibility")
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 25)
                     //column 2
                     VStack{
@@ -173,8 +180,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                     .padding(.trailing, 25)
                     // column 3
                     VStack{
@@ -190,8 +198,9 @@ struct DayDetailView: View {
                         
                     }
                     .frame(width:100, height:150)
-                    .background(.white)
-                    .opacity(0.5)
+                    .background(Color.white.opacity(0.3))
+                    .cornerRadius(10)
+                    .foregroundStyle(.black)
                 }
                 
                 .padding(.top, 350)
@@ -201,8 +210,8 @@ struct DayDetailView: View {
             
         }
                     .sharedToolbar(showToolbar: $showToolbar, city: weatherViewModel.city)
-        //            .navigationTitle("Weather")
-        //            .navigationBarTitleDisplayMode(.inline)
+                    .navigationTitle("Weather")
+                    .navigationBarTitleDisplayMode(.inline)
         
         //        .padding(.bottom,50)
         

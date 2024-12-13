@@ -75,7 +75,7 @@ struct WeatherDataView: View {
                     
                 }
                 .frame(width: 350, height: 175)
-                .background(Color.yellow.opacity(0.3))
+                .background(Color.white.opacity(0.3))
                 .cornerRadius(10)
                 .foregroundStyle(.black)
                 .padding(.bottom, 500)
@@ -84,7 +84,7 @@ struct WeatherDataView: View {
                 HStack{
                     SolidGaugeChartView(weatherViewModel: weatherViewModel)
                 }
-                .padding(.top, 230)
+                .padding(.top, 250)
             }
         }
         .sharedToolbar(showToolbar: $showToolbar, city: weatherViewModel.city)

@@ -100,8 +100,8 @@ struct WeeklyView: View {
                             }
                             .foregroundStyle(.black)
                         }
-                        .frame(width: 400, height: 175)
-                        .background(Color.yellow.opacity(0.3))
+                        .frame(width: 350, height: 175)
+                        .background(Color.white.opacity(0.3))
                         .cornerRadius(10)
                         .foregroundStyle(.black)
                         .padding(.bottom, 380)

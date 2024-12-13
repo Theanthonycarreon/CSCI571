@@ -21,11 +21,11 @@
                                 <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Powered_by_Tomorrow-Black" translatesAutoresizingMaskIntoConstraints="NO" id="qX6-1p-33h">
-                                <rect key="frame" x="42" y="647" width="356" height="36"/>
+                                <rect key="frame" x="34" y="647" width="356" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" fixedFrame="YES" image="Mostly Clear" translatesAutoresizingMaskIntoConstraints="NO" id="6mN-Jz-hQL">
-                                <rect key="frame" x="155" y="262" width="131" height="150"/>
+                                <rect key="frame" x="147" y="262" width="131" height="150"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
