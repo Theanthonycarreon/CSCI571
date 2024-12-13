@@ -12,6 +12,7 @@ import UIKit
 
 struct WeatherDataView: View {
     @EnvironmentObject var weatherViewModel: WeatherViewModel
+    @State private var showToolbar: Bool = true
     
     var body: some View {
         ZStack{
@@ -86,6 +87,7 @@ struct WeatherDataView: View {
                 .padding(.top, 230)
             }
         }
+        .sharedToolbar(showToolbar: $showToolbar, city: weatherViewModel.city)
     }
 }
 

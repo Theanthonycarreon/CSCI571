@@ -25,6 +25,7 @@ struct TodayView: View {
     @State private var showToast = false
     @State private var toastMessage = ""
     @State private var hideTextField: Bool = false
+//    @State private var
     
     
     
@@ -129,9 +130,6 @@ struct TodayView: View {
                 }
                 .zIndex(1)
                 
-                
-                
-                
                 VStack{
                     Button(action: {
                         
@@ -162,7 +160,7 @@ struct TodayView: View {
                         )
                         
                     }
-                    //                    .padding(.top, 10)
+                    .font(.system(size: 20))
                     
                     NavigationLink(
                         destination: DayDetailView(city: city, weatherViewModel: _weatherViewModel),
@@ -174,13 +172,13 @@ struct TodayView: View {
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width:150, height: 150 )
-                                        //                                            .padding(.trailing,10)
+    //                                            .padding(.trailing,10)
                                     } else {
                                         Image("Cloudy")
                                             .resizable()
                                             .scaledToFit()
                                             .frame(width:150, height: 150 )
-                                        //                                            .padding(.trailing,20)
+    //                                            .padding(.trailing,20)
                                     }
                                 }
                                 VStack (spacing:15){
@@ -194,7 +192,7 @@ struct TodayView: View {
                                                 .font(.system(size: 30)) // Set font size
                                                 .fontWeight(.bold)
                                         }
-                                        
+
                                     }
                                     HStack{
                                         if let status = weatherViewModel.weekData.first?["status"] as? String {
@@ -212,7 +210,7 @@ struct TodayView: View {
                                             .frame(width: 100)
                                             .font(.system(size: 14))
                                             .fontWeight(.bold)
-                                        
+
                                     }
                                 }
                                 .padding(.top, 30)
@@ -226,143 +224,152 @@ struct TodayView: View {
                             .padding(.bottom, 450)
                         }
                     )
-                    
-                    
                 }
+
+
+                
+                
+                
+                
                 VStack{
-                    HStack(spacing:15){
-                        VStack{
-                            Text("Humidity")
-                                .fontWeight(.bold)
-                        }
-                        VStack{
-                            Text("Wind Speed")
-                                .fontWeight(.bold)
-                        }
-                        VStack{
-                            Text("Visibility")
-                                .fontWeight(.bold)
-                        }
-                        VStack{
-                            Text("Pressure")
-                                .fontWeight(.bold)
-                        }
-                    }
-                    HStack(spacing:20){
-                        VStack{
-                            Image("Humidity")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width:75,height:75)
-                        }
-                        VStack{
-                            Image("WindSpeed")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width:75,height:75)
-                        }
-                        VStack{
-                            Image("Visibility")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width:75,height:75)
-                        }
-                        VStack{
-                            Image("Pressure")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width:75,height:75)
-                        }
-                    }
-                    HStack(spacing:25){
-                        VStack{
-                            if let humidity = weatherViewModel.weekData.first?["humidity"] as? Double{
-                                Text("\(Int(humidity)) %")
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("0 %")
-                                    .fontWeight(.bold)
-                            }
-                        }
-                        VStack{
-                            if let windSpeed = weatherViewModel.weekData.first?["windSpeed"] as? Double{
-                                Text("\(String(format: "%.2f", windSpeed)) mph")
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("0 mph")
-                                    .fontWeight(.bold)
-                            }
-                        }
-                        VStack{
-                            if let visibility = weatherViewModel.weekData.first?["visibility"] as? Double{
-                                Text("\(String(format: "%.2f", visibility)) mi")
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("0 mi")
-                                    .fontWeight(.bold)
-                            }
-                        }
-                        VStack{
-                            if let pressureSeaLevel = weatherViewModel.weekData.first?["pressureSeaLevel"] as? Double{
-                                Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
-                                    .fontWeight(.bold)
-                            } else {
-                                Text("0 inHg")
-                                    .fontWeight(.bold)
-                            }
-                        }
-                    }
-                    //                    .padding(.bottom, 150)
-                    VStack {
-                        ForEach(weatherViewModel.weekData.indices, id: \.self) { index in
-                            let dayData = weatherViewModel.weekData[index]
-                            HStack {
-                                // Date column
-                                VStack(spacing: 10) {
-                                    if let date = dayData["date"] as? String {
-                                        Text(date)
-                                    } else {
-                                        Text("N/A")
-                                    }
-                                }
-                                
-                                // Weather status column
-                                VStack(spacing: 15) {
-                                    if let status = dayData["status"] as? String {
-                                        Image(status)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: 32, height: 32)
-                                    } else {
-                                        Text("N/A")
-                                    }
-                                }
-                                .padding(.trailing, 30)
-                                
-                                // Sunrise image column
-                                VStack {
-                                    Image("sun-rise")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
-                                }
-                                .padding(.trailing, 40)
-                                .padding(.leading, 40)
-                                
-                                // Sunset image column
-                                VStack {
-                                    Image("sun-set")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: 32, height: 32)
-                                }
-                            }
-                        }
-                    }
-                    .frame(width: 350)
-                    .background(Color.yellow)
-                    .cornerRadius(10)
-                }
+                                   HStack(spacing:15){
+                                       VStack{
+                                           Text("Humidity")
+                                               .fontWeight(.bold)
+                                       }
+                                       VStack{
+                                           Text("Wind Speed")
+                                               .fontWeight(.bold)
+                                       }
+                                       VStack{
+                                           Text("Visibility")
+                                               .fontWeight(.bold)
+                                       }
+                                       VStack{
+                                           Text("Pressure")
+                                               .fontWeight(.bold)
+                                       }
+                                   }
+                                   HStack(spacing:20){
+                                       VStack{
+                                           Image("Humidity")
+                                               .resizable()
+                                               .scaledToFit()
+                                               .frame(width:75,height:75)
+                                       }
+                                       VStack{
+                                           Image("WindSpeed")
+                                               .resizable()
+                                               .scaledToFit()
+                                               .frame(width:75,height:75)
+                                       }
+                                       VStack{
+                                           Image("Visibility")
+                                               .resizable()
+                                               .scaledToFit()
+                                               .frame(width:75,height:75)
+                                       }
+                                       VStack{
+                                           Image("Pressure")
+                                               .resizable()
+                                               .scaledToFit()
+                                               .frame(width:75,height:75)
+                                       }
+                                   }
+                                   HStack(spacing:25){
+                                       VStack{
+                                           if let humidity = weatherViewModel.weekData.first?["humidity"] as? Double{
+                                               Text("\(Int(humidity)) %")
+                                                   .fontWeight(.bold)
+                                           } else {
+                                               Text("0 %")
+                                                   .fontWeight(.bold)
+                                           }
+                                       }
+                                       VStack{
+                                           if let windSpeed = weatherViewModel.weekData.first?["windSpeed"] as? Double{
+                                               Text("\(String(format: "%.2f", windSpeed)) mph")
+                                                   .fontWeight(.bold)
+                                           } else {
+                                               Text("0 mph")
+                                                   .fontWeight(.bold)
+                                           }
+                                       }
+                                       VStack{
+                                           if let visibility = weatherViewModel.weekData.first?["visibility"] as? Double{
+                                               Text("\(String(format: "%.2f", visibility)) mi")
+                                                   .fontWeight(.bold)
+                                           } else {
+                                               Text("0 mi")
+                                                   .fontWeight(.bold)
+                                           }
+                                       }
+                                       VStack{
+                                           if let pressureSeaLevel = weatherViewModel.weekData.first?["pressureSeaLevel"] as? Double{
+                                               Text("\(String(format: "%.2f", pressureSeaLevel)) inHg")
+                                                   .fontWeight(.bold)
+                                           } else {
+                                               Text("0 inHg")
+                                                   .fontWeight(.bold)
+                                           }
+                                       }
+                                   }
+               //                    .padding(.bottom, 150)
+                                   VStack {
+                                       ForEach(weatherViewModel.weekData.indices, id: \.self) { index in
+                                           let dayData = weatherViewModel.weekData[index]
+                                           HStack {
+                                               // Date column
+                                               VStack(spacing: 10) {
+                                                   if let date = dayData["date"] as? String {
+                                                       Text(date)
+                                                   } else {
+                                                       Text("N/A")
+                                                   }
+                                               }
+               
+                                               // Weather status column
+                                               VStack(spacing: 15) {
+                                                   if let status = dayData["status"] as? String {
+                                                       Image(status)
+                                                           .resizable()
+                                                           .scaledToFit()
+                                                           .frame(width: 32, height: 32)
+                                                   } else {
+                                                       Text("N/A")
+                                                   }
+                                               }
+                                               .padding(.trailing, 30)
+               
+                                               // Sunrise image column
+                                               VStack {
+                                                   Image("sun-rise")
+                                                       .resizable()
+                                                       .scaledToFit()
+                                                       .frame(width: 32, height: 32)
+                                               }
+                                               .padding(.trailing, 40)
+                                               .padding(.leading, 40)
+               
+                                               // Sunset image column
+                                               VStack {
+                                                   Image("sun-set")
+                                                       .resizable()
+                                                       .scaledToFit()
+                                                       .frame(width: 32, height: 32)
+                                               }
+                                           }
+                                       }
+                                   }
+                                   .frame(width: 350)
+                                   .background(Color.yellow)
+                                   .cornerRadius(10)
+                               }
+               
+               
+                               .padding(.top, 200)
+                
+                
                 
                 
                 
@@ -424,6 +431,7 @@ struct TodayView: View {
                     }
                 }
             }
+//            .sharedToolbar(showToolbar: $showToolbar, city: city)
             .navigationTitle("Weather")
             .navigationBarTitleDisplayMode(.inline)
         }

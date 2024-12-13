@@ -98,6 +98,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
             showThisButton = "plus-circle"
         } else {
             changeFavoriteSign = false
+            showThisButton = "close-circle"
         }
     }
     
@@ -109,6 +110,7 @@ class WeatherViewModel: ObservableObject { // ViewModels usually inherits “Obs
             showThisButton = "close-circle"
         } else {
             changeFavoriteSign = false
+            showThisButton = "plus-circle"
         }
     }
     

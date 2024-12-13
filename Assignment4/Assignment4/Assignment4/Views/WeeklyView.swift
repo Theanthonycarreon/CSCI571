@@ -8,6 +8,7 @@ import SwiftUI
 import Highcharts
 
 struct WeeklyView: View {
+    @State private var showToolbar: Bool = true
     @State var city: String = ""
     @State private var tabs = ["Today_Tab", "Weekly_Tab", "Weather_Data_Tab"]
     @State private var tabsNames = ["Today", "Weekly", "Weather Data"]
@@ -112,6 +113,7 @@ struct WeeklyView: View {
                 .padding(.top, 250)
                 .frame(width: 400, height: 600)
         }
+//        .sharedToolbar(showToolbar: $showToolbar, city: weatherViewModel.city)
 //        .onAppear {
 //            if weatherViewModel.city != "" {
 //                weatherViewModel.getLocation(city: weatherViewModel.city) {
